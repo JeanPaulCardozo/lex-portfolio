@@ -109,12 +109,16 @@ src/
 
 El repo incluye `.github/workflows/deploy.yml`. Al hacer push a `main`:
 
-1. build con `VITE_BASE=/<nombre-del-repo>/` y `VITE_API_MODE=mock`.
-2. copia `index.html` a `404.html` (fallback SPA para rutas profundas).
-3. publica en GitHub Pages.
+1. `actions/configure-pages` **activa GitHub Pages** (source = GitHub Actions) en la primera ejecución.
+2. build con `VITE_BASE=/<nombre-del-repo>/` y `VITE_API_MODE=mock`.
+3. copia `index.html` a `404.html` (fallback SPA para rutas profundas).
+4. publica en GitHub Pages.
 
-Para activarlo: en el repo → **Settings → Pages → Source: GitHub Actions**.
 La URL pública queda como `https://<usuario>.github.io/<nombre-del-repo>/`.
+
+> Si la configuración de la cuenta impide la activación automática, hazlo una vez a
+> mano en **Settings → Pages → Source: GitHub Actions** y vuelve a lanzar el workflow
+> (pestaña *Actions* → *Re-run jobs*).
 
 > Para desplegar contra tu API real, cambia `VITE_API_MODE` a `live` y añade
 > `VITE_API_BASE_URL` en el workflow (o usa *secrets* del repositorio).
