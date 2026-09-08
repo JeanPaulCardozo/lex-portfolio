@@ -11,26 +11,29 @@ import type {
 /**
  * Datos de demostración (ficticios). Sirven para mostrar el MVP sin necesidad de
  * la API real. El abogado los reemplaza desde el panel /admin.
+ *
+ * Ambientación: ejercicio independiente en Colombia, con foco en Derecho Procesal
+ * (litigio civil y laboral, acción de tutela y conciliación).
  */
 
 export const seedProfile: Profile = {
   fullName: 'María Banda',
   title: 'Abogada · Especialista en Derecho Procesal',
   headline:
-    'Acompaño a personas trabajadoras y a pymes en conflictos laborales, despidos y procesos de extranjería, con un enfoque práctico y cercano.',
+    'Represento a personas y pymes en litigios civiles, laborales y de tutela ante la Rama Judicial, con estrategia procesal clara y comunicación en cada etapa.',
   summary:
-    'Soy abogada colegiada con más de diez años de ejercicio independiente. Mi trabajo se centra en el Derecho del Trabajo y de la Seguridad Social, y en procedimientos de extranjería. Litigo ante los juzgados de lo social y de lo contencioso-administrativo, pero antes agoto siempre la vía de la negociación: la mayoría de mis asuntos se resuelven con un acuerdo razonable para mi cliente. Doy respuestas claras, sin tecnicismos innecesarios, y explico cada paso del proceso.',
+    'Soy abogada con tarjeta profesional y más de diez años de ejercicio independiente, especialista en Derecho Procesal. Concentro mi práctica en el litigio civil y laboral y en la acción de tutela, bajo el Código General del Proceso y el Código Procesal del Trabajo y de la Seguridad Social. Antes de demandar agoto la conciliación y las salidas negociadas; cuando el proceso es inevitable, defino una estrategia probatoria y de recursos y explico cada etapa —audiencias, pruebas y términos— sin tecnicismos innecesarios.',
   location: 'Cartagena, Colombia',
   email: 'contacto@mariabanda.example',
-  phone: '+34 600 000 000',
-  whatsapp: '34600000000',
+  phone: '+57 300 000 0000',
+  whatsapp: '573000000000',
   linkedin: 'https://www.linkedin.com/in/ejemplo',
   avatarUrl: '',
   cvUrl: '',
-  languages: ['Español (nativo)', 'Inglés (C1)', 'Portugués (B2)'],
+  languages: ['Español (nativo)', 'Inglés (B2)'],
   barAdmissions: [
-    'Ilustre Colegio de la Abogacía de Madrid (nº 000000)',
-    'Turno de oficio de extranjería',
+    'Tarjeta profesional de abogada — Consejo Superior de la Judicatura',
+    'Inscrita como conciliadora en derecho — Ministerio de Justicia',
   ],
   education: [
     {
@@ -51,74 +54,87 @@ export const seedProfile: Profile = {
   ],
   stats: [
     { label: 'Años de ejercicio', value: '10+' },
-    { label: 'Asuntos gestionados', value: '400+' },
-    { label: 'Resueltos con acuerdo', value: '68%' },
-    { label: 'Idiomas de trabajo', value: '3' },
+    { label: 'Procesos gestionados', value: '400+' },
+    { label: 'Resueltos por conciliación', value: '62%' },
+    { label: 'Audiencias al año', value: '120+' },
   ],
 }
 
 export const seedAreas: PracticeArea[] = [
   {
-    id: 'area-laboral',
-    slug: 'derecho-laboral',
-    name: 'Derecho laboral',
-    summary: 'Despidos, reclamaciones de cantidad, modificaciones sustanciales y acoso laboral.',
+    id: 'area-civil',
+    slug: 'derecho-procesal-civil',
+    name: 'Derecho procesal civil',
+    summary:
+      'Procesos ejecutivos y declarativos, medidas cautelares, restitución de inmueble y responsabilidad civil.',
     description:
-      'Asesoro y represento a personas trabajadoras y a pequeñas empresas en toda la relación laboral: contratación, modificaciones de condiciones, sanciones, despidos individuales y colectivos, reclamaciones de salarios y horas extra, y situaciones de acoso o vulneración de derechos fundamentales. Preparo la papeleta de conciliación, negocio ante el SMAC y litigo ante el Juzgado de lo Social cuando no hay acuerdo.',
+      'Asesoro y litigo en asuntos civiles bajo el Código General del Proceso: procesos ejecutivos (con títulos valores o contractuales) y declarativos (verbales y verbales sumarios), restitución de inmueble arrendado, responsabilidad civil contractual y extracontractual, pertenencia y servidumbres. Solicito y controvierto medidas cautelares (embargo y secuestro, inscripción de la demanda), preparo la prueba para la audiencia inicial y la de instrucción y juzgamiento, y sustento los recursos de reposición, apelación y, cuando procede, casación.',
     faqs: [
       {
-        q: '¿Cuánto tiempo tengo para impugnar un despido?',
-        a: 'El plazo es de 20 días hábiles desde la fecha de efectos del despido. Es un plazo de caducidad, muy estricto: conviene consultar cuanto antes.',
+        q: '¿Qué necesito para iniciar un proceso ejecutivo?',
+        a: 'Un título ejecutivo: un documento que contenga una obligación clara, expresa y exigible (pagaré, letra, factura, contrato, acta de conciliación, sentencia). Con él se libra mandamiento de pago y se pueden pedir medidas cautelares desde el inicio.',
       },
       {
-        q: '¿Qué diferencia hay entre despido improcedente y nulo?',
-        a: 'En el improcedente la empresa elige entre readmitir o indemnizar. En el nulo (por vulnerar derechos fundamentales o afectar a personas especialmente protegidas) la readmisión es obligatoria, con abono de los salarios de tramitación.',
+        q: '¿Cuánto puede durar un proceso verbal?',
+        a: 'Depende del despacho y de la práctica de pruebas, pero el Código General del Proceso fija una meta de un año en primera instancia y seis meses en segunda. En la práctica suele extenderse; una estrategia probatoria ordenada ayuda a evitar aplazamientos.',
       },
     ],
     order: 1,
   },
   {
-    id: 'area-extranjeria',
-    slug: 'extranjeria',
-    name: 'Extranjería',
-    summary: 'Arraigo, reagrupación familiar, renovaciones, nacionalidad y recursos.',
+    id: 'area-laboral',
+    slug: 'derecho-procesal-laboral',
+    name: 'Derecho procesal laboral',
+    summary:
+      'Reclamación de prestaciones, despidos, estabilidad laboral reforzada y acoso laboral.',
     description:
-      'Tramito autorizaciones de residencia y trabajo (arraigo social, laboral y familiar), reagrupación familiar, tarjetas de familiar de ciudadano de la UE, renovaciones y solicitudes de nacionalidad por residencia. Interpongo recursos de reposición y contencioso-administrativos frente a denegaciones y frente a expedientes de expulsión.',
+      'Represento a trabajadores y a pequeñas empresas ante los juzgados laborales del circuito bajo el Código Procesal del Trabajo y de la Seguridad Social: reclamación de salarios, horas extra y recargos, liquidación y reliquidación de prestaciones sociales, despidos sin justa causa, ineficacia del despido por estabilidad laboral reforzada (embarazo, salud, fuero sindical) y acoso laboral. Agoto la reclamación administrativa y la conciliación, y llevo el proceso ordinario hasta la audiencia de trámite y juzgamiento.',
     faqs: [
       {
-        q: '¿Puedo trabajar con una autorización por arraigo social?',
-        a: 'Sí. El arraigo social habilita para trabajar por cuenta ajena o propia si se acredita el medio de vida correspondiente; desde las últimas reformas el contrato ya no es requisito imprescindible en todos los casos.',
+        q: '¿En cuánto tiempo prescriben las acreencias laborales?',
+        a: 'La regla general es de tres años contados desde que la obligación se hace exigible (art. 488 del CST y 151 del CPTSS). La reclamación escrita al empleador interrumpe la prescripción por una sola vez.',
       },
       {
-        q: '¿Cuánto tarda un expediente de nacionalidad?',
-        a: 'Depende de la carga de la Dirección General de Seguridad Jurídica y Fe Pública, pero el plazo legal de resolución es de un año desde que el expediente está completo. Superado ese plazo cabe recurso por silencio.',
+        q: '¿Qué es la estabilidad laboral reforzada?',
+        a: 'Es la protección especial frente al despido de personas en situación de embarazo, con afectación de salud o con fuero sindical. Sin autorización previa del inspector de trabajo o del juez, el despido se presume ineficaz y procede el reintegro con pago de lo dejado de percibir.',
       },
     ],
     order: 2,
   },
   {
-    id: 'area-seguridad-social',
-    slug: 'seguridad-social',
-    name: 'Seguridad Social',
-    summary: 'Incapacidad permanente, prestaciones denegadas y recargo por falta de medidas.',
+    id: 'area-tutela',
+    slug: 'accion-de-tutela',
+    name: 'Acción de tutela y litigio constitucional',
+    summary:
+      'Protección de derechos fundamentales, tutela contra providencias judiciales e incidentes de desacato.',
     description:
-      'Reclamo frente al INSS y la Seguridad Social: grados de incapacidad permanente (parcial, total, absoluta y gran invalidez), prestaciones por nacimiento y cuidado, desempleo, y recargo de prestaciones por falta de medidas de seguridad. Presento la reclamación administrativa previa y, en su caso, demanda ante el Juzgado de lo Social.',
+      'Presento acciones de tutela (art. 86 de la Constitución) para la protección inmediata de derechos fundamentales frente a autoridades y particulares: mora en el reconocimiento de prestaciones, acceso a la salud, debido proceso administrativo y mínimo vital. Tramito la tutela contra providencias judiciales cuando se cumplen las causales de procedibilidad, e impulso el incidente de desacato hasta el cumplimiento efectivo del fallo.',
     faqs: [
       {
-        q: 'Me han denegado la incapacidad permanente, ¿qué puedo hacer?',
-        a: 'Tienes 30 días para presentar reclamación administrativa previa ante el INSS y, si se desestima, 30 días para demanda judicial. Es clave aportar informes médicos actualizados y, si es posible, un informe pericial.',
+        q: '¿En cuánto tiempo se resuelve una tutela?',
+        a: 'El juez debe fallar en un máximo de diez días hábiles desde el reparto. El fallo se puede impugnar dentro de los tres días siguientes a su notificación y la Corte Constitucional puede seleccionarlo para revisión.',
+      },
+      {
+        q: '¿Se puede tutelar una sentencia?',
+        a: 'Sí, de forma excepcional. Debe agotarse todo recurso ordinario y extraordinario, cumplirse el requisito de inmediatez y configurarse un defecto (fáctico, sustantivo, procedimental, entre otros) que vulnere derechos fundamentales.',
       },
     ],
     order: 3,
   },
   {
-    id: 'area-mediacion',
-    slug: 'mediacion-y-negociacion',
-    name: 'Mediación y negociación',
-    summary: 'Acuerdos de salida, pactos de no competencia y conflictos entre socios.',
+    id: 'area-masc',
+    slug: 'conciliacion-y-masc',
+    name: 'Conciliación y MASC',
+    summary:
+      'Conciliación extrajudicial como requisito de procedibilidad, acuerdos de pago e insolvencia de persona natural.',
     description:
-      'Diseño y conduzco negociaciones en conflictos laborales y mercantiles de baja cuantía: acuerdos de extinción indemnizada, pactos de confidencialidad y no competencia, planes de pago y salidas negociadas entre socios de pymes. El objetivo es cerrar el asunto rápido, por escrito y sin desgaste procesal.',
-    faqs: [],
+      'Diseño y conduzco procesos de conciliación en derecho y otros mecanismos alternativos de solución de conflictos: audiencias en centros de conciliación, acuerdos de pago con mérito ejecutivo, transacciones y cláusulas compromisorias. También acompaño trámites de insolvencia de persona natural no comerciante (arts. 531 y siguientes del CGP) para negociar y formalizar acuerdos con los acreedores.',
+    faqs: [
+      {
+        q: '¿La conciliación es obligatoria antes de demandar?',
+        a: 'En varios asuntos civiles y de familia la conciliación extrajudicial en derecho es requisito de procedibilidad: sin la constancia de que se intentó, el juez rechaza la demanda. En materia laboral no es obligatoria, pero suele ser conveniente.',
+      },
+    ],
     order: 4,
   },
 ]
@@ -126,122 +142,122 @@ export const seedAreas: PracticeArea[] = [
 export const seedCases: Case[] = [
   {
     id: 'case-1',
-    slug: 'despido-nulo-readmision',
-    title: 'Despido declarado nulo con readmisión inmediata',
-    area: 'Derecho laboral',
+    slug: 'ejecutivo-pago-total-tras-cautelares',
+    title: 'Proceso ejecutivo: pago total del capital tras decretarse medidas cautelares',
+    area: 'Derecho procesal civil',
     year: 2024,
-    role: 'Dirección letrada (parte trabajadora)',
-    resultType: 'sentencia',
-    outcome: 'Readmisión + 14.200 € de salarios de tramitación',
+    role: 'Apoderada de la parte demandante (ejecutante)',
+    resultType: 'acuerdo',
+    outcome: 'Pago de $92.000.000 más intereses y costas antes de la sentencia',
     situation:
-      'La empresa despidió a la trabajadora dos semanas después de comunicar su embarazo, alegando causas objetivas de tipo económico que no estaban acreditadas.',
+      'Una pyme del sector de suministros no logró el pago de dos pagarés vencidos pese a varios requerimientos. El deudor tenía capacidad de pago pero dilataba la negociación.',
     action:
-      'Se presentó papeleta de conciliación y, sin avenencia, demanda por despido nulo con vulneración del derecho a la no discriminación por razón de sexo. Se solicitó el interrogatorio de la dirección y prueba documental sobre la situación real de la empresa.',
+      'Se presentó demanda ejecutiva con los títulos valores y se solicitaron medidas cautelares. Decretados el embargo y secuestro de cuentas y de un vehículo, se libró mandamiento de pago y se controvirtieron las excepciones propuestas.',
     result:
-      'El Juzgado de lo Social declaró la nulidad del despido, ordenó la readmisión con abono de los salarios de tramitación y una indemnización adicional por daño moral.',
-    skills: ['Litigio laboral', 'Derechos fundamentales', 'Prueba documental'],
+      'Antes de la audiencia, el deudor pagó la totalidad del capital, los intereses de mora liquidados y las costas. Se levantaron las cautelas y se dio por terminado el proceso por pago total de la obligación.',
+    skills: ['Proceso ejecutivo', 'Medidas cautelares', 'Títulos valores'],
     featured: true,
-    confidential: true,
+    confidential: false,
     imageUrl: '',
   },
   {
     id: 'case-2',
-    slug: 'arraigo-social-tras-denegacion',
-    title: 'Arraigo social concedido tras recurso de reposición',
-    area: 'Extranjería',
+    slug: 'restitucion-inmueble-arrendado',
+    title: 'Restitución de inmueble arrendado por mora en el pago de cánones',
+    area: 'Derecho procesal civil',
     year: 2024,
-    role: 'Dirección letrada (solicitante)',
-    resultType: 'dictamen',
-    outcome: 'Autorización de residencia y trabajo por 1 año',
+    role: 'Apoderada de la parte demandante (arrendadora)',
+    resultType: 'sentencia',
+    outcome: 'Sentencia de restitución y pago de $18.000.000 en cánones adeudados',
     situation:
-      'La Oficina de Extranjería denegó una solicitud de arraigo social por considerar insuficiente la acreditación de la permanencia continuada en España.',
+      'El arrendatario de un local comercial acumuló seis cánones sin pagar y se negaba a entregar el inmueble, lo que impedía a la propietaria arrendarlo de nuevo.',
     action:
-      'Se interpuso recurso de reposición aportando empadronamiento histórico, informes de servicios sociales, certificados médicos y declaraciones de terceros para completar la prueba de los tres años de estancia.',
+      'Se adelantó el proceso de restitución de inmueble arrendado, aportando el contrato, la prueba de la mora y los paz y salvos de servicios. Se pidió el embargo de los cánones y la práctica anticipada de la inspección.',
     result:
-      'La Administración estimó el recurso y concedió la autorización sin necesidad de acudir a la vía contencioso-administrativa.',
-    skills: ['Extranjería', 'Recursos administrativos', 'Prueba de arraigo'],
+      'La sentencia ordenó la restitución y el pago de los cánones y servicios adeudados. La entrega se materializó en diligencia de lanzamiento con acompañamiento de la Policía.',
+    skills: ['Restitución de inmueble', 'Contratos de arrendamiento', 'Diligencia de lanzamiento'],
     featured: true,
     confidential: false,
     imageUrl: '',
   },
   {
     id: 'case-3',
-    slug: 'incapacidad-permanente-total',
-    title: 'Incapacidad permanente total reconocida en vía judicial',
-    area: 'Seguridad Social',
+    slug: 'reintegro-estabilidad-laboral-reforzada',
+    title: 'Ineficacia del despido y reintegro por estabilidad laboral reforzada',
+    area: 'Derecho procesal laboral',
     year: 2023,
-    role: 'Dirección letrada (parte demandante)',
+    role: 'Apoderada de la parte demandante (trabajadora)',
     resultType: 'sentencia',
-    outcome: 'Pensión vitalicia del 55% de la base reguladora',
+    outcome: 'Reintegro, pago de lo dejado de percibir e indemnización del art. 239 del CST',
     situation:
-      'El INSS denegó el grado de incapacidad permanente total a un trabajador de la construcción con patología lumbar crónica, calificándolo como apto con limitaciones.',
+      'Una trabajadora fue despedida sin justa causa dos semanas después de informar su estado de embarazo, sin autorización del inspector de trabajo.',
     action:
-      'Se presentó reclamación previa y demanda, con informe pericial médico independiente y valoración de los requerimientos reales del puesto de trabajo.',
+      'Se presentó demanda ordinaria laboral por ineficacia del despido y, de forma paralela, acción de tutela como mecanismo transitorio ante el riesgo para el mínimo vital. Se aportó la historia clínica y las comunicaciones con la empresa.',
     result:
-      'La sentencia reconoció la incapacidad permanente total para la profesión habitual, con efectos económicos desde la fecha de la resolución denegatoria.',
-    skills: ['Seguridad Social', 'Pericial médica', 'Litigio'],
+      'El juzgado declaró la ineficacia del despido, ordenó el reintegro sin solución de continuidad, el pago de salarios y prestaciones dejados de percibir y la indemnización equivalente a sesenta días de salario.',
+    skills: ['Litigio laboral', 'Estabilidad laboral reforzada', 'Acción de tutela'],
+    featured: true,
+    confidential: true,
+    imageUrl: '',
+  },
+  {
+    id: 'case-4',
+    slug: 'conciliacion-horas-extra-vigilancia',
+    title: 'Conciliación por horas extra y recargos en el sector de vigilancia',
+    area: 'Derecho procesal laboral',
+    year: 2022,
+    role: 'Apoderada de la parte demandante (trabajadores)',
+    resultType: 'acuerdo',
+    outcome: 'Conciliación por $34.000.000 en la audiencia inicial',
+    situation:
+      'Tres vigilantes cubrían turnos de doce horas sin pago de recargos nocturnos, dominicales ni horas extra, y con prestaciones liquidadas sobre un salario base incompleto.',
+    action:
+      'Se reconstruyeron los turnos reales a partir de minutas y planillas de relevo y se presentó demanda ordinaria laboral acumulada. En la audiencia inicial se sustentó la liquidación actualizada.',
+    result:
+      'La empresa reconoció la deuda por recargos, horas extra y reliquidación de prestaciones, que se formalizó en acta de conciliación con mérito ejecutivo y calendario de pagos.',
+    skills: ['Derecho laboral', 'Horas extra y recargos', 'Conciliación judicial'],
+    featured: false,
+    confidential: false,
+    imageUrl: '',
+  },
+  {
+    id: 'case-5',
+    slug: 'tutela-mora-reconocimiento-pensional',
+    title: 'Acción de tutela por mora en el reconocimiento de una pensión de invalidez',
+    area: 'Acción de tutela y litigio constitucional',
+    year: 2024,
+    role: 'Apoderada en la acción de tutela (accionante)',
+    resultType: 'sentencia',
+    outcome: 'Reconocimiento y pago del retroactivo pensional en 48 horas',
+    situation:
+      'El fondo de pensiones dilató más de ocho meses la resolución de fondo sobre una pensión de invalidez, dejando al afiliado sin ingresos ni afiliación a salud.',
+    action:
+      'Se presentó acción de tutela por vulneración del mínimo vital, la seguridad social y el debido proceso administrativo, con prueba de las radicaciones y del silencio de la entidad.',
+    result:
+      'El fallo ordenó resolver de fondo en cuarenta y ocho horas y pagar el retroactivo. Ante el incumplimiento inicial se abrió incidente de desacato, tras el cual la entidad cumplió.',
+    skills: ['Acción de tutela', 'Derecho a la seguridad social', 'Incidente de desacato'],
     featured: true,
     confidential: false,
     imageUrl: '',
   },
   {
-    id: 'case-4',
-    slug: 'acuerdo-salida-directiva',
-    title: 'Salida negociada de una directiva con pacto de no competencia',
-    area: 'Mediación y negociación',
+    id: 'case-6',
+    slug: 'conciliacion-responsabilidad-civil-transito',
+    title: 'Conciliación en responsabilidad civil por un accidente de tránsito',
+    area: 'Conciliación y MASC',
     year: 2023,
-    role: 'Asesoramiento y negociación (parte trabajadora)',
+    role: 'Apoderada del convocante',
     resultType: 'acuerdo',
-    outcome: 'Indemnización equivalente a 18 meses + compensación por no competencia',
+    outcome: 'Acuerdo conciliatorio por $47.000.000, pagadero en 30 días',
     situation:
-      'Una directiva quería abandonar la empresa por un cambio de proyecto profesional, pero su contrato incluía un pacto de permanencia y otro de no competencia postcontractual.',
+      'Un conductor sufrió daños materiales y lucro cesante por la inactividad de su vehículo de trabajo tras un choque. La aseguradora ofrecía una suma que no cubría el perjuicio real.',
     action:
-      'Se negoció con la empresa un acuerdo global: extinción de mutuo acuerdo, renuncia al pacto de permanencia y compensación económica por el mantenimiento parcial de la no competencia durante doce meses.',
+      'Se convocó audiencia de conciliación extrajudicial en un centro de conciliación, respaldada por un dictamen pericial sobre el lucro cesante y las cotizaciones de reparación.',
     result:
-      'Acuerdo firmado en tres semanas, sin proceso judicial, con calendario de pagos garantizado y cláusula de confidencialidad recíproca.',
-    skills: ['Negociación', 'Alta dirección', 'Pactos postcontractuales'],
+      'Se logró un acuerdo conciliatorio, que presta mérito ejecutivo, por el cien por ciento de los daños y el setenta por ciento del lucro cesante, con pago en treinta días.',
+    skills: ['Conciliación extrajudicial', 'Responsabilidad civil', 'Dictamen pericial'],
     featured: false,
     confidential: true,
-    imageUrl: '',
-  },
-  {
-    id: 'case-5',
-    slug: 'reclamacion-horas-extra-logistica',
-    title: 'Reclamación de horas extra en el sector logístico',
-    area: 'Derecho laboral',
-    year: 2022,
-    role: 'Dirección letrada (parte trabajadora)',
-    resultType: 'acuerdo',
-    outcome: 'Abono de 9.800 € en conciliación',
-    situation:
-      'Un grupo de cuatro repartidores realizaba de forma sistemática horas por encima de la jornada pactada sin registro ni compensación.',
-    action:
-      'Se reconstruyó la jornada real a partir de los partes de ruta y la geolocalización de la flota, y se presentó papeleta de conciliación conjunta.',
-    result:
-      'La empresa reconoció la deuda en el acto de conciliación y abonó las cantidades reclamadas, además de implantar un sistema de registro horario.',
-    skills: ['Reclamación de cantidad', 'Registro de jornada', 'Conciliación'],
-    featured: false,
-    confidential: false,
-    imageUrl: '',
-  },
-  {
-    id: 'case-6',
-    slug: 'archivo-expediente-expulsion',
-    title: 'Archivo de un expediente de expulsión por estancia irregular',
-    area: 'Extranjería',
-    year: 2022,
-    role: 'Dirección letrada (interesado)',
-    resultType: 'archivo',
-    outcome: 'Expediente archivado; multa en lugar de expulsión',
-    situation:
-      'Se incoó un expediente de expulsión con prohibición de entrada frente a una persona con estancia irregular pero con fuerte arraigo familiar y laboral.',
-    action:
-      'Se presentaron alegaciones invocando la jurisprudencia del TJUE sobre proporcionalidad y la situación familiar (menores escolarizados a cargo), solicitando la sustitución por sanción de multa.',
-    result:
-      'La Subdelegación del Gobierno acordó no imponer la expulsión y sustituirla por multa, dejando expedita la vía para regularizar la situación.',
-    skills: ['Extranjería sancionadora', 'Derecho de la UE', 'Alegaciones'],
-    featured: false,
-    confidential: false,
     imageUrl: '',
   },
 ]
@@ -254,64 +270,64 @@ export const seedExperience: Experience[] = [
     startDate: '2018-01',
     endDate: null,
     current: true,
-    location: 'Madrid',
+    location: 'Cartagena',
     description:
-      'Ejercicio independiente en Derecho laboral, Seguridad Social y extranjería. Cartera propia de personas trabajadoras y pymes. Colaboración habitual con graduados sociales y peritos médicos.',
+      'Ejercicio independiente en litigio civil, laboral y constitucional. Representación ante juzgados civiles y laborales del circuito y el Tribunal Superior del Distrito Judicial de Bolívar. Cartera propia de personas y pymes; colaboración con peritos y con abogados de familia.',
   },
   {
     id: 'exp-2',
-    org: 'García-Luna & Asociados',
-    role: 'Abogada del área laboral',
+    org: 'Restrepo & Asociados',
+    role: 'Abogada litigante — área civil y de cobros',
     startDate: '2014-09',
     endDate: '2017-12',
     current: false,
-    location: 'Madrid',
+    location: 'Cartagena',
     description:
-      'Litigación laboral para clientes empresa y trabajadores. Despidos colectivos, conflictos de convenio y auditorías de cumplimiento en materia de contratación.',
+      'Procesos ejecutivos y declarativos para clientes empresa, insolvencia de persona natural y recuperación de cartera. Elaboración de demandas, sustentación de audiencias y recursos de apelación.',
   },
   {
     id: 'exp-3',
-    org: 'Servicio de Orientación Jurídica (ICAM)',
-    role: 'Abogada voluntaria',
+    org: 'Consultorio Jurídico — Universidad Libre',
+    role: 'Asesora y monitora',
     startDate: '2015-01',
     endDate: '2019-06',
     current: false,
-    location: 'Madrid',
+    location: 'Cartagena',
     description:
-      'Orientación jurídica gratuita en materia de extranjería y vivienda a personas en situación de vulnerabilidad.',
+      'Orientación jurídica gratuita en asuntos civiles, de familia y laborales a población en situación de vulnerabilidad, y acompañamiento a estudiantes en la práctica procesal.',
   },
 ]
 
 export const seedPublications: Publication[] = [
   {
     id: 'pub-1',
-    title: 'El nuevo reglamento de extranjería: claves prácticas para el arraigo',
+    title: 'Medidas cautelares en el proceso ejecutivo bajo el Código General del Proceso',
     kind: 'articulo',
-    venue: 'Blog jurídico — Legaltoday',
+    venue: 'Blog jurídico — Ámbito Jurídico',
     date: '2025-03-11',
     url: '',
     summary:
-      'Análisis de los cambios en las modalidades de arraigo y su impacto en la acreditación de la permanencia y del medio de vida.',
+      'Análisis práctico del embargo y secuestro, la caución y el levantamiento de cautelas, con criterios recientes de los tribunales.',
   },
   {
     id: 'pub-2',
-    title: 'Registro de jornada y prueba de las horas extraordinarias',
+    title: 'La tutela contra providencias judiciales: causales de procedibilidad',
     kind: 'ponencia',
-    venue: 'Jornadas de actualización laboral — ICAM',
+    venue: 'Jornada de actualización procesal — Universidad Libre, Seccional Cartagena',
     date: '2024-10-02',
     url: '',
     summary:
-      'Ponencia sobre el valor probatorio del registro horario y las consecuencias de su ausencia en las reclamaciones de cantidad.',
+      'Ponencia sobre los requisitos generales y específicos fijados por la Corte Constitucional y su aplicación en el litigio civil y laboral.',
   },
   {
     id: 'pub-3',
-    title: 'Despido y garantía de indemnidad: repaso de jurisprudencia reciente',
+    title: 'Estabilidad laboral reforzada: línea jurisprudencial de la Corte Constitucional',
     kind: 'articulo',
-    venue: 'Revista de Derecho del Trabajo (colaboración)',
+    venue: 'Revista de Derecho Laboral (colaboración)',
     date: '2023-06-20',
     url: '',
     summary:
-      'Comentario a varias sentencias sobre nulidad del despido como represalia frente a reclamaciones previas del trabajador.',
+      'Repaso de la evolución de la protección frente al despido por embarazo, salud y fuero sindical, y sus efectos procesales.',
   },
 ]
 
@@ -319,23 +335,23 @@ export const seedTestimonials: Testimonial[] = [
   {
     id: 'test-1',
     quote:
-      'Me explicó las opciones con total claridad y siempre supe en qué punto estaba mi caso. Conseguimos un acuerdo mejor del que esperaba.',
-    author: 'Cliente — reclamación por despido',
+      'Me explicó las opciones con claridad y siempre supe en qué etapa iba el proceso. Logramos el pago completo sin llegar a sentencia.',
+    author: 'Cliente — proceso ejecutivo',
     authorRole: 'Sector comercio',
     context: '2024',
   },
   {
     id: 'test-2',
     quote:
-      'Llevó mi expediente de arraigo después de una denegación. Fue meticulosa con la documentación y lo resolvió sin tener que ir a juicio.',
-    author: 'Cliente — extranjería',
-    authorRole: 'Arraigo social',
+      'Llevó mi acción de tutela por la demora en la pensión. Fue rigurosa con las pruebas y se resolvió rápido, sin necesidad de más instancias.',
+    author: 'Cliente — acción de tutela',
+    authorRole: 'Seguridad social',
     context: '2024',
   },
   {
     id: 'test-3',
     quote:
-      'Como pequeña empresa necesitábamos alguien que fuera al grano. Nos ayudó a negociar una salida sin conflicto y con todo por escrito.',
+      'Como pequeña empresa necesitábamos a alguien práctico. Nos ayudó a conciliar un conflicto contractual sin ir a juicio y con todo por escrito.',
     author: 'Gerente de pyme',
     authorRole: 'Sector servicios',
     context: '2023',
@@ -347,19 +363,19 @@ export const seedMessages: Message[] = [
     id: 'msg-1',
     name: 'Laura Méndez',
     email: 'laura.mendez@example.com',
-    phone: '+34 611 111 111',
+    phone: '+57 311 111 1111',
     message:
-      'Buenos días, me han comunicado un despido objetivo y creo que no está justificado. ¿Podríamos hablar esta semana?',
+      'Buenos días. Me notificaron una demanda ejecutiva, pero creo que nunca me notificaron en debida forma el auto que la admitió y ya hay un embargo. ¿Podríamos hablar esta semana?',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
     read: false,
   },
   {
     id: 'msg-2',
-    name: 'Carlos Ntutumu',
-    email: 'carlos.n@example.com',
+    name: 'Carlos Ortega',
+    email: 'carlos.ortega@example.com',
     phone: '',
     message:
-      'Necesito renovar mi tarjeta de residencia y tengo dudas con la documentación de la vida laboral. Gracias.',
+      'Necesito iniciar un proceso de restitución de un inmueble arrendado. El arrendatario lleva cuatro meses sin pagar y no quiere entregar. Gracias.',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
     read: true,
   },

@@ -24,7 +24,9 @@ import type {
   User,
 } from './types'
 
-const DB_KEY = 'lex_db_v1'
+// Sube la versión cuando cambian los datos semilla para forzar el re-sembrado
+// en navegadores que ya visitaron la demo.
+const DB_KEY = 'lex_db_v2'
 const TOKEN_KEY = 'lex_token'
 
 interface DB {
