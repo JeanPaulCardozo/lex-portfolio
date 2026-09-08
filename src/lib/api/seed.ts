@@ -14,14 +14,14 @@ import type {
  */
 
 export const seedProfile: Profile = {
-  fullName: 'Valentina Ortega',
-  title: 'Abogada laboralista y de extranjería',
+  fullName: 'María Banda',
+  title: 'Abogada · Especialista en Derecho Procesal',
   headline:
     'Acompaño a personas trabajadoras y a pymes en conflictos laborales, despidos y procesos de extranjería, con un enfoque práctico y cercano.',
   summary:
     'Soy abogada colegiada con más de diez años de ejercicio independiente. Mi trabajo se centra en el Derecho del Trabajo y de la Seguridad Social, y en procedimientos de extranjería. Litigo ante los juzgados de lo social y de lo contencioso-administrativo, pero antes agoto siempre la vía de la negociación: la mayoría de mis asuntos se resuelven con un acuerdo razonable para mi cliente. Doy respuestas claras, sin tecnicismos innecesarios, y explico cada paso del proceso.',
-  location: 'Madrid, España',
-  email: 'contacto@valentinaortega.example',
+  location: 'Cartagena, Colombia',
+  email: 'contacto@mariabanda.example',
   phone: '+34 600 000 000',
   whatsapp: '34600000000',
   linkedin: 'https://www.linkedin.com/in/ejemplo',
@@ -34,19 +34,19 @@ export const seedProfile: Profile = {
   ],
   education: [
     {
-      degree: 'Máster de Acceso a la Abogacía',
-      institution: 'Universidad Complutense de Madrid',
-      year: '2013',
+      degree: 'Especialización en Derecho Procesal',
+      institution: 'Universidad Libre',
+      year: '',
     },
     {
-      degree: 'Grado en Derecho',
-      institution: 'Universidad de Salamanca',
-      year: '2012',
+      degree: 'Pregrado en Derecho',
+      institution: 'Universidad Libre',
+      year: '',
     },
     {
-      degree: 'Curso de especialización en Derecho de Extranjería',
-      institution: 'Consejo General de la Abogacía Española',
-      year: '2016',
+      degree: 'Educación básica primaria y media académica',
+      institution: 'Ciudad Escolar Comfenalco (Cartagena)',
+      year: '',
     },
   ],
   stats: [
@@ -249,7 +249,7 @@ export const seedCases: Case[] = [
 export const seedExperience: Experience[] = [
   {
     id: 'exp-1',
-    org: 'Despacho propio — Ortega Abogacía',
+    org: 'Despacho propio — María Banda',
     role: 'Abogada titular',
     startDate: '2018-01',
     endDate: null,
