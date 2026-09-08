@@ -29,9 +29,11 @@ jobs:
 
       # base = "/<nombre-del-repo>/" para que las rutas de assets funcionen en Pages
       - name: Build
-        run: npm run build
+        run: |
+          export VITE_BASE="/${GITHUB_REPOSITORY#*/}/"
+          echo "VITE_BASE=$VITE_BASE"
+          npm run build
         env:
-          VITE_BASE: /${{ github.event.repository.name }}/
           VITE_API_MODE: mock
 
       # SPA fallback: cualquier ruta profunda cae en 404.html, que es la propia app
