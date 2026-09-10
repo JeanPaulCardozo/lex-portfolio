@@ -6,14 +6,14 @@ import type {
   Testimonial,
 } from '@/lib/api/types'
 import {
+  useAllTestimonials,
   useAreas,
   useCases,
   useExperience,
   usePublications,
-  useTestimonials,
 } from '@/lib/queries'
 import type { CollectionConfig } from '@/components/admin/CollectionAdmin'
-import { formatMonthYear } from '@/lib/format'
+import { formatDate, formatMonthYear } from '@/lib/format'
 
 export const casesConfig: CollectionConfig<Case> = {
   resource: 'cases',
@@ -24,6 +24,7 @@ export const casesConfig: CollectionConfig<Case> = {
   useList: useCases,
   primary: (r) => r.title,
   secondary: (r) => `${r.area} · ${r.year} · ${r.outcome}`,
+  badge: (r) => (r.featured ? { label: 'Destacado', tone: 'accent' } : null),
   blank: {
     title: '',
     area: '',
@@ -184,19 +185,68 @@ export const publicationsConfig: CollectionConfig<Publication> = {
   ],
 }
 
+const TESTIMONIAL_STATUS_BADGE = {
+  pending: { label: 'Pendiente', tone: 'warn' as const },
+  rejected: { label: 'Rechazado', tone: 'muted' as const },
+  approved: null,
+}
+
 export const testimonialsConfig: CollectionConfig<Testimonial> = {
   resource: 'testimonials',
   title: 'Testimonios',
   singular: 'Testimonio',
-  description: 'Opiniones de clientes o colegas. Evita datos identificativos si no tienes permiso.',
-  useList: useTestimonials,
+  description:
+    'Opiniones de clientes o colegas. Las que llegan desde el sitio entran como «Pendiente»; solo se publican las que marques como «Aprobado».',
+  useList: useAllTestimonials,
   primary: (r) => r.author,
-  secondary: (r) => r.quote,
-  blank: { quote: '', author: '', authorRole: '', context: '' },
+  secondary: (r) =>
+    `${r.authorRole ? `${r.authorRole} · ` : ''}★${r.rating} · ${formatDate(
+      r.createdAt.slice(0, 10),
+    )} · ${r.quote}`,
+  badge: (r) => TESTIMONIAL_STATUS_BADGE[r.status] ?? null,
+  blank: {
+    quote: '',
+    author: '',
+    authorRole: '',
+    context: '',
+    rating: 5,
+    status: 'approved',
+    email: '',
+  },
   fields: [
     { name: 'quote', label: 'Testimonio', type: 'textarea', required: true, full: true },
     { name: 'author', label: 'Autor/a', type: 'text', required: true },
     { name: 'authorRole', label: 'Rol o sector', type: 'text' },
+    {
+      name: 'rating',
+      label: 'Valoración',
+      type: 'select',
+      required: true,
+      options: [
+        { value: '5', label: '★★★★★ (5)' },
+        { value: '4', label: '★★★★ (4)' },
+        { value: '3', label: '★★★ (3)' },
+        { value: '2', label: '★★ (2)' },
+        { value: '1', label: '★ (1)' },
+      ],
+    },
+    {
+      name: 'status',
+      label: 'Estado',
+      type: 'select',
+      required: true,
+      options: [
+        { value: 'pending', label: 'Pendiente de revisión' },
+        { value: 'approved', label: 'Aprobado (visible en el sitio)' },
+        { value: 'rejected', label: 'Rechazado' },
+      ],
+    },
+    {
+      name: 'email',
+      label: 'Correo de quien escribe',
+      type: 'text',
+      help: 'No se publica. Útil para verificar la autoría.',
+    },
     { name: 'context', label: 'Contexto', type: 'text', help: 'Año o tipo de asunto.' },
   ],
 }

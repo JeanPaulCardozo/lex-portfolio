@@ -20,6 +20,24 @@ export function formatDate(value: string): string {
   return `${Number(d)} ${MONTHS[mi]} ${y}`
 }
 
+/**
+ * Construye el enlace de WhatsApp a partir de lo que el titular guarde en el
+ * perfil. Acepta dos formatos:
+ *   - Número con prefijo internacional: "573001234567", "+57 300 123 4567"
+ *   - Nombre de usuario de WhatsApp:     "@miusuario"
+ * Devuelve `null` si el valor está vacío o no deja nada utilizable.
+ */
+export function whatsappHref(value: string): string | null {
+  const v = (value ?? '').trim()
+  if (!v) return null
+  if (v.startsWith('@')) {
+    const handle = v.slice(1).replace(/[^a-zA-Z0-9._]/g, '')
+    return handle ? `https://wa.me/${handle}` : null
+  }
+  const digits = v.replace(/\D/g, '')
+  return digits ? `https://wa.me/${digits}` : null
+}
+
 export function slugify(input: string): string {
   return input
     .toLowerCase()

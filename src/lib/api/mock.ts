@@ -21,12 +21,13 @@ import type {
   Profile,
   Publication,
   Testimonial,
+  TestimonialSubmitInput,
   User,
 } from './types'
 
 // Sube la versión cuando cambian los datos semilla para forzar el re-sembrado
 // en navegadores que ya visitaron la demo.
-const DB_KEY = 'lex_db_v2'
+const DB_KEY = 'lex_db_v3'
 const TOKEN_KEY = 'lex_token'
 
 interface DB {
@@ -100,6 +101,11 @@ function uid(prefix: string): string {
       ? crypto.randomUUID().slice(0, 8)
       : Math.random().toString(36).slice(2, 10)
   return `${prefix}-${rnd}`
+}
+
+function clampRating(value: unknown): number {
+  const n = Math.round(Number(value) || 0)
+  return Math.min(5, Math.max(1, n || 5))
 }
 
 function uniqueSlug(base: string, taken: string[]): string {
@@ -210,7 +216,32 @@ export const mockClient: ApiClient = {
 
   async listTestimonials() {
     await latency()
-    return clone(load().testimonials)
+    return clone(load().testimonials.filter((t) => t.status === 'approved'))
+  },
+
+  async listAllTestimonials() {
+    await latency()
+    return clone(load().testimonials).sort((a, b) =>
+      b.createdAt.localeCompare(a.createdAt),
+    )
+  },
+
+  async submitTestimonial(data: TestimonialSubmitInput) {
+    await latency()
+    const db = load()
+    db.testimonials.unshift({
+      id: uid('test'),
+      quote: data.quote,
+      author: data.author,
+      authorRole: data.authorRole,
+      context: String(new Date().getFullYear()),
+      rating: clampRating(data.rating),
+      status: 'pending',
+      email: data.email,
+      createdAt: new Date().toISOString(),
+    })
+    save(db)
+    return { ok: true }
   },
 
   async create(resource, data) {
@@ -227,6 +258,13 @@ export const mockClient: ApiClient = {
     if (resource === 'practice-areas' && record.order == null) {
       record.order = arr.length + 1
     }
+    if (resource === 'testimonials') {
+      // Alta manual desde el panel: se publica salvo que se indique lo contrario.
+      if (record.status == null) record.status = 'approved'
+      record.rating = clampRating(record.rating)
+      if (record.email == null) record.email = ''
+      if (record.createdAt == null) record.createdAt = new Date().toISOString()
+    }
 
     arr.unshift(record)
     save(db)
@@ -241,6 +279,9 @@ export const mockClient: ApiClient = {
     if (idx === -1) throw new Error('Registro no encontrado')
 
     const next: Row = { ...arr[idx], ...data, id }
+    if (resource === 'testimonials' && 'rating' in data) {
+      next.rating = clampRating(next.rating)
+    }
     if ((resource === 'cases' || resource === 'practice-areas') && !next.slug) {
       const nameField = resource === 'cases' ? 'title' : 'name'
       const taken = arr.filter((_, i) => i !== idx).map((r) => String(r.slug ?? ''))

@@ -25,6 +25,7 @@ export const seedProfile: Profile = {
     'Soy abogada con tarjeta profesional y más de diez años de ejercicio independiente, especialista en Derecho Procesal. Concentro mi práctica en el litigio civil y laboral y en la acción de tutela, bajo el Código General del Proceso y el Código Procesal del Trabajo y de la Seguridad Social. Antes de demandar agoto la conciliación y las salidas negociadas; cuando el proceso es inevitable, defino una estrategia probatoria y de recursos y explico cada etapa —audiencias, pruebas y términos— sin tecnicismos innecesarios.',
   location: 'Cartagena, Colombia',
   email: 'contacto@mariabanda.example',
+  notifyEmail: '',
   phone: '+57 300 000 0000',
   whatsapp: '573000000000',
   linkedin: 'https://www.linkedin.com/in/ejemplo',
@@ -339,6 +340,10 @@ export const seedTestimonials: Testimonial[] = [
     author: 'Cliente — proceso ejecutivo',
     authorRole: 'Sector comercio',
     context: '2024',
+    rating: 5,
+    status: 'approved',
+    email: '',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 40).toISOString(),
   },
   {
     id: 'test-2',
@@ -347,6 +352,10 @@ export const seedTestimonials: Testimonial[] = [
     author: 'Cliente — acción de tutela',
     authorRole: 'Seguridad social',
     context: '2024',
+    rating: 5,
+    status: 'approved',
+    email: '',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 25).toISOString(),
   },
   {
     id: 'test-3',
@@ -355,6 +364,22 @@ export const seedTestimonials: Testimonial[] = [
     author: 'Gerente de pyme',
     authorRole: 'Sector servicios',
     context: '2023',
+    rating: 4,
+    status: 'approved',
+    email: '',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 12).toISOString(),
+  },
+  {
+    id: 'test-4',
+    quote:
+      'Me acompañó en la restitución de un local arrendado. Todo llegó a tiempo y el lanzamiento se hizo sin contratiempos.',
+    author: 'Propietario — arrendamiento comercial',
+    authorRole: 'Sector inmobiliario',
+    context: '2024',
+    rating: 5,
+    status: 'pending',
+    email: 'propietario@example.com',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
   },
 ]
 

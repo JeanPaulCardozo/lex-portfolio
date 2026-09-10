@@ -17,6 +17,7 @@ const PATHS = {
   phone: 'M6 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A18 18 0 013 6a2 2 0 012-2',
   spark: 'M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z',
   chevronDown: 'M6 9l6 6 6-6',
+  star: 'M12 3.5l2.6 5.7 6.2.7-4.6 4.2 1.2 6.1L12 17.1 6.6 20.4l1.2-6.1L3.2 9.9l6.2-.7z',
 } as const
 
 export type IconName = keyof typeof PATHS

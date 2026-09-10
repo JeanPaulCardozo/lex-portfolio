@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useProfile, useSubmitContact } from '@/lib/queries'
+import { whatsappHref } from '@/lib/format'
 import { Button, Section } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 
@@ -102,12 +103,12 @@ export default function Contact() {
           <aside className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm">
             <ContactRow icon="mail" label="Correo" value={profile.email} href={`mailto:${profile.email}`} />
             <ContactRow icon="phone" label="Teléfono" value={profile.phone} href={`tel:${profile.phone.replace(/\s/g, '')}`} />
-            {profile.whatsapp && (
+            {whatsappHref(profile.whatsapp) && (
               <ContactRow
                 icon="phone"
                 label="WhatsApp"
                 value="Escribir por WhatsApp"
-                href={`https://wa.me/${profile.whatsapp}`}
+                href={whatsappHref(profile.whatsapp) as string}
               />
             )}
             {profile.linkedin && (

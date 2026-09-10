@@ -73,8 +73,10 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "summary": "Texto largo de la biografía...",
   "location": "Madrid, España",
   "email": "contacto@ejemplo.com",
+  "notifyEmail": "",                  // destino de los avisos; si va "" usa "email". Nunca se muestra en el sitio
   "phone": "+34 600 000 000",
-  "whatsapp": "34600000000",          // solo dígitos, para https://wa.me/<whatsapp>
+  "whatsapp": "34600000000",          // dígitos con prefijo internacional -> https://wa.me/<whatsapp>
+                                      // o un usuario de WhatsApp con arroba: "@miusuario" -> https://wa.me/miusuario
   "linkedin": "https://linkedin.com/in/...",
   "avatarUrl": "https://cdn/.../foto.jpg",   // "" si no hay
   "cvUrl": "https://cdn/.../cv.pdf",          // "" si no hay
@@ -207,12 +209,17 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 
 ## 7. Testimonios
 
-| Método | Ruta | Acceso |
-|---|---|---|
-| `GET`    | `/testimonials`     | público |
-| `POST`   | `/testimonials`     | privado |
-| `PUT`    | `/testimonials/:id` | privado |
-| `DELETE` | `/testimonials/:id` | privado |
+El público puede **proponer** un testimonio desde la portada; queda en estado
+`pending` y no se muestra hasta que el titular lo marca como `approved`.
+
+| Método | Ruta | Acceso | Nota |
+|---|---|---|---|
+| `GET`    | `/testimonials`         | público  | **solo** los `approved` |
+| `GET`    | `/testimonials?all=1`   | privado  | todos, orden desc por `createdAt` (panel) |
+| `POST`   | `/testimonials/submit`  | público  | envío del visitante (ver abajo) |
+| `POST`   | `/testimonials`         | privado  | alta manual del titular; `status` por defecto `approved` |
+| `PUT`    | `/testimonials/:id`     | privado  | actualiza (incluye cambiar `status`) |
+| `DELETE` | `/testimonials/:id`     | privado  | |
 
 ```jsonc
 {
@@ -220,9 +227,36 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "quote": "Me explicó las opciones con total claridad...",
   "author": "Cliente — reclamación por despido",
   "authorRole": "Sector comercio",
-  "context": "2024"
+  "context": "2024",
+  "rating": 5,                       // entero 1..5
+  "status": "approved",              // "pending" | "approved" | "rejected"
+  "email": "cliente@ej.com",         // de quien deja la opinión; NUNCA se expone en GET público
+  "createdAt": "2026-09-01T10:00:00.000Z"
 }
 ```
+
+### `POST /testimonials/submit`  — público
+
+```jsonc
+// Request
+{
+  "author": "Laura Méndez",
+  "authorRole": "Sector servicios",
+  "quote": "Texto de la opinión (mín. 10 caracteres)...",
+  "rating": 5,                       // el backend lo acota a 1..5
+  "email": "laura@ej.com"
+}
+// 200
+{ "ok": true }
+```
+
+El backend guarda el registro con `status: "pending"`, `createdAt` (ISO) y un
+`context` (p. ej. el año). **Ignora** cualquier `status` que venga en el cuerpo.
+Recomendado: enviar un correo de aviso al titular (`notifyEmail || email`) y
+aplicar rate-limiting / captcha.
+
+> El `GET /testimonials` público **no** debe incluir el campo `email` ni los
+> testimonios `pending`/`rejected`.
 
 ---
 
@@ -237,8 +271,13 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 { "ok": true }
 ```
 
-El backend guarda el mensaje con `id`, `createdAt` (ISO) y `read: false`.
-Recomendado: enviar además un email de aviso al titular y aplicar rate-limiting / captcha.
+El backend guarda el mensaje con `id`, `createdAt` (ISO) y `read: false`, y
+**envía un correo de aviso** al titular (`profile.notifyEmail || profile.email`)
+con el nombre, el correo y el texto de la consulta. Aplica rate-limiting / captcha.
+
+> El envío de correo es responsabilidad del backend: el frontend es estático y no
+> puede guardar credenciales SMTP. El mismo criterio aplica a `POST
+> /testimonials/submit`.
 
 ### `GET /messages`  — privado
 
@@ -304,7 +343,13 @@ DELETE /cases/:id        privado
 
 GET/POST/PUT/DELETE  /experience[/:id]     (GET público, resto privado)
 GET/POST/PUT/DELETE  /publications[/:id]   (GET público, resto privado)
-GET/POST/PUT/DELETE  /testimonials[/:id]   (GET público, resto privado)
+
+GET    /testimonials            público   (solo approved, sin campo email)
+GET    /testimonials?all=1      privado   (todos, para el panel)
+POST   /testimonials/submit     público   (propuesta del visitante -> status pending)
+POST   /testimonials            privado
+PUT    /testimonials/:id        privado
+DELETE /testimonials/:id        privado
 
 POST   /contact           público
 GET    /messages          privado

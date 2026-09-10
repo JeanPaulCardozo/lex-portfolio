@@ -7,6 +7,14 @@ import { Button, EmptyState, ErrorState, Spinner, Toast } from '../ui'
 import { Icon } from '../Icon'
 import { Drawer } from './Drawer'
 
+type BadgeTone = 'accent' | 'muted' | 'warn'
+
+const BADGE_CLS: Record<BadgeTone, string> = {
+  accent: 'bg-accent-soft text-accent-ink',
+  muted: 'bg-stone-100 text-muted',
+  warn: 'bg-amber-100 text-amber-800',
+}
+
 export interface CollectionConfig<T extends { id: string }> {
   resource: Collection
   title: string
@@ -17,6 +25,8 @@ export interface CollectionConfig<T extends { id: string }> {
   /** Celdas de resumen que se muestran en la lista. */
   primary: (row: T) => ReactNode
   secondary?: (row: T) => ReactNode
+  /** Píldora opcional junto al título (p. ej. «Destacado», «Pendiente»). */
+  badge?: (row: T) => { label: string; tone?: BadgeTone } | null
   /** Valores por defecto de un registro nuevo. */
   blank: FormValues
   /** row -> valores del formulario (por defecto, el propio row). */
@@ -28,8 +38,18 @@ export function CollectionAdmin<T extends { id: string }>({
 }: {
   config: CollectionConfig<T>
 }) {
-  const { resource, title, singular, description, useList, fields, primary, secondary, blank } =
-    config
+  const {
+    resource,
+    title,
+    singular,
+    description,
+    useList,
+    fields,
+    primary,
+    secondary,
+    badge,
+    blank,
+  } = config
   const list = useList()
   const create = useCreate(resource)
   const update = useUpdate(resource)
@@ -87,10 +107,23 @@ export function CollectionAdmin<T extends { id: string }>({
 
       {rows.length > 0 && (
         <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
-          {rows.map((row) => (
+          {rows.map((row) => {
+            const b = badge?.(row) ?? null
+            return (
             <li key={row.id} className="flex items-center gap-4 px-4 py-3.5">
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium">{primary(row)}</p>
+                <p className="flex items-center gap-2 truncate font-medium">
+                  <span className="truncate">{primary(row)}</span>
+                  {b && (
+                    <span
+                      className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                        BADGE_CLS[b.tone ?? 'accent']
+                      }`}
+                    >
+                      {b.label}
+                    </span>
+                  )}
+                </p>
                 {secondary && <p className="truncate text-sm text-muted">{secondary(row)}</p>}
               </div>
               <div className="flex shrink-0 items-center gap-1">
@@ -109,7 +142,8 @@ export function CollectionAdmin<T extends { id: string }>({
                 </button>
               </div>
             </li>
-          ))}
+            )
+          })}
         </ul>
       )}
 

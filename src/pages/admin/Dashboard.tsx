@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api/client'
 import {
+  useAllTestimonials,
   useAreas,
   useCases,
   useMessages,
@@ -17,16 +18,19 @@ export default function Dashboard() {
   const { data: areas = [] } = useAreas()
   const { data: publications = [] } = usePublications()
   const { data: messages = [] } = useMessages()
+  const { data: testimonials = [] } = useAllTestimonials()
   const qc = useQueryClient()
   const [toast, setToast] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
   const unread = messages.filter((m) => !m.read).length
+  const pendingTestimonials = testimonials.filter((t) => t.status === 'pending').length
 
   const stats = [
     { label: 'Casos', value: cases.length, to: '/admin/casos' },
     { label: 'Áreas de práctica', value: areas.length, to: '/admin/areas' },
     { label: 'Publicaciones', value: publications.length, to: '/admin/publicaciones' },
+    { label: 'Testimonios pendientes', value: pendingTestimonials, to: '/admin/testimonios' },
     { label: 'Mensajes sin leer', value: unread, to: '/admin/mensajes' },
   ]
 
@@ -54,7 +58,7 @@ export default function Dashboard() {
         Desde aquí gestionas todo lo que se muestra en tu portafolio público.
       </p>
 
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((s) => (
           <Link
             key={s.label}
@@ -67,25 +71,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <section className="rounded-2xl border border-line bg-card p-5">
-          <h2 className="font-semibold">Empieza por aquí</h2>
-          <ol className="mt-3 space-y-2 text-sm text-ink-soft">
-            <li>
-              1. Completa tu <Link to="/admin/perfil" className="text-accent-ink underline">perfil</Link>{' '}
-              (nombre, titular, contacto, colegiación).
-            </li>
-            <li>
-              2. Revisa tus <Link to="/admin/areas" className="text-accent-ink underline">áreas de práctica</Link>.
-            </li>
-            <li>
-              3. Añade 3-4 <Link to="/admin/casos" className="text-accent-ink underline">casos</Link> y
-              márcalos como destacados.
-            </li>
-            <li>4. Publica tu trayectoria, publicaciones y testimonios.</li>
-          </ol>
-        </section>
-
+      <div className="mt-8">
         <section className="rounded-2xl border border-line bg-card p-5">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Últimos mensajes</h2>

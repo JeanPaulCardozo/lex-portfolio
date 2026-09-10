@@ -16,6 +16,7 @@ import type {
   Profile,
   Publication,
   Testimonial,
+  TestimonialSubmitInput,
 } from './api/types'
 
 /* ------------------------------------------------------------------ *
@@ -30,6 +31,7 @@ export const keys = {
   experience: ['experience'] as const,
   publications: ['publications'] as const,
   testimonials: ['testimonials'] as const,
+  allTestimonials: ['testimonials', 'all'] as const,
   messages: ['messages'] as const,
 }
 
@@ -67,6 +69,16 @@ export const usePublications = () =>
 
 export const useTestimonials = () =>
   useQuery({ queryKey: keys.testimonials, queryFn: () => api.listTestimonials() })
+
+/** Panel admin: incluye pendientes y rechazados. */
+export const useAllTestimonials = () =>
+  useQuery({ queryKey: keys.allTestimonials, queryFn: () => api.listAllTestimonials() })
+
+export function useSubmitTestimonial() {
+  return useMutation({
+    mutationFn: (data: TestimonialSubmitInput) => api.submitTestimonial(data),
+  })
+}
 
 export function usePrefetchCase() {
   const qc = useQueryClient()

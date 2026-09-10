@@ -10,6 +10,7 @@ import type {
   Profile,
   Publication,
   Testimonial,
+  TestimonialSubmitInput,
 } from './types'
 
 const TOKEN_KEY = 'lex_token'
@@ -100,6 +101,12 @@ export const httpClient: ApiClient = {
   listExperience: () => request<Experience[]>('/experience'),
   listPublications: () => request<Publication[]>('/publications'),
   listTestimonials: () => request<Testimonial[]>('/testimonials'),
+  listAllTestimonials: () => request<Testimonial[]>('/testimonials?all=1'),
+  submitTestimonial: (data: TestimonialSubmitInput) =>
+    request<{ ok: true }>('/testimonials/submit', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
 
   create: (resource, data) =>
     request(`/${RESOURCE_PATH[resource]}`, { method: 'POST', body: JSON.stringify(data) }),

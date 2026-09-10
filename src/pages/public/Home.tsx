@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   useAreas,
@@ -7,13 +8,16 @@ import {
 } from '@/lib/queries'
 import { CaseCard } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
-import { ButtonLink, Section, Spinner } from '@/components/ui'
+import { Stars } from '@/components/Stars'
+import { TestimonialForm } from '@/components/TestimonialForm'
+import { Button, ButtonLink, Section, Spinner } from '@/components/ui'
 
 export default function Home() {
   const { data: profile, isLoading } = useProfile()
   const { data: areas = [] } = useAreas()
   const { data: cases = [] } = useCases()
   const { data: testimonials = [] } = useTestimonials()
+  const [showTestimonialForm, setShowTestimonialForm] = useState(false)
 
   const featured = cases.filter((c) => c.featured).slice(0, 3)
 
@@ -130,12 +134,13 @@ export default function Home() {
       </Section>
 
       {/* Testimonios */}
-      {testimonials.length > 0 && (
-        <Section label="Opiniones" title="Lo que dicen" className="border-t border-line bg-white">
+      <Section label="Opiniones" title="Lo que dicen" className="border-t border-line bg-white">
+        {testimonials.length > 0 ? (
           <div className="grid gap-5 md:grid-cols-3">
             {testimonials.slice(0, 3).map((t) => (
               <figure key={t.id} className="rounded-2xl border border-line bg-paper p-6">
-                <blockquote className="text-sm leading-relaxed text-ink">“{t.quote}”</blockquote>
+                <Stars value={t.rating} />
+                <blockquote className="mt-3 text-sm leading-relaxed text-ink">“{t.quote}”</blockquote>
                 <figcaption className="mt-4 text-xs text-muted">
                   {t.author}
                   {t.authorRole ? ` · ${t.authorRole}` : ''}
@@ -143,8 +148,25 @@ export default function Home() {
               </figure>
             ))}
           </div>
-        </Section>
-      )}
+        ) : (
+          <p className="text-sm text-muted">
+            Aún no hay opiniones publicadas. ¿Trabajaste conmigo? Anímate a dejar la primera.
+          </p>
+        )}
+
+        <div className="mt-8 border-t border-line pt-6">
+          {showTestimonialForm ? (
+            <TestimonialForm />
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => setShowTestimonialForm(true)}>
+              <Icon name="plus" size={15} /> Deja tu opinión
+            </Button>
+          )}
+          <p className="mt-3 text-xs text-muted">
+            Las opiniones se revisan antes de publicarse.
+          </p>
+        </div>
+      </Section>
 
       {/* CTA */}
       <section className="border-t border-line bg-ink text-white">

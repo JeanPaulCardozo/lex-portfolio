@@ -22,6 +22,9 @@ export interface Profile {
   summary: string
   location: string
   email: string
+  /** Dónde recibe el titular los avisos de nuevas consultas y testimonios.
+   *  Si va vacío, el backend usa `email`. Nunca se muestra en el sitio. */
+  notifyEmail: string
   phone: string
   whatsapp: string
   linkedin: string
@@ -96,12 +99,31 @@ export interface Publication {
   summary: string
 }
 
+export type TestimonialStatus = 'pending' | 'approved' | 'rejected'
+
 export interface Testimonial {
   id: string
   quote: string
   author: string
   authorRole: string
   context: string
+  /** Valoración de 1 a 5 estrellas. */
+  rating: number
+  /** Solo aparecen en el sitio público los testimonios `approved`. */
+  status: TestimonialStatus
+  /** Correo de quien deja la opinión. No se publica; sirve para verificar autoría. */
+  email: string
+  createdAt: string
+}
+
+/** Datos que envía el público desde la portada. El backend fuerza
+ *  `status: 'pending'` y acota `rating` a 1–5. */
+export interface TestimonialSubmitInput {
+  author: string
+  authorRole: string
+  quote: string
+  rating: number
+  email: string
 }
 
 export interface Message {
@@ -147,7 +169,12 @@ export interface ApiClient {
 
   listExperience(): Promise<Experience[]>
   listPublications(): Promise<Publication[]>
+  /** Público: solo testimonios aprobados. */
   listTestimonials(): Promise<Testimonial[]>
+  /** Privado: todos los testimonios, incluidos pendientes y rechazados. */
+  listAllTestimonials(): Promise<Testimonial[]>
+  /** Público: envío de una opinión desde la portada (queda pendiente de revisión). */
+  submitTestimonial(data: TestimonialSubmitInput): Promise<{ ok: true }>
 
   create<T = unknown>(resource: Collection, data: Record<string, unknown>): Promise<T>
   update<T = unknown>(resource: Collection, id: string, data: Record<string, unknown>): Promise<T>
