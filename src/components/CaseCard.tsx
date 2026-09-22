@@ -19,7 +19,7 @@ export function CaseCard({ item }: { item: Case }) {
       to={`/casos/${item.slug}`}
       onMouseEnter={() => prefetch(item.slug)}
       onFocus={() => prefetch(item.slug)}
-      className="group flex flex-col rounded-2xl border border-line bg-card p-6 transition-colors hover:border-ink"
+      className="group flex flex-col rounded-2xl border border-line bg-card p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg"
     >
       <div className="flex items-center gap-2 text-xs text-muted">
         <Badge tone="accent">{item.area}</Badge>
@@ -34,7 +34,7 @@ export function CaseCard({ item }: { item: Case }) {
         {item.situation}
       </p>
 
-      <div className="mt-5 rounded-lg bg-paper px-3 py-2 text-sm">
+      <div className="mt-5 rounded-lg border-l-2 border-accent bg-paper px-3 py-2 text-sm">
         <span className="label text-[0.6rem]">Resultado</span>
         <p className="mt-0.5 font-medium text-ink">{item.outcome}</p>
       </div>

@@ -2,7 +2,8 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { useAuth } from '@/lib/auth'
 import { API_MODE } from '@/lib/api/client'
-import mbLogo from '@/assets/brand/mb-logo.png'
+import { useProfile } from '@/lib/queries'
+import { BrandMark } from './BrandMark'
 import { Icon } from './Icon'
 
 const LINKS = [
@@ -19,13 +20,16 @@ const LINKS = [
 export function AdminLayout() {
   const { logout, user } = useAuth()
   const navigate = useNavigate()
+  const { data: profile } = useProfile()
+  const profession = profile?.title?.split(' · ')[0] ?? ''
 
   return (
     <div className="min-h-dvh bg-paper">
-      <header className="border-b border-line bg-white">
+      <header className="border-b border-line bg-white shadow-sm">
         <div className="container-x flex h-14 items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={mbLogo} alt="" className="h-8 w-8 shrink-0 rounded-full" />
+            <BrandMark name={profile?.fullName ?? 'Panel'} profession={profession} size="sm" />
+            <span className="h-5 w-px bg-line" />
             <span className="font-display font-semibold">Panel de edición</span>
             <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] text-muted">
               API: {API_MODE}
@@ -60,8 +64,10 @@ export function AdminLayout() {
                 end={l.end}
                 className={({ isActive }) =>
                   cn(
-                    'whitespace-nowrap rounded-lg px-3 py-2 text-sm transition-colors',
-                    isActive ? 'bg-ink text-white' : 'text-ink-soft hover:bg-white',
+                    'whitespace-nowrap rounded-lg border-l-2 px-3 py-2 text-sm transition-colors',
+                    isActive
+                      ? 'border-accent bg-ink text-white'
+                      : 'border-transparent text-ink-soft hover:bg-white hover:shadow-sm',
                   )
                 }
               >

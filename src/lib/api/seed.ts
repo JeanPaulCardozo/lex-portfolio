@@ -19,6 +19,7 @@ import type {
 export const seedProfile: Profile = {
   fullName: 'María Banda',
   title: 'Abogada · Especialista en Derecho Procesal',
+  tagline: 'Defensa Legal con Excelencia y Empatía',
   headline:
     'Represento a personas y pymes en litigios civiles, laborales y de tutela ante la Rama Judicial, con estrategia procesal clara y comunicación en cada etapa.',
   summary:

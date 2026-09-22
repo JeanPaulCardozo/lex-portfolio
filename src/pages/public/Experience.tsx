@@ -20,7 +20,7 @@ export default function Experience() {
       <ol className="relative border-l border-line pl-6">
         {experience.map((x) => (
           <li key={x.id} className="mb-10 last:mb-0">
-            <span className="absolute -left-[6.5px] mt-1.5 h-3 w-3 rounded-full border-2 border-paper bg-ink" />
+            <span className="absolute -left-[6.5px] mt-1.5 h-3 w-3 rounded-full border-2 border-paper bg-accent" />
             <p className="text-sm text-muted">
               {formatMonthYear(x.startDate)} – {x.current ? 'Actualidad' : formatMonthYear(x.endDate)}
               {x.location ? ` · ${x.location}` : ''}

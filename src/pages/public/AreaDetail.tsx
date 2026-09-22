@@ -47,7 +47,7 @@ export default function AreaDetail() {
         {area.faqs.length > 0 && (
           <div className="mt-12 max-w-2xl">
             <h2 className="text-xl font-semibold">Preguntas frecuentes</h2>
-            <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-card">
+            <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
               {area.faqs.map((faq, i) => (
                 <div key={faq.q}>
                   <button

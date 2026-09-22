@@ -23,7 +23,7 @@ export default function About() {
             <p className="text-lg text-ink">{profile.headline}</p>
             <p>{profile.summary}</p>
 
-            <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line shadow-sm sm:grid-cols-4">
               {profile.stats.map((s) => (
                 <div key={s.label} className="bg-card p-4">
                   <p className="font-display text-xl font-semibold">{s.value}</p>
@@ -33,7 +33,7 @@ export default function About() {
             </div>
           </div>
 
-          <aside className="space-y-5 rounded-2xl border border-line bg-card p-6 text-sm">
+          <aside className="space-y-5 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
             {profile.avatarUrl && (
               <img
                 src={profile.avatarUrl}
@@ -71,7 +71,7 @@ export default function About() {
       </Section>
 
       <Section label="Formación" title="Estudios" className="border-t border-line bg-white">
-        <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
+        <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
           {profile.education.map((e) => (
             <li key={`${e.degree}-${e.year}`} className="flex items-baseline justify-between gap-4 px-5 py-4">
               <div>

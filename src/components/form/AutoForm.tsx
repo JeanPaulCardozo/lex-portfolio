@@ -38,7 +38,7 @@ function Label({ field, children }: { field: FieldSpec; children: ReactNode }) {
 }
 
 const inputCls =
-  'w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none focus:border-ink'
+  'w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25'
 
 export function AutoForm({
   fields,

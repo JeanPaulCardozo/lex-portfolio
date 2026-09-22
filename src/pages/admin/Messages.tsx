@@ -29,14 +29,14 @@ export default function Messages() {
         <EmptyState title="Todavía no has recibido mensajes" />
       )}
 
-      <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
+      <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
         {messages.map((m) => {
           const open = openId === m.id
           return (
             <li key={m.id} className={cn(!m.read && 'bg-accent-soft/40')}>
               <button
                 onClick={() => toggle(m.id, m.read)}
-                className="flex w-full items-center gap-3 px-4 py-3.5 text-left"
+                className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-paper/60"
               >
                 {!m.read && <span className="h-2 w-2 shrink-0 rounded-full bg-accent" />}
                 <span className={cn('shrink-0 font-medium', m.read && 'ml-5')}>{m.name}</span>

@@ -69,6 +69,7 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 {
   "fullName": "Valentina Ortega",
   "title": "Abogada laboralista y de extranjería",
+  "tagline": "Defensa Legal con Excelencia y Empatía",  // titular corto del hero de Inicio
   "headline": "Acompaño a personas trabajadoras y pymes...",
   "summary": "Texto largo de la biografía...",
   "location": "Madrid, España",

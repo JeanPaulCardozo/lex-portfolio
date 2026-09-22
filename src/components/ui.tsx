@@ -8,10 +8,12 @@ type Variant = 'primary' | 'outline' | 'ghost' | 'danger'
 type Size = 'sm' | 'md'
 
 const BTN_BASE =
-  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap'
+  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap'
 const BTN_VARIANT: Record<Variant, string> = {
-  primary: 'bg-accent text-ink hover:bg-accent-ink hover:text-white',
-  outline: 'border border-line-strong text-ink hover:bg-white hover:border-ink',
+  primary:
+    'bg-gradient-to-b from-[#fdedc2] from-5% via-[#d9ac4c] via-45% to-[#8a611c] to-100% text-ink shadow-[inset_0_1.5px_0_rgba(255,255,255,0.95),inset_0_-6px_10px_-4px_rgba(90,60,10,0.55),0_4px_10px_rgba(20,14,8,0.4)] hover:-translate-y-px hover:brightness-110 hover:shadow-[inset_0_1.5px_0_rgba(255,255,255,1),inset_0_-6px_10px_-4px_rgba(90,60,10,0.6),0_6px_16px_rgba(20,14,8,0.5)]',
+  outline:
+    'border border-line-strong text-ink shadow-sm hover:-translate-y-px hover:border-ink hover:bg-white hover:shadow-md',
   ghost: 'text-ink-soft hover:bg-white hover:text-ink',
   danger: 'border border-red-200 text-red-700 hover:bg-red-50',
 }
@@ -106,7 +108,12 @@ export function Section({
       <div className="container-x">
         {(label || title || intro) && (
           <div className="mb-10 max-w-2xl">
-            {label && <p className="label mb-3">{label}</p>}
+            {label && (
+              <p className="label mb-3 flex items-center gap-2">
+                <span className="h-px w-6 bg-accent" aria-hidden="true" />
+                {label}
+              </p>
+            )}
             {title && <h2 className="text-2xl sm:text-3xl font-semibold">{title}</h2>}
             {intro && <p className="mt-3 text-ink-soft leading-relaxed">{intro}</p>}
           </div>

@@ -26,7 +26,7 @@ export default function Publications() {
         <EmptyState title="Todavía no hay publicaciones" />
       )}
 
-      <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
+      <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
         {publications.map((p) => {
           const inner = (
             <>
@@ -44,7 +44,7 @@ export default function Publications() {
               {p.url && <Icon name="external" size={16} className="mt-1 shrink-0 text-muted" />}
             </>
           )
-          const cls = 'flex items-start gap-4 px-5 py-4'
+          const cls = 'flex items-start gap-4 px-5 py-4 transition-colors'
           return (
             <li key={p.id}>
               {p.url ? (

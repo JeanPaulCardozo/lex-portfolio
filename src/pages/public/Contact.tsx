@@ -16,7 +16,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const fieldCls =
-  'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none focus:border-ink'
+  'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25'
 
 export default function Contact() {
   const { data: profile } = useProfile()
@@ -100,7 +100,7 @@ export default function Contact() {
         </div>
 
         {profile && (
-          <aside className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm">
+          <aside className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
             <ContactRow icon="mail" label="Correo" value={profile.email} href={`mailto:${profile.email}`} />
             <ContactRow icon="phone" label="Teléfono" value={profile.phone} href={`tel:${profile.phone.replace(/\s/g, '')}`} />
             {whatsappHref(profile.whatsapp) && (

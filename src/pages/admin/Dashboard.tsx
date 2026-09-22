@@ -63,16 +63,16 @@ export default function Dashboard() {
           <Link
             key={s.label}
             to={s.to}
-            className="rounded-2xl border border-line bg-card p-5 transition-colors hover:border-ink"
+            className="rounded-2xl border border-line bg-card p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg"
           >
-            <p className="font-display text-3xl font-semibold">{s.value}</p>
+            <p className="font-display text-3xl font-semibold text-accent-ink">{s.value}</p>
             <p className="mt-1 text-xs text-muted">{s.label}</p>
           </Link>
         ))}
       </div>
 
       <div className="mt-8">
-        <section className="rounded-2xl border border-line bg-card p-5">
+        <section className="rounded-2xl border border-line bg-card p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Últimos mensajes</h2>
             <Link to="/admin/mensajes" className="text-sm text-accent-ink underline">

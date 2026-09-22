@@ -106,11 +106,11 @@ export function CollectionAdmin<T extends { id: string }>({
       )}
 
       {rows.length > 0 && (
-        <ul className="divide-y divide-line rounded-2xl border border-line bg-card">
+        <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
           {rows.map((row) => {
             const b = badge?.(row) ?? null
             return (
-            <li key={row.id} className="flex items-center gap-4 px-4 py-3.5">
+            <li key={row.id} className="flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-paper/60">
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-2 truncate font-medium">
                   <span className="truncate">{primary(row)}</span>

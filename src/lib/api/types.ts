@@ -18,6 +18,8 @@ export interface StatItem {
 export interface Profile {
   fullName: string
   title: string
+  /** Titular corto de portada (p. ej. «Defensa Legal con Excelencia y Empatía»). */
+  tagline: string
   headline: string
   summary: string
   location: string

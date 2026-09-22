@@ -47,7 +47,7 @@ export default function CaseDetail() {
       <h1 className="mt-4 max-w-3xl text-3xl font-semibold sm:text-4xl">{c.title}</h1>
       {c.role && <p className="mt-3 text-ink-soft">{c.role}</p>}
 
-      <div className="mt-6 rounded-2xl border border-line bg-ink px-6 py-5 text-white">
+      <div className="mt-6 rounded-2xl border border-line bg-ink px-6 py-5 text-white shadow-md">
         <p className="label text-[0.6rem] text-white/60">Resultado</p>
         <p className="mt-1 text-lg font-medium">{c.outcome}</p>
       </div>

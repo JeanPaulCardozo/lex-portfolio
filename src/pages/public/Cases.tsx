@@ -62,7 +62,7 @@ export default function Cases() {
       intro="Búsqueda instantánea. Filtra por área, año y tipo de resultado; la URL guarda el filtro para compartirlo."
     >
       {/* Toolbar */}
-      <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-line bg-card p-4 sm:flex-row sm:flex-wrap sm:items-center">
+      <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-line bg-card p-4 shadow-sm sm:flex-row sm:flex-wrap sm:items-center">
         <div className="flex flex-1 items-center gap-2 rounded-lg border border-line-strong bg-white px-3">
           <Icon name="search" size={16} className="text-muted" />
           <input

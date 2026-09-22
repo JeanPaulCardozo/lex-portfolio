@@ -15,6 +15,14 @@ const fields: FieldSpec[] = [
     help: 'P. ej. Abogada laboralista y de extranjería.',
   },
   {
+    name: 'tagline',
+    label: 'Titular de portada',
+    type: 'text',
+    required: true,
+    full: true,
+    help: 'Frase corta y directa para el hero de Inicio. P. ej. «Defensa Legal con Excelencia y Empatía».',
+  },
+  {
     name: 'headline',
     label: 'Frase de presentación',
     type: 'textarea',

@@ -34,18 +34,18 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-ink text-white">
+        {/* La foto es el fondo de toda la sección, sin ningún velo ni degradado encima. */}
         <div
-          className="absolute inset-0 bg-cover bg-[position:75%_center]"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBanner})` }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink from-50% via-ink/95 via-70% to-ink/15" />
 
         <div className="container-x relative py-20 sm:py-28 lg:py-32">
-          <div className="max-w-xl">
+          <div className="max-w-xl [text-shadow:0_2px_14px_rgba(0,0,0,0.85)]">
             <p className="label mb-4 text-accent">{profile.title}</p>
             <h1 className="text-4xl font-semibold leading-[1.05] sm:text-5xl md:text-6xl">
-              {profile.fullName}
+              {profile.tagline}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-white/80">{profile.headline}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -80,17 +80,19 @@ export default function Home() {
             <Link
               key={area.id}
               to={`/areas/${area.slug}`}
-              className="group flex items-start justify-between gap-4 rounded-2xl border border-line bg-card p-6 transition-colors hover:border-ink"
+              className="group flex items-start justify-between gap-4 rounded-2xl border border-line bg-card p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg"
             >
               <div>
                 <h3 className="text-lg font-semibold">{area.name}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{area.summary}</p>
               </div>
-              <Icon
-                name="arrowUpRight"
-                size={18}
-                className="mt-1 shrink-0 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-paper text-muted transition-colors group-hover:bg-accent-soft group-hover:text-accent-ink">
+                <Icon
+                  name="arrowUpRight"
+                  size={16}
+                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </span>
             </Link>
           ))}
         </div>
@@ -126,7 +128,7 @@ export default function Home() {
               Trayectoria completa
             </ButtonLink>
           </div>
-          <div className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm">
+          <div className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
             <div>
               <p className="label text-[0.6rem]">Colegiación</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
@@ -148,7 +150,10 @@ export default function Home() {
         {testimonials.length > 0 ? (
           <div className="grid gap-5 md:grid-cols-3">
             {testimonials.slice(0, 3).map((t) => (
-              <figure key={t.id} className="rounded-2xl border border-line bg-paper p-6">
+              <figure
+                key={t.id}
+                className="rounded-2xl border border-line bg-paper p-6 shadow-sm transition-shadow hover:shadow-md"
+              >
                 <Stars value={t.rating} />
                 <blockquote className="mt-3 text-sm leading-relaxed text-ink">“{t.quote}”</blockquote>
                 <figcaption className="mt-4 text-xs text-muted">
@@ -179,7 +184,7 @@ export default function Home() {
       </Section>
 
       {/* CTA */}
-      <section className="border-t border-line bg-ink text-white">
+      <section className="border-t-2 border-accent bg-ink text-white">
         <div className="container-x flex flex-col items-start gap-6 py-14 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold sm:text-3xl">¿Hablamos de tu caso?</h2>

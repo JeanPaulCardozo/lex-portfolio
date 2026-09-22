@@ -17,7 +17,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const fieldCls =
-  'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none focus:border-ink'
+  'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25'
 
 export function TestimonialForm() {
   const submit = useSubmitTestimonial()
