@@ -42,7 +42,7 @@ export function Layout() {
             <BrandMark name={name} profession={profession} onDark />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
@@ -50,7 +50,7 @@ export function Layout() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'rounded-full px-3 py-1.5 text-sm transition-colors',
+                    'whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors',
                     isActive ? 'bg-accent text-ink' : 'text-white/75 hover:bg-white/10 hover:text-white',
                   )
                 }
@@ -79,7 +79,7 @@ export function Layout() {
             </ButtonLink>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden grid h-9 w-9 place-items-center rounded-lg border border-white/20 text-white"
+              className="lg:hidden grid h-9 w-9 place-items-center rounded-lg border border-white/20 text-white"
               aria-label={t('nav.openMenu')}
               aria-expanded={open}
             >
@@ -89,7 +89,7 @@ export function Layout() {
         </div>
 
         {open && (
-          <div className="md:hidden border-t border-white/10 bg-ink">
+          <div className="lg:hidden border-t border-white/10 bg-ink">
             <nav className="container-x flex flex-col py-3">
               {NAV.map((item) => (
                 <NavLink
