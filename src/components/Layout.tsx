@@ -32,7 +32,7 @@ export function Layout() {
 
   return (
     <div className="min-h-dvh flex flex-col">
-      <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-black/20 bg-ink/95 text-white backdrop-blur">
         <div className="container-x flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 font-display font-semibold tracking-tight">
             <img src={mbLogo} alt="" className="h-9 w-9 shrink-0 rounded-full" />
@@ -48,7 +48,7 @@ export function Layout() {
                 className={({ isActive }) =>
                   cn(
                     'rounded-full px-3 py-1.5 text-sm transition-colors',
-                    isActive ? 'bg-ink text-white' : 'text-ink-soft hover:text-ink hover:bg-white',
+                    isActive ? 'bg-accent text-ink' : 'text-white/75 hover:bg-white/10 hover:text-white',
                   )
                 }
               >
@@ -60,11 +60,11 @@ export function Layout() {
           <div className="flex items-center gap-2">
             <button
               onClick={openSearch}
-              className="hidden sm:inline-flex items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 text-sm text-muted hover:border-ink hover:text-ink"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 text-sm text-white/70 hover:border-white/50 hover:text-white"
             >
               <Icon name="search" size={15} />
               Buscar
-              <kbd className="ml-1 rounded border border-line-strong bg-white px-1.5 text-[11px] font-sans text-muted">
+              <kbd className="ml-1 rounded border border-white/20 bg-white/10 px-1.5 text-[11px] font-sans text-white/70">
                 ⌘K
               </kbd>
             </button>
@@ -73,7 +73,7 @@ export function Layout() {
             </ButtonLink>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden grid h-9 w-9 place-items-center rounded-lg border border-line-strong"
+              className="md:hidden grid h-9 w-9 place-items-center rounded-lg border border-white/20 text-white"
               aria-label="Abrir menú"
               aria-expanded={open}
             >
@@ -83,7 +83,7 @@ export function Layout() {
         </div>
 
         {open && (
-          <div className="md:hidden border-t border-line bg-paper">
+          <div className="md:hidden border-t border-white/10 bg-ink">
             <nav className="container-x flex flex-col py-3">
               {NAV.map((item) => (
                 <NavLink
@@ -93,7 +93,7 @@ export function Layout() {
                   className={({ isActive }) =>
                     cn(
                       'rounded-lg px-3 py-2.5 text-sm',
-                      isActive ? 'bg-ink text-white' : 'text-ink-soft',
+                      isActive ? 'bg-accent text-ink' : 'text-white/75',
                     )
                   }
                 >
@@ -103,7 +103,7 @@ export function Layout() {
               <div className="mt-2 flex gap-2 px-1">
                 <button
                   onClick={openSearch}
-                  className="flex-1 rounded-lg border border-line-strong px-3 py-2.5 text-sm text-muted"
+                  className="flex-1 rounded-lg border border-white/20 px-3 py-2.5 text-sm text-white/70"
                 >
                   Buscar (⌘K)
                 </button>
