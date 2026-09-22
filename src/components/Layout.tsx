@@ -2,18 +2,11 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { useProfile } from '@/lib/queries'
+import { useT } from '@/lib/i18n'
 import { BrandMark } from './BrandMark'
 import { Icon } from './Icon'
+import { LanguageSwitcher } from './LanguageSwitcher'
 import { ButtonLink } from './ui'
-
-const NAV = [
-  { to: '/', label: 'Inicio', end: true },
-  { to: '/sobre-mi', label: 'Sobre mí' },
-  { to: '/areas', label: 'Áreas' },
-  { to: '/casos', label: 'Casos' },
-  { to: '/experiencia', label: 'Trayectoria' },
-  { to: '/publicaciones', label: 'Publicaciones' },
-]
 
 function openSearch() {
   window.dispatchEvent(new Event('lex:open-search'))
@@ -23,6 +16,7 @@ export function Layout() {
   const { data: profile } = useProfile()
   const [open, setOpen] = useState(false)
   const location = useLocation()
+  const t = useT()
 
   useEffect(() => {
     setOpen(false)
@@ -30,6 +24,15 @@ export function Layout() {
 
   const name = profile?.fullName ?? 'Portafolio'
   const profession = profile?.title?.split(' · ')[0] ?? ''
+
+  const NAV = [
+    { to: '/', label: t('nav.home'), end: true },
+    { to: '/sobre-mi', label: t('nav.about') },
+    { to: '/areas', label: t('nav.areas') },
+    { to: '/casos', label: t('nav.cases') },
+    { to: '/experiencia', label: t('nav.experience') },
+    { to: '/publicaciones', label: t('nav.publications') },
+  ]
 
   return (
     <div className="min-h-dvh flex flex-col">
@@ -63,18 +66,21 @@ export function Layout() {
               className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1.5 text-sm text-white/70 hover:border-white/50 hover:text-white"
             >
               <Icon name="search" size={15} />
-              Buscar
+              {t('nav.search')}
               <kbd className="ml-1 rounded border border-white/20 bg-white/10 px-1.5 text-[11px] font-sans text-white/70">
                 ⌘K
               </kbd>
             </button>
+            <span className="hidden sm:inline-flex">
+              <LanguageSwitcher />
+            </span>
             <ButtonLink to="/contacto" size="sm" className="hidden sm:inline-flex">
-              Contactar
+              {t('nav.contact')}
             </ButtonLink>
             <button
               onClick={() => setOpen((v) => !v)}
               className="md:hidden grid h-9 w-9 place-items-center rounded-lg border border-white/20 text-white"
-              aria-label="Abrir menú"
+              aria-label={t('nav.openMenu')}
               aria-expanded={open}
             >
               <Icon name={open ? 'close' : 'menu'} />
@@ -100,15 +106,18 @@ export function Layout() {
                   {item.label}
                 </NavLink>
               ))}
-              <div className="mt-2 flex gap-2 px-1">
+              <div className="mt-2 flex items-center gap-2 px-1">
                 <button
                   onClick={openSearch}
                   className="flex-1 rounded-lg border border-white/20 px-3 py-2.5 text-sm text-white/70"
                 >
-                  Buscar (⌘K)
+                  {t('nav.search')} (⌘K)
                 </button>
-                <ButtonLink to="/contacto" size="sm" className="flex-1">
-                  Contactar
+                <LanguageSwitcher />
+              </div>
+              <div className="mt-2 px-1">
+                <ButtonLink to="/contacto" size="sm" className="w-full">
+                  {t('nav.contact')}
                 </ButtonLink>
               </div>
             </nav>
@@ -126,6 +135,7 @@ export function Layout() {
 }
 
 function SiteFooter({ name, profession }: { name: string; profession: string }) {
+  const t = useT()
   return (
     <footer className="border-t border-line bg-white">
       <div className="container-x py-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
@@ -133,14 +143,14 @@ function SiteFooter({ name, profession }: { name: string; profession: string }) 
         <div className="flex flex-col gap-2 text-sm text-muted sm:items-end">
           <div className="flex items-center gap-4">
             <Link to="/contacto" className="hover:text-ink">
-              Contacto
+              {t('footer.contact')}
             </Link>
             <Link to="/admin" className="hover:text-ink">
-              Panel
+              {t('footer.panel')}
             </Link>
           </div>
           <p>
-            © {new Date().getFullYear()} {name}. Portafolio profesional.
+            © {new Date().getFullYear()} {name}. {t('footer.rights')}
           </p>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { useT } from '@/lib/i18n'
 import { Icon } from './Icon'
 
 /* ------------------------------ Button ------------------------------ */
@@ -126,23 +127,25 @@ export function Section({
 
 /* --------------------- Estados de carga / error --------------------- */
 export function Spinner({ label }: { label?: string }) {
+  const t = useT()
   return (
     <div className="flex items-center gap-3 text-sm text-muted py-10">
       <span className="h-4 w-4 animate-spin rounded-full border-2 border-line-strong border-t-ink" />
-      {label ?? 'Cargando…'}
+      {label ?? t('common.loading')}
     </div>
   )
 }
 
 export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
-  const message = error instanceof Error ? error.message : 'Se produjo un error.'
+  const t = useT()
+  const message = error instanceof Error ? error.message : t('common.genericError')
   return (
     <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-800">
-      <p className="font-medium">No se pudieron cargar los datos</p>
+      <p className="font-medium">{t('common.errorTitle')}</p>
       <p className="mt-1 text-red-700">{message}</p>
       {onRetry && (
         <button onClick={onRetry} className="mt-3 underline underline-offset-2">
-          Reintentar
+          {t('common.retry')}
         </button>
       )}
     </div>

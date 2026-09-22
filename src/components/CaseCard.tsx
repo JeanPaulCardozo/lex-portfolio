@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 import type { Case } from '@/lib/api/types'
 import { usePrefetchCase } from '@/lib/queries'
+import { useT, type TKey } from '@/lib/i18n'
 import { Icon } from './Icon'
 import { Badge } from './ui'
 
-const RESULT_LABEL: Record<Case['resultType'], string> = {
-  sentencia: 'Sentencia',
-  acuerdo: 'Acuerdo',
-  archivo: 'Archivo',
-  dictamen: 'Resolución',
-  otro: 'Otro',
+const RESULT_KEY: Record<Case['resultType'], TKey> = {
+  sentencia: 'result.sentencia',
+  acuerdo: 'result.acuerdo',
+  archivo: 'result.archivo',
+  dictamen: 'result.dictamen',
+  otro: 'result.otro',
 }
 
 export function CaseCard({ item }: { item: Case }) {
   const prefetch = usePrefetchCase()
+  const t = useT()
   return (
     <Link
       to={`/casos/${item.slug}`}
@@ -25,7 +27,7 @@ export function CaseCard({ item }: { item: Case }) {
         <Badge tone="accent">{item.area}</Badge>
         <span>{item.year}</span>
         <span aria-hidden>·</span>
-        <span>{RESULT_LABEL[item.resultType]}</span>
+        <span>{t(RESULT_KEY[item.resultType])}</span>
       </div>
 
       <h3 className="mt-4 text-lg font-semibold leading-snug">{item.title}</h3>
@@ -35,12 +37,12 @@ export function CaseCard({ item }: { item: Case }) {
       </p>
 
       <div className="mt-5 rounded-lg border-l-2 border-accent bg-paper px-3 py-2 text-sm">
-        <span className="label text-[0.6rem]">Resultado</span>
+        <span className="label text-[0.6rem]">{t('caseCard.result')}</span>
         <p className="mt-0.5 font-medium text-ink">{item.outcome}</p>
       </div>
 
       <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent-ink">
-        Ver caso
+        {t('caseCard.viewCase')}
         <Icon
           name="arrowRight"
           size={16}
@@ -51,4 +53,4 @@ export function CaseCard({ item }: { item: Case }) {
   )
 }
 
-export { RESULT_LABEL }
+export { RESULT_KEY }

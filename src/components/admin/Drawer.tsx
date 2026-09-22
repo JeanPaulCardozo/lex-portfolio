@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react'
+import { useT } from '@/lib/i18n'
 import { Icon } from '../Icon'
 
 export function Drawer({
@@ -12,6 +13,7 @@ export function Drawer({
   title: string
   children: ReactNode
 }) {
+  const t = useT()
   useEffect(() => {
     if (!open) return
     function onKey(e: KeyboardEvent) {
@@ -36,7 +38,7 @@ export function Drawer({
           <button
             onClick={onClose}
             className="grid h-8 w-8 place-items-center rounded-lg hover:bg-paper"
-            aria-label="Cerrar"
+            aria-label={t('common.close')}
           >
             <Icon name="close" />
           </button>

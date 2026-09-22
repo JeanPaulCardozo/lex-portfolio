@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAreas, useCases, usePublications } from '@/lib/queries'
 import { cn } from '@/lib/cn'
+import { useT } from '@/lib/i18n'
 import { Icon } from './Icon'
 
 interface Item {
@@ -11,16 +12,6 @@ interface Item {
   to: string
   keywords: string
 }
-
-const STATIC: Item[] = [
-  { id: 'nav-home', title: 'Inicio', group: 'Navegación', to: '/', keywords: 'inicio home' },
-  { id: 'nav-about', title: 'Sobre mí', group: 'Navegación', to: '/sobre-mi', keywords: 'bio perfil trayectoria' },
-  { id: 'nav-areas', title: 'Áreas de práctica', group: 'Navegación', to: '/areas', keywords: 'servicios materias' },
-  { id: 'nav-cases', title: 'Casos y resultados', group: 'Navegación', to: '/casos', keywords: 'resultados expediente' },
-  { id: 'nav-exp', title: 'Trayectoria', group: 'Navegación', to: '/experiencia', keywords: 'experiencia cv' },
-  { id: 'nav-pub', title: 'Publicaciones', group: 'Navegación', to: '/publicaciones', keywords: 'articulos ponencias' },
-  { id: 'nav-contact', title: 'Contacto', group: 'Navegación', to: '/contacto', keywords: 'email telefono cita' },
-]
 
 function normalize(s: string): string {
   return s.toLowerCase().normalize('NFD').replace(/[^ -~]/g, '')
@@ -36,31 +27,42 @@ export function CommandPalette() {
   const { data: areas = [] } = useAreas()
   const { data: cases = [] } = useCases()
   const { data: publications = [] } = usePublications()
+  const t = useT()
 
   const items = useMemo<Item[]>(() => {
+    const nav = t('palette.groupNav')
+    const STATIC: Item[] = [
+      { id: 'nav-home', title: t('palette.itemHome'), group: nav, to: '/', keywords: 'inicio home' },
+      { id: 'nav-about', title: t('palette.itemAbout'), group: nav, to: '/sobre-mi', keywords: 'bio perfil trayectoria about' },
+      { id: 'nav-areas', title: t('palette.itemAreas'), group: nav, to: '/areas', keywords: 'servicios materias areas' },
+      { id: 'nav-cases', title: t('palette.itemCases'), group: nav, to: '/casos', keywords: 'resultados expediente cases' },
+      { id: 'nav-exp', title: t('palette.itemExperience'), group: nav, to: '/experiencia', keywords: 'experiencia cv experience' },
+      { id: 'nav-pub', title: t('palette.itemPublications'), group: nav, to: '/publicaciones', keywords: 'articulos ponencias publications' },
+      { id: 'nav-contact', title: t('palette.itemContact'), group: nav, to: '/contacto', keywords: 'email telefono cita contact' },
+    ]
     const areaItems: Item[] = areas.map((a) => ({
       id: `area-${a.id}`,
       title: a.name,
-      group: 'Áreas',
+      group: t('palette.groupAreas'),
       to: `/areas/${a.slug}`,
       keywords: normalize(`${a.name} ${a.summary}`),
     }))
     const caseItems: Item[] = cases.map((c) => ({
       id: `case-${c.id}`,
       title: c.title,
-      group: 'Casos',
+      group: t('palette.groupCases'),
       to: `/casos/${c.slug}`,
       keywords: normalize(`${c.title} ${c.area} ${c.outcome} ${c.skills.join(' ')} ${c.year}`),
     }))
     const pubItems: Item[] = publications.map((p) => ({
       id: `pub-${p.id}`,
       title: p.title,
-      group: 'Publicaciones',
+      group: t('palette.groupPublications'),
       to: '/publicaciones',
       keywords: normalize(`${p.title} ${p.venue} ${p.summary}`),
     }))
     return [...STATIC, ...areaItems, ...caseItems, ...pubItems]
-  }, [areas, cases, publications])
+  }, [areas, cases, publications, t])
 
   const results = useMemo(() => {
     const q = normalize(query.trim())
@@ -137,7 +139,7 @@ export function CommandPalette() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onInputKey}
-            placeholder="Busca casos, áreas, publicaciones…"
+            placeholder={t('palette.placeholder')}
             className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-muted"
           />
           <kbd className="rounded border border-line-strong bg-paper px-1.5 text-[11px] text-muted">
@@ -147,7 +149,7 @@ export function CommandPalette() {
 
         <ul className="max-h-[46vh] overflow-y-auto p-2">
           {results.length === 0 && (
-            <li className="px-3 py-6 text-center text-sm text-muted">Sin resultados</li>
+            <li className="px-3 py-6 text-center text-sm text-muted">{t('palette.noResults')}</li>
           )}
           {results.map((it, i) => (
             <li key={it.id}>

@@ -2,10 +2,12 @@ import { useExperience, useProfile } from '@/lib/queries'
 import { formatMonthYear } from '@/lib/format'
 import { ButtonLink, Section, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
+import { useT } from '@/lib/i18n'
 
 export default function About() {
   const { data: profile, isLoading } = useProfile()
   const { data: experience = [] } = useExperience()
+  const t = useT()
 
   if (isLoading || !profile) {
     return (
@@ -17,7 +19,7 @@ export default function About() {
 
   return (
     <>
-      <Section label="Perfil" title="Sobre mí">
+      <Section label={t('home.aboutLabel')} title={t('home.aboutTitle')}>
         <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
           <div className="prose-legal max-w-none text-[15px]">
             <p className="text-lg text-ink">{profile.headline}</p>
@@ -42,11 +44,11 @@ export default function About() {
               />
             )}
             <div>
-              <p className="label text-[0.6rem]">Ubicación</p>
+              <p className="label text-[0.6rem]">{t('about.location')}</p>
               <p className="mt-1 text-ink-soft">{profile.location}</p>
             </div>
             <div>
-              <p className="label text-[0.6rem]">Colegiación</p>
+              <p className="label text-[0.6rem]">{t('about.barAdmissions')}</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
                 {profile.barAdmissions.map((b) => (
                   <li key={b}>{b}</li>
@@ -54,7 +56,7 @@ export default function About() {
               </ul>
             </div>
             <div>
-              <p className="label text-[0.6rem]">Idiomas</p>
+              <p className="label text-[0.6rem]">{t('about.languages')}</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
                 {profile.languages.map((l) => (
                   <li key={l}>{l}</li>
@@ -63,14 +65,14 @@ export default function About() {
             </div>
             {profile.cvUrl && (
               <ButtonLink to={profile.cvUrl} external variant="outline" size="sm" className="w-full">
-                <Icon name="external" size={15} /> Descargar CV
+                <Icon name="external" size={15} /> {t('about.downloadCv')}
               </ButtonLink>
             )}
           </aside>
         </div>
       </Section>
 
-      <Section label="Formación" title="Estudios" className="border-t border-line bg-white">
+      <Section label={t('about.educationLabel')} title={t('about.educationTitle')} className="border-t border-line bg-white">
         <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
           {profile.education.map((e) => (
             <li key={`${e.degree}-${e.year}`} className="flex items-baseline justify-between gap-4 px-5 py-4">
@@ -85,12 +87,12 @@ export default function About() {
       </Section>
 
       {experience.length > 0 && (
-        <Section label="Trayectoria" title="Experiencia reciente" className="border-t border-line">
+        <Section label={t('about.experienceLabel')} title={t('about.experienceTitle')} className="border-t border-line">
           <ol className="space-y-6">
             {experience.slice(0, 3).map((x) => (
               <li key={x.id} className="grid gap-1 sm:grid-cols-[180px_1fr]">
                 <p className="text-sm text-muted">
-                  {formatMonthYear(x.startDate)} – {x.current ? 'Actualidad' : formatMonthYear(x.endDate)}
+                  {formatMonthYear(x.startDate)} – {x.current ? t('common.current') : formatMonthYear(x.endDate)}
                 </p>
                 <div>
                   <p className="font-medium">
@@ -103,7 +105,7 @@ export default function About() {
           </ol>
           <div className="mt-8">
             <ButtonLink to="/experiencia" variant="outline" size="sm">
-              Ver trayectoria completa
+              {t('about.viewFullExperience')}
             </ButtonLink>
           </div>
         </Section>

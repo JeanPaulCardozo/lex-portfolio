@@ -1,54 +1,59 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { useAuth } from '@/lib/auth'
-import { API_MODE } from '@/lib/api/client'
 import { useProfile } from '@/lib/queries'
+import { useT } from '@/lib/i18n'
 import { BrandMark } from './BrandMark'
 import { Icon } from './Icon'
-
-const LINKS = [
-  { to: '/admin', label: 'Resumen', end: true },
-  { to: '/admin/perfil', label: 'Perfil' },
-  { to: '/admin/casos', label: 'Casos' },
-  { to: '/admin/areas', label: 'Áreas de práctica' },
-  { to: '/admin/experiencia', label: 'Trayectoria' },
-  { to: '/admin/publicaciones', label: 'Publicaciones' },
-  { to: '/admin/testimonios', label: 'Testimonios' },
-  { to: '/admin/mensajes', label: 'Mensajes' },
-]
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function AdminLayout() {
   const { logout, user } = useAuth()
   const navigate = useNavigate()
   const { data: profile } = useProfile()
   const profession = profile?.title?.split(' · ')[0] ?? ''
+  const t = useT()
+
+  const LINKS = [
+    { to: '/admin', label: t('admin.nav.summary'), end: true },
+    { to: '/admin/perfil', label: t('admin.nav.profile') },
+    { to: '/admin/casos', label: t('admin.nav.cases') },
+    { to: '/admin/areas', label: t('admin.nav.areas') },
+    { to: '/admin/experiencia', label: t('admin.nav.experience') },
+    { to: '/admin/publicaciones', label: t('admin.nav.publications') },
+    { to: '/admin/testimonios', label: t('admin.nav.testimonials') },
+    { to: '/admin/mensajes', label: t('admin.nav.messages') },
+  ]
 
   return (
     <div className="min-h-dvh bg-paper">
-      <header className="border-b border-line bg-white shadow-sm">
+      <header className="border-b border-black/20 bg-ink/95 text-white shadow-sm backdrop-blur">
         <div className="container-x flex h-14 items-center justify-between">
           <div className="flex items-center gap-3">
-            <BrandMark name={profile?.fullName ?? 'Panel'} profession={profession} size="sm" />
-            <span className="h-5 w-px bg-line" />
-            <span className="font-display font-semibold">Panel de edición</span>
-            <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] text-muted">
-              API: {API_MODE}
-            </span>
+            <BrandMark name={profile?.fullName ?? 'Panel'} profession={profession} size="sm" onDark />
+            <span className="h-5 w-px bg-white/20" />
+            <span className="font-display font-semibold">{t('admin.title')}</span>
           </div>
           <div className="flex items-center gap-3 text-sm">
-            <a href="/" target="_blank" rel="noreferrer" className="hidden sm:inline text-muted hover:text-ink">
-              Ver sitio ↗
+            <a
+              href={import.meta.env.BASE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:inline text-white/70 hover:text-white"
+            >
+              {t('admin.viewSite')}
             </a>
-            <span className="hidden sm:inline text-muted">{user?.email}</span>
+            <span className="hidden sm:inline text-white/70">{user?.email}</span>
+            <LanguageSwitcher />
             <button
               onClick={() => {
                 logout()
                 navigate('/admin/login')
               }}
-              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong px-3 py-1.5 hover:border-ink"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-white hover:border-white/50"
             >
               <Icon name="logout" size={15} />
-              Salir
+              {t('admin.logout')}
             </button>
           </div>
         </div>

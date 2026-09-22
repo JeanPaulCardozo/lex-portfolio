@@ -1,19 +1,23 @@
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useProfile, useSubmitContact } from '@/lib/queries'
 import { whatsappHref } from '@/lib/format'
+import { useT, type TFn } from '@/lib/i18n'
 import { Button, Section } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 
-const schema = z.object({
-  name: z.string().min(2, 'Indica tu nombre'),
-  email: z.string().email('Correo no válido'),
-  phone: z.string().optional().or(z.literal('')),
-  message: z.string().min(10, 'Cuéntame brevemente tu situación (mín. 10 caracteres)'),
-})
+function makeSchema(t: TFn) {
+  return z.object({
+    name: z.string().min(2, t('contact.errorName')),
+    email: z.string().email(t('contact.errorEmail')),
+    phone: z.string().optional().or(z.literal('')),
+    message: z.string().min(10, t('contact.errorMessage')),
+  })
+}
 
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<ReturnType<typeof makeSchema>>
 
 const fieldCls =
   'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25'
@@ -21,6 +25,8 @@ const fieldCls =
 export default function Contact() {
   const { data: profile } = useProfile()
   const submit = useSubmitContact()
+  const t = useT()
+  const schema = useMemo(() => makeSchema(t), [t])
   const {
     register,
     handleSubmit,
@@ -39,44 +45,42 @@ export default function Contact() {
   }
 
   return (
-    <Section label="Contacto" title="Cuéntame tu caso">
+    <Section label={t('contact.label')} title={t('contact.title')}>
       <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
         <div>
           {submit.isSuccess ? (
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
               <p className="flex items-center gap-2 font-medium text-emerald-800">
-                <Icon name="check" size={18} /> Mensaje enviado
+                <Icon name="check" size={18} /> {t('contact.sent')}
               </p>
-              <p className="mt-1 text-sm text-emerald-700">
-                Te responderé lo antes posible al correo que has indicado.
-              </p>
+              <p className="mt-1 text-sm text-emerald-700">{t('contact.sentBody')}</p>
               <button
                 onClick={() => submit.reset()}
                 className="mt-3 text-sm text-emerald-800 underline underline-offset-2"
               >
-                Enviar otro mensaje
+                {t('contact.sendAnother')}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium">Nombre *</span>
+                  <span className="mb-1.5 block text-sm font-medium">{t('contact.name')} *</span>
                   <input className={fieldCls} {...register('name')} />
                   {errors.name && <span className="mt-1 block text-xs text-red-600">{errors.name.message}</span>}
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium">Correo electrónico *</span>
+                  <span className="mb-1.5 block text-sm font-medium">{t('contact.email')} *</span>
                   <input type="email" className={fieldCls} {...register('email')} />
                   {errors.email && <span className="mt-1 block text-xs text-red-600">{errors.email.message}</span>}
                 </label>
               </div>
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium">Teléfono</span>
+                <span className="mb-1.5 block text-sm font-medium">{t('contact.phone')}</span>
                 <input className={fieldCls} {...register('phone')} />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium">Mensaje *</span>
+                <span className="mb-1.5 block text-sm font-medium">{t('contact.message')} *</span>
                 <textarea rows={5} className={fieldCls} {...register('message')} />
                 {errors.message && (
                   <span className="mt-1 block text-xs text-red-600">{errors.message.message}</span>
@@ -85,37 +89,35 @@ export default function Contact() {
 
               {submit.isError && (
                 <p className="text-sm text-red-600">
-                  {submit.error instanceof Error ? submit.error.message : 'No se pudo enviar. Inténtalo de nuevo.'}
+                  {submit.error instanceof Error ? submit.error.message : t('contact.sendError')}
                 </p>
               )}
 
               <Button type="submit" disabled={submit.isPending}>
-                {submit.isPending ? 'Enviando…' : 'Enviar mensaje'}
+                {submit.isPending ? t('common.sending') : t('contact.send')}
               </Button>
-              <p className="text-xs text-muted">
-                El envío de este formulario no genera relación profesional ni obligación de asistencia.
-              </p>
+              <p className="text-xs text-muted">{t('contact.disclaimer')}</p>
             </form>
           )}
         </div>
 
         {profile && (
           <aside className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
-            <ContactRow icon="mail" label="Correo" value={profile.email} href={`mailto:${profile.email}`} />
-            <ContactRow icon="phone" label="Teléfono" value={profile.phone} href={`tel:${profile.phone.replace(/\s/g, '')}`} />
+            <ContactRow icon="mail" label={t('contact.email')} value={profile.email} href={`mailto:${profile.email}`} />
+            <ContactRow icon="phone" label={t('contact.phone')} value={profile.phone} href={`tel:${profile.phone.replace(/\s/g, '')}`} />
             {whatsappHref(profile.whatsapp) && (
               <ContactRow
                 icon="phone"
-                label="WhatsApp"
-                value="Escribir por WhatsApp"
+                label={t('contact.whatsapp')}
+                value={t('contact.whatsappCta')}
                 href={whatsappHref(profile.whatsapp) as string}
               />
             )}
             {profile.linkedin && (
-              <ContactRow icon="external" label="LinkedIn" value="Ver perfil" href={profile.linkedin} />
+              <ContactRow icon="external" label={t('contact.linkedin')} value={t('contact.viewProfile')} href={profile.linkedin} />
             )}
             <div>
-              <p className="label text-[0.6rem]">Ubicación</p>
+              <p className="label text-[0.6rem]">{t('contact.location')}</p>
               <p className="mt-1 text-ink-soft">{profile.location}</p>
             </div>
           </aside>

@@ -3,6 +3,7 @@ import type { Profile } from '@/lib/api/types'
 import { useProfile, useUpdateProfile } from '@/lib/queries'
 import { AutoForm, type FieldSpec, type FormValues } from '@/components/form/AutoForm'
 import { ErrorState, Spinner, Toast } from '@/components/ui'
+import { useT } from '@/lib/i18n'
 
 const fields: FieldSpec[] = [
   { name: 'fullName', label: 'Nombre completo', type: 'text', required: true, full: true },
@@ -86,6 +87,7 @@ export default function ProfileEdit() {
   const { data: profile, isLoading, isError, error, refetch } = useProfile()
   const update = useUpdateProfile()
   const [toast, setToast] = useState(false)
+  const t = useT()
 
   if (isLoading) return <Spinner />
   if (isError || !profile) return <ErrorState error={error} onRetry={() => refetch()} />
@@ -99,10 +101,8 @@ export default function ProfileEdit() {
   return (
     <div>
       <header className="mb-6">
-        <h1 className="font-display text-2xl font-semibold">Perfil</h1>
-        <p className="mt-1 text-sm text-muted">
-          Estos datos aparecen en la portada, en «Sobre mí» y en la página de contacto.
-        </p>
+        <h1 className="font-display text-2xl font-semibold">{t('profileEdit.title')}</h1>
+        <p className="mt-1 text-sm text-muted">{t('profileEdit.intro')}</p>
       </header>
 
       <div className="rounded-2xl border border-line bg-card p-6">
@@ -111,11 +111,11 @@ export default function ProfileEdit() {
           initial={profile as unknown as FormValues}
           onSubmit={onSubmit}
           submitting={update.isPending}
-          submitLabel="Guardar perfil"
+          submitLabel={t('profileEdit.save')}
         />
       </div>
 
-      {toast && <Toast>Perfil guardado</Toast>}
+      {toast && <Toast>{t('profileEdit.saved')}</Toast>}
     </div>
   )
 }

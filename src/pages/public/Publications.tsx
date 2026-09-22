@@ -2,28 +2,30 @@ import { usePublications } from '@/lib/queries'
 import { formatDate } from '@/lib/format'
 import { Badge, EmptyState, ErrorState, Section, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
+import { useT, type TKey } from '@/lib/i18n'
 import type { PublicationKind } from '@/lib/api/types'
 
-const KIND_LABEL: Record<PublicationKind, string> = {
-  articulo: 'Artículo',
-  ponencia: 'Ponencia',
-  libro: 'Libro',
-  podcast: 'Pódcast',
+const KIND_KEY: Record<PublicationKind, TKey> = {
+  articulo: 'pub.articulo',
+  ponencia: 'pub.ponencia',
+  libro: 'pub.libro',
+  podcast: 'pub.podcast',
 }
 
 export default function Publications() {
   const { data: publications = [], isLoading, isError, error, refetch } = usePublications()
+  const t = useT()
 
   return (
     <Section
-      label="Divulgación"
-      title="Publicaciones y ponencias"
-      intro="Artículos, intervenciones en jornadas y otras aportaciones profesionales."
+      label={t('publicationsPage.label')}
+      title={t('publicationsPage.title')}
+      intro={t('publicationsPage.intro')}
     >
       {isLoading && <Spinner />}
       {isError && <ErrorState error={error} onRetry={() => refetch()} />}
       {!isLoading && !isError && publications.length === 0 && (
-        <EmptyState title="Todavía no hay publicaciones" />
+        <EmptyState title={t('publicationsPage.empty')} />
       )}
 
       <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
@@ -32,7 +34,7 @@ export default function Publications() {
             <>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge tone="neutral">{KIND_LABEL[p.kind]}</Badge>
+                  <Badge tone="neutral">{t(KIND_KEY[p.kind])}</Badge>
                   {p.date && <span className="text-xs text-muted">{formatDate(p.date)}</span>}
                 </div>
                 <p className="mt-1.5 font-medium">{p.title}</p>

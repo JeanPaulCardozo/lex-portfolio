@@ -11,6 +11,7 @@ import { CaseCard } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
 import { Stars } from '@/components/Stars'
 import { TestimonialForm } from '@/components/TestimonialForm'
+import { useT } from '@/lib/i18n'
 import { Button, ButtonLink, Section, Spinner } from '@/components/ui'
 
 export default function Home() {
@@ -19,13 +20,14 @@ export default function Home() {
   const { data: cases = [] } = useCases()
   const { data: testimonials = [] } = useTestimonials()
   const [showTestimonialForm, setShowTestimonialForm] = useState(false)
+  const t = useT()
 
   const featured = cases.filter((c) => c.featured).slice(0, 3)
 
   if (isLoading || !profile) {
     return (
       <div className="container-x py-24">
-        <Spinner label="Cargando portafolio…" />
+        <Spinner label={t('home.loading')} />
       </div>
     )
   }
@@ -50,14 +52,14 @@ export default function Home() {
             <p className="mt-6 text-lg leading-relaxed text-white/80">{profile.headline}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink to="/casos">
-                Ver casos y resultados <Icon name="arrowRight" size={16} />
+                {t('home.viewCases')} <Icon name="arrowRight" size={16} />
               </ButtonLink>
               <ButtonLink
                 to="/contacto"
                 variant="outline"
                 className="border-white/30 text-white hover:bg-white hover:text-ink"
               >
-                Agendar una consulta
+                {t('home.scheduleConsult')}
               </ButtonLink>
             </div>
 
@@ -74,7 +76,7 @@ export default function Home() {
       </section>
 
       {/* Áreas */}
-      <Section label="En qué puedo ayudarte" title="Áreas de práctica">
+      <Section label={t('home.areasLabel')} title={t('home.areasTitle')}>
         <div className="grid gap-4 sm:grid-cols-2">
           {areas.map((area) => (
             <Link
@@ -101,9 +103,9 @@ export default function Home() {
       {/* Casos destacados */}
       {featured.length > 0 && (
         <Section
-          label="Resultados"
-          title="Casos destacados"
-          intro="Una muestra de asuntos representativos. En la sección de casos puedes filtrarlos por área, año y tipo de resultado."
+          label={t('home.casesLabel')}
+          title={t('home.casesTitle')}
+          intro={t('home.casesIntro')}
           className="border-t border-line bg-white"
         >
           <div className="grid gap-5 md:grid-cols-3">
@@ -113,24 +115,24 @@ export default function Home() {
           </div>
           <div className="mt-8">
             <ButtonLink to="/casos" variant="outline" size="sm">
-              Ver todos los casos
+              {t('home.viewAllCases')}
             </ButtonLink>
           </div>
         </Section>
       )}
 
       {/* Sobre mí (teaser) */}
-      <Section label="Perfil" title="Sobre mí" className="border-t border-line">
+      <Section label={t('home.aboutLabel')} title={t('home.aboutTitle')} className="border-t border-line">
         <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
           <div className="prose-legal max-w-none">
             <p>{profile.summary}</p>
             <ButtonLink to="/sobre-mi" variant="outline" size="sm">
-              Trayectoria completa
+              {t('home.fullBio')}
             </ButtonLink>
           </div>
           <div className="space-y-4 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
             <div>
-              <p className="label text-[0.6rem]">Colegiación</p>
+              <p className="label text-[0.6rem]">{t('home.barAdmissions')}</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
                 {profile.barAdmissions.map((b) => (
                   <li key={b}>{b}</li>
@@ -138,7 +140,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <p className="label text-[0.6rem]">Idiomas</p>
+              <p className="label text-[0.6rem]">{t('home.languages')}</p>
               <p className="mt-1 text-ink-soft">{profile.languages.join(' · ')}</p>
             </div>
           </div>
@@ -146,27 +148,25 @@ export default function Home() {
       </Section>
 
       {/* Testimonios */}
-      <Section label="Opiniones" title="Lo que dicen" className="border-t border-line bg-white">
+      <Section label={t('home.testimonialsLabel')} title={t('home.testimonialsTitle')} className="border-t border-line bg-white">
         {testimonials.length > 0 ? (
           <div className="grid gap-5 md:grid-cols-3">
-            {testimonials.slice(0, 3).map((t) => (
+            {testimonials.slice(0, 3).map((item) => (
               <figure
-                key={t.id}
+                key={item.id}
                 className="rounded-2xl border border-line bg-paper p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                <Stars value={t.rating} />
-                <blockquote className="mt-3 text-sm leading-relaxed text-ink">“{t.quote}”</blockquote>
+                <Stars value={item.rating} />
+                <blockquote className="mt-3 text-sm leading-relaxed text-ink">“{item.quote}”</blockquote>
                 <figcaption className="mt-4 text-xs text-muted">
-                  {t.author}
-                  {t.authorRole ? ` · ${t.authorRole}` : ''}
+                  {item.author}
+                  {item.authorRole ? ` · ${item.authorRole}` : ''}
                 </figcaption>
               </figure>
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted">
-            Aún no hay opiniones publicadas. ¿Trabajaste conmigo? Anímate a dejar la primera.
-          </p>
+          <p className="text-sm text-muted">{t('home.noTestimonials')}</p>
         )}
 
         <div className="mt-8 border-t border-line pt-6">
@@ -174,12 +174,10 @@ export default function Home() {
             <TestimonialForm />
           ) : (
             <Button variant="outline" size="sm" onClick={() => setShowTestimonialForm(true)}>
-              <Icon name="plus" size={15} /> Deja tu opinión
+              <Icon name="plus" size={15} /> {t('home.leaveReview')}
             </Button>
           )}
-          <p className="mt-3 text-xs text-muted">
-            Las opiniones se revisan antes de publicarse.
-          </p>
+          <p className="mt-3 text-xs text-muted">{t('home.reviewsModerated')}</p>
         </div>
       </Section>
 
@@ -187,11 +185,11 @@ export default function Home() {
       <section className="border-t-2 border-accent bg-ink text-white">
         <div className="container-x flex flex-col items-start gap-6 py-14 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-2xl font-semibold sm:text-3xl">¿Hablamos de tu caso?</h2>
-            <p className="mt-2 text-white/70">Primera valoración sin compromiso.</p>
+            <h2 className="text-2xl font-semibold sm:text-3xl">{t('home.ctaTitle')}</h2>
+            <p className="mt-2 text-white/70">{t('home.ctaSubtitle')}</p>
           </div>
           <ButtonLink to="/contacto" variant="outline" className="border-white/30 text-white hover:bg-white hover:text-ink">
-            Ir a contacto <Icon name="arrowRight" size={16} />
+            {t('home.goToContact')} <Icon name="arrowRight" size={16} />
           </ButtonLink>
         </div>
       </section>

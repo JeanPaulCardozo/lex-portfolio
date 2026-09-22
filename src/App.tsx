@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '@/lib/auth'
+import { LanguageProvider } from '@/lib/i18n'
 import { Layout } from '@/components/Layout'
 import { AdminLayout } from '@/components/AdminLayout'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
@@ -55,6 +56,7 @@ function PageFallback() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AuthProvider>
           <CommandPalette />
@@ -93,6 +95,7 @@ export default function App() {
           </Suspense>
         </AuthProvider>
       </BrowserRouter>
+      </LanguageProvider>
     </QueryClientProvider>
   )
 }

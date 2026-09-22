@@ -4,12 +4,14 @@ import { formatDate } from '@/lib/format'
 import { EmptyState, ErrorState, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 import { cn } from '@/lib/cn'
+import { useT } from '@/lib/i18n'
 
 export default function Messages() {
   const { data: messages = [], isLoading, isError, error, refetch } = useMessages()
   const updateMsg = useUpdateMessage()
   const removeMsg = useRemoveMessage()
   const [openId, setOpenId] = useState<string | null>(null)
+  const t = useT()
 
   function toggle(id: string, read: boolean) {
     setOpenId((cur) => (cur === id ? null : id))
@@ -19,14 +21,14 @@ export default function Messages() {
   return (
     <div>
       <header className="mb-6">
-        <h1 className="font-display text-2xl font-semibold">Mensajes</h1>
-        <p className="mt-1 text-sm text-muted">Consultas recibidas desde el formulario de contacto.</p>
+        <h1 className="font-display text-2xl font-semibold">{t('messages.title')}</h1>
+        <p className="mt-1 text-sm text-muted">{t('messages.subtitle')}</p>
       </header>
 
       {isLoading && <Spinner />}
       {isError && <ErrorState error={error} onRetry={() => refetch()} />}
       {!isLoading && !isError && messages.length === 0 && (
-        <EmptyState title="Todavía no has recibido mensajes" />
+        <EmptyState title={t('messages.empty')} />
       )}
 
       <ul className="divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
@@ -62,21 +64,21 @@ export default function Messages() {
                       href={`mailto:${m.email}?subject=Re: tu consulta`}
                       className="rounded-full bg-ink px-3 py-1.5 text-xs font-medium text-white hover:bg-ink-soft"
                     >
-                      Responder
+                      {t('messages.reply')}
                     </a>
                     <button
                       onClick={() => updateMsg.mutate({ id: m.id, data: { read: !m.read } })}
                       className="rounded-full border border-line-strong px-3 py-1.5 text-xs hover:border-ink"
                     >
-                      Marcar como {m.read ? 'no leído' : 'leído'}
+                      {t(m.read ? 'messages.markUnread' : 'messages.markRead')}
                     </button>
                     <button
                       onClick={() => {
-                        if (window.confirm('¿Eliminar este mensaje?')) removeMsg.mutate(m.id)
+                        if (window.confirm(t('messages.deleteConfirm'))) removeMsg.mutate(m.id)
                       }}
                       className="rounded-full px-3 py-1.5 text-xs text-muted hover:text-red-600"
                     >
-                      Eliminar
+                      {t('messages.delete')}
                     </button>
                   </div>
                 </div>

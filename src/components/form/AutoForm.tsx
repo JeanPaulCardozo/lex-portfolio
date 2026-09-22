@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { useT } from '@/lib/i18n'
 import { Button } from '../ui'
 import { ImageField } from './ImageField'
 import { Repeater, type RepeaterSubField } from './Repeater'
@@ -46,7 +47,7 @@ export function AutoForm({
   onSubmit,
   onCancel,
   submitting,
-  submitLabel = 'Guardar',
+  submitLabel,
 }: {
   fields: FieldSpec[]
   initial: FormValues
@@ -57,6 +58,7 @@ export function AutoForm({
 }) {
   const [values, setValues] = useState<FormValues>(initial)
   const [error, setError] = useState<string | null>(null)
+  const t = useT()
 
   const set = (name: string, value: unknown) =>
     setValues((v) => ({ ...v, [name]: value }))
@@ -71,7 +73,7 @@ export function AutoForm({
           val === '' ||
           (Array.isArray(val) && val.length === 0)
         if (empty) {
-          setError(`El campo "${f.label}" es obligatorio.`)
+          setError(t('autoForm.required', { field: f.label }))
           return
         }
       }
@@ -138,7 +140,7 @@ export function AutoForm({
                     className={inputCls}
                   >
                     <option value="" disabled>
-                      Selecciona…
+                      {t('common.select')}
                     </option>
                     {field.options.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -198,11 +200,11 @@ export function AutoForm({
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={submitting}>
-          {submitting ? 'Guardando…' : submitLabel}
+          {submitting ? t('common.saving') : (submitLabel ?? t('common.save'))}
         </Button>
         {onCancel && (
           <Button type="button" variant="ghost" onClick={onCancel}>
-            Cancelar
+            {t('common.cancel')}
           </Button>
         )}
       </div>

@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import type { UseQueryResult } from '@tanstack/react-query'
 import type { Collection } from '@/lib/api/types'
 import { useCreate, useRemove, useUpdate } from '@/lib/queries'
+import { useT } from '@/lib/i18n'
 import { AutoForm, type FieldSpec, type FormValues } from '../form/AutoForm'
 import { Button, EmptyState, ErrorState, Spinner, Toast } from '../ui'
 import { Icon } from '../Icon'
@@ -54,6 +55,7 @@ export function CollectionAdmin<T extends { id: string }>({
   const create = useCreate(resource)
   const update = useUpdate(resource)
   const remove = useRemove(resource)
+  const t = useT()
 
   const [editing, setEditing] = useState<T | 'new' | null>(null)
   const [toast, setToast] = useState<string | null>(null)
@@ -68,20 +70,20 @@ export function CollectionAdmin<T extends { id: string }>({
   async function handleSubmit(values: FormValues) {
     if (editing === 'new') {
       await create.mutateAsync(values)
-      flash(`${singular} creado`)
+      flash(t('collectionAdmin.created', { item: singular }))
     } else if (editing) {
       await update.mutateAsync({ id: editing.id, data: values })
-      flash(`${singular} actualizado`)
+      flash(t('collectionAdmin.updated', { item: singular }))
     }
     setEditing(null)
   }
 
   async function handleDelete(row: T) {
-    if (!window.confirm(`¿Eliminar este ${singular.toLowerCase()}? Esta acción no se puede deshacer.`)) {
+    if (!window.confirm(t('collectionAdmin.deleteConfirm', { item: singular.toLowerCase() }))) {
       return
     }
     await remove.mutateAsync(row.id)
-    flash(`${singular} eliminado`)
+    flash(t('collectionAdmin.deleted', { item: singular }))
   }
 
   const rows = list.data ?? []
@@ -94,7 +96,7 @@ export function CollectionAdmin<T extends { id: string }>({
           {description && <p className="mt-1 text-sm text-muted">{description}</p>}
         </div>
         <Button size="sm" onClick={() => setEditing('new')}>
-          <Icon name="plus" size={15} /> Nuevo
+          <Icon name="plus" size={15} /> {t('collectionAdmin.new')}
         </Button>
       </header>
 
@@ -102,7 +104,10 @@ export function CollectionAdmin<T extends { id: string }>({
       {list.isError && <ErrorState error={list.error} onRetry={() => list.refetch()} />}
 
       {!list.isLoading && !list.isError && rows.length === 0 && (
-        <EmptyState title={`Aún no hay ${title.toLowerCase()}`} hint="Pulsa «Nuevo» para añadir el primero." />
+        <EmptyState
+          title={t('collectionAdmin.emptyTitle', { title: title.toLowerCase() })}
+          hint={t('collectionAdmin.emptyHint')}
+        />
       )}
 
       {rows.length > 0 && (
@@ -131,12 +136,12 @@ export function CollectionAdmin<T extends { id: string }>({
                   onClick={() => setEditing(row)}
                   className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-ink-soft hover:bg-paper hover:text-ink"
                 >
-                  <Icon name="edit" size={14} /> Editar
+                  <Icon name="edit" size={14} /> {t('collectionAdmin.edit')}
                 </button>
                 <button
                   onClick={() => handleDelete(row)}
                   className="grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-red-50 hover:text-red-600"
-                  aria-label="Eliminar"
+                  aria-label={t('collectionAdmin.delete')}
                 >
                   <Icon name="trash" size={15} />
                 </button>
@@ -150,7 +155,11 @@ export function CollectionAdmin<T extends { id: string }>({
       <Drawer
         open={editing !== null}
         onClose={() => setEditing(null)}
-        title={editing === 'new' ? `Nuevo · ${singular}` : `Editar · ${singular}`}
+        title={
+          editing === 'new'
+            ? `${t('collectionAdmin.newDrawer')} ${singular}`
+            : `${t('collectionAdmin.editDrawer')} ${singular}`
+        }
       >
         {editing !== null && (
           <AutoForm

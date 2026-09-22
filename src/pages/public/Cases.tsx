@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useCases } from '@/lib/queries'
-import { CaseCard, RESULT_LABEL } from '@/components/CaseCard'
+import { CaseCard, RESULT_KEY } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
 import { EmptyState, ErrorState, Section, Spinner } from '@/components/ui'
 import { cn } from '@/lib/cn'
+import { useT } from '@/lib/i18n'
 
 function normalize(s: string): string {
   return s.toLowerCase().normalize('NFD').replace(/[^ -~]/g, '')
@@ -13,6 +14,7 @@ function normalize(s: string): string {
 export default function Cases() {
   const { data: cases = [], isLoading, isError, error, refetch } = useCases()
   const [params, setParams] = useSearchParams()
+  const t = useT()
 
   const q = params.get('q') ?? ''
   const area = params.get('area') ?? ''
@@ -56,11 +58,7 @@ export default function Cases() {
   const hasFilters = Boolean(q || area || year || type)
 
   return (
-    <Section
-      label="Resultados"
-      title="Casos"
-      intro="Búsqueda instantánea. Filtra por área, año y tipo de resultado; la URL guarda el filtro para compartirlo."
-    >
+    <Section label={t('casesPage.label')} title={t('casesPage.title')} intro={t('casesPage.intro')}>
       {/* Toolbar */}
       <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-line bg-card p-4 shadow-sm sm:flex-row sm:flex-wrap sm:items-center">
         <div className="flex flex-1 items-center gap-2 rounded-lg border border-line-strong bg-white px-3">
@@ -68,7 +66,7 @@ export default function Cases() {
           <input
             value={q}
             onChange={(e) => patch({ q: e.target.value })}
-            placeholder="Buscar por palabra clave…"
+            placeholder={t('casesPage.searchPlaceholder')}
             className="w-full bg-transparent py-2 text-sm outline-none"
           />
         </div>
@@ -78,7 +76,7 @@ export default function Cases() {
           onChange={(e) => patch({ area: e.target.value })}
           className="rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none"
         >
-          <option value="">Todas las áreas</option>
+          <option value="">{t('casesPage.allAreas')}</option>
           {areaOptions.map((a) => (
             <option key={a} value={a}>
               {a}
@@ -91,7 +89,7 @@ export default function Cases() {
           onChange={(e) => patch({ year: e.target.value })}
           className="rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none"
         >
-          <option value="">Cualquier año</option>
+          <option value="">{t('casesPage.anyYear')}</option>
           {yearOptions.map((y) => (
             <option key={y} value={String(y)}>
               {y}
@@ -104,10 +102,10 @@ export default function Cases() {
           onChange={(e) => patch({ type: e.target.value })}
           className="rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none"
         >
-          <option value="">Cualquier resultado</option>
-          {Object.entries(RESULT_LABEL).map(([value, label]) => (
+          <option value="">{t('casesPage.anyResult')}</option>
+          {Object.entries(RESULT_KEY).map(([value, key]) => (
             <option key={value} value={value}>
-              {label}
+              {t(key)}
             </option>
           ))}
         </select>
@@ -119,19 +117,19 @@ export default function Cases() {
             !hasFilters && 'pointer-events-none opacity-0',
           )}
         >
-          Limpiar
+          {t('casesPage.clear')}
         </button>
       </div>
 
       <p className="mb-4 text-sm text-muted">
-        {filtered.length} {filtered.length === 1 ? 'caso' : 'casos'}
-        {hasFilters && ` de ${cases.length}`}
+        {filtered.length} {t(filtered.length === 1 ? 'casesPage.case' : 'casesPage.cases')}
+        {hasFilters && ` ${t('casesPage.of')} ${cases.length}`}
       </p>
 
       {isLoading && <Spinner />}
       {isError && <ErrorState error={error} onRetry={() => refetch()} />}
       {!isLoading && !isError && filtered.length === 0 && (
-        <EmptyState title="Ningún caso coincide con el filtro" hint="Prueba a quitar algún criterio." />
+        <EmptyState title={t('casesPage.empty')} hint={t('casesPage.emptyHint')} />
       )}
 
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

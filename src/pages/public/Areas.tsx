@@ -2,21 +2,17 @@ import { Link } from 'react-router-dom'
 import { useAreas } from '@/lib/queries'
 import { EmptyState, ErrorState, Section, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
+import { useT } from '@/lib/i18n'
 
 export default function Areas() {
   const { data: areas = [], isLoading, isError, error, refetch } = useAreas()
+  const t = useT()
 
   return (
-    <Section
-      label="Servicios"
-      title="Áreas de práctica"
-      intro="Materias en las que asesoro y litigo. Cada área incluye una explicación del tipo de asuntos que gestiono y preguntas frecuentes."
-    >
+    <Section label={t('areasPage.label')} title={t('areasPage.title')} intro={t('areasPage.intro')}>
       {isLoading && <Spinner />}
       {isError && <ErrorState error={error} onRetry={() => refetch()} />}
-      {!isLoading && !isError && areas.length === 0 && (
-        <EmptyState title="Todavía no hay áreas publicadas" />
-      )}
+      {!isLoading && !isError && areas.length === 0 && <EmptyState title={t('areasPage.empty')} />}
 
       <div className="grid gap-4 sm:grid-cols-2">
         {areas.map((area) => (
@@ -34,8 +30,7 @@ export default function Areas() {
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">{area.summary}</p>
             {area.faqs.length > 0 && (
               <p className="mt-4 text-xs text-muted">
-                {area.faqs.length} pregunta{area.faqs.length > 1 ? 's' : ''} frecuente
-                {area.faqs.length > 1 ? 's' : ''}
+                {area.faqs.length} {t(area.faqs.length > 1 ? 'areasPage.faqs' : 'areasPage.faq')}
               </p>
             )}
           </Link>
