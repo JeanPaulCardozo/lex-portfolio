@@ -10,7 +10,7 @@ type Size = 'sm' | 'md'
 const BTN_BASE =
   'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap'
 const BTN_VARIANT: Record<Variant, string> = {
-  primary: 'bg-ink text-white hover:bg-ink-soft',
+  primary: 'bg-accent text-ink hover:bg-accent-ink hover:text-white',
   outline: 'border border-line-strong text-ink hover:bg-white hover:border-ink',
   ghost: 'text-ink-soft hover:bg-white hover:text-ink',
   danger: 'border border-red-200 text-red-700 hover:bg-red-50',

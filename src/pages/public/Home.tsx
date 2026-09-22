@@ -6,6 +6,7 @@ import {
   useProfile,
   useTestimonials,
 } from '@/lib/queries'
+import heroBanner from '@/assets/brand/hero-banner.jpg'
 import { CaseCard } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
 import { Stars } from '@/components/Stars'
@@ -32,34 +33,43 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="border-b border-line">
-        <div className="container-x grid gap-10 py-16 sm:py-24 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-          <div>
-            <p className="label mb-4">{profile.title}</p>
+      <section className="relative overflow-hidden bg-ink text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-[position:75%_center]"
+          style={{ backgroundImage: `url(${heroBanner})` }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink from-50% via-ink/95 via-70% to-ink/15" />
+
+        <div className="container-x relative py-20 sm:py-28 lg:py-32">
+          <div className="max-w-xl">
+            <p className="label mb-4 text-accent">{profile.title}</p>
             <h1 className="text-4xl font-semibold leading-[1.05] sm:text-5xl md:text-6xl">
               {profile.fullName}
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
-              {profile.headline}
-            </p>
+            <p className="mt-6 text-lg leading-relaxed text-white/80">{profile.headline}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink to="/casos">
                 Ver casos y resultados <Icon name="arrowRight" size={16} />
               </ButtonLink>
-              <ButtonLink to="/contacto" variant="outline">
+              <ButtonLink
+                to="/contacto"
+                variant="outline"
+                className="border-white/30 text-white hover:bg-white hover:text-ink"
+              >
                 Agendar una consulta
               </ButtonLink>
             </div>
-          </div>
 
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line">
-            {profile.stats.map((s) => (
-              <div key={s.label} className="bg-card p-5">
-                <dt className="text-xs text-muted">{s.label}</dt>
-                <dd className="mt-1 font-display text-2xl font-semibold">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
+            <dl className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/15 pt-8">
+              {profile.stats.map((s) => (
+                <div key={s.label}>
+                  <dd className="font-display text-2xl font-semibold">{s.value}</dd>
+                  <dt className="mt-1 text-xs text-white/60">{s.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 

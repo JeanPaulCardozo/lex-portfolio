@@ -12,3 +12,7 @@ yarn-error.log*
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# Mockups de referencia de marca (logo/banner/reference) usados solo para
+# recortar los assets finales en src/assets/brand/ y public/favicon.png.
+/images/

@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { useAuth } from '@/lib/auth'
 import { API_MODE } from '@/lib/api/client'
+import mbLogo from '@/assets/brand/mb-logo.png'
 import { Icon } from './Icon'
 
 const LINKS = [
@@ -24,6 +25,7 @@ export function AdminLayout() {
       <header className="border-b border-line bg-white">
         <div className="container-x flex h-14 items-center justify-between">
           <div className="flex items-center gap-3">
+            <img src={mbLogo} alt="" className="h-8 w-8 shrink-0 rounded-full" />
             <span className="font-display font-semibold">Panel de edición</span>
             <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] text-muted">
               API: {API_MODE}

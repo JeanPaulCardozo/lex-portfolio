@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth'
 import { API_MODE, api } from '@/lib/api/client'
 import { DEMO_CREDENTIALS } from '@/lib/api/seed'
+import mbLogo from '@/assets/brand/mb-logo.png'
 import { Button } from '@/components/ui'
 
 export default function Login() {
@@ -40,6 +41,7 @@ export default function Login() {
         <Link to="/" className="mb-8 block text-sm text-muted hover:text-ink">
           ← Volver al sitio
         </Link>
+        <img src={mbLogo} alt="" className="mb-4 h-12 w-12 rounded-full" />
         <h1 className="font-display text-2xl font-semibold">Panel de edición</h1>
         <p className="mt-1 text-sm text-muted">Acceso privado del titular del portafolio.</p>
 

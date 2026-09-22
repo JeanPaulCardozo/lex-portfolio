@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 import { useProfile } from '@/lib/queries'
+import mbLogo from '@/assets/brand/mb-logo.png'
 import { Icon } from './Icon'
 import { ButtonLink } from './ui'
 
@@ -34,9 +35,7 @@ export function Layout() {
       <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur">
         <div className="container-x flex h-16 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 font-display font-semibold tracking-tight">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-ink text-white text-sm">
-              {name.trim().charAt(0) || 'A'}
-            </span>
+            <img src={mbLogo} alt="" className="h-9 w-9 shrink-0 rounded-full" />
             <span className="hidden sm:block">{name}</span>
           </Link>
 
@@ -130,7 +129,8 @@ function SiteFooter({ name }: { name: string }) {
   return (
     <footer className="border-t border-line bg-white">
       <div className="container-x py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-muted">
-        <p>
+        <p className="flex items-center gap-3">
+          <img src={mbLogo} alt="" className="h-8 w-8 shrink-0 rounded-full" />
           © {new Date().getFullYear()} {name}. Portafolio profesional.
         </p>
         <div className="flex items-center gap-4">
