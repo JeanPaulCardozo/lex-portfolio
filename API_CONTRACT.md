@@ -132,8 +132,8 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 
 | Param | Ejemplo | Efecto |
 |---|---|---|
-| `q`          | `q=despido`      | texto libre sobre título, área, rol, resultado y narrativa |
-| `area`       | `area=Derecho laboral` | coincidencia exacta con `area` |
+| `q`          | `q=despido`      | texto libre sobre título, rol, resultado y narrativa |
+| `areaId`     | `areaId=area_1`  | coincidencia exacta con `areaId` |
 | `year`       | `year=2024`      | coincidencia exacta |
 | `resultType` | `resultType=sentencia` | uno de los valores del enum |
 
@@ -144,7 +144,7 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "id": "case_1",
   "slug": "despido-nulo-readmision",     // generado a partir de "title"; único
   "title": "Despido declarado nulo con readmisión",
-  "area": "Derecho laboral",             // string; debe casar con PracticeArea.name
+  "areaId": "area_1",                    // FK a PracticeArea.id (relación, no texto libre)
   "year": 2024,
   "role": "Dirección letrada (parte trabajadora)",
   "resultType": "sentencia",             // "sentencia" | "acuerdo" | "archivo" | "dictamen" | "otro"
@@ -336,7 +336,7 @@ POST   /practice-areas               privado
 PUT    /practice-areas/:id           privado
 DELETE /practice-areas/:id           privado
 
-GET    /cases            público   (?q= &area= &year= &resultType=)
+GET    /cases            público   (?q= &areaId= &year= &resultType=)
 GET    /cases/:slug      público
 POST   /cases            privado
 PUT    /cases/:id        privado

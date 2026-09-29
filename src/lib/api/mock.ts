@@ -27,7 +27,7 @@ import type {
 
 // Sube la versión cuando cambian los datos semilla para forzar el re-sembrado
 // en navegadores que ya visitaron la demo.
-const DB_KEY = 'lex_db_v3'
+const DB_KEY = 'lex_db_v4'
 const TOKEN_KEY = 'lex_token'
 
 interface DB {
@@ -119,14 +119,13 @@ function uniqueSlug(base: string, taken: string[]): string {
 }
 
 function matchesCaseQuery(c: Case, q: CaseQuery): boolean {
-  if (q.area && c.area !== q.area) return false
+  if (q.areaId && c.areaId !== q.areaId) return false
   if (q.year && String(c.year) !== String(q.year)) return false
   if (q.resultType && c.resultType !== q.resultType) return false
   if (q.q) {
     const needle = q.q.toLowerCase()
     const haystack = [
       c.title,
-      c.area,
       c.role,
       c.outcome,
       c.situation,

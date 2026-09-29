@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Case } from '@/lib/api/types'
-import { usePrefetchCase } from '@/lib/queries'
+import { useAreas, usePrefetchCase } from '@/lib/queries'
 import { useT, type TKey } from '@/lib/i18n'
 import { Icon } from './Icon'
 import { Badge } from './ui'
@@ -15,7 +15,9 @@ const RESULT_KEY: Record<Case['resultType'], TKey> = {
 
 export function CaseCard({ item }: { item: Case }) {
   const prefetch = usePrefetchCase()
+  const { data: areas = [] } = useAreas()
   const t = useT()
+  const areaName = areas.find((a) => a.id === item.areaId)?.name ?? ''
   return (
     <Link
       to={`/casos/${item.slug}`}
@@ -24,7 +26,7 @@ export function CaseCard({ item }: { item: Case }) {
       className="group flex flex-col rounded-2xl border border-line bg-card p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg"
     >
       <div className="flex items-center gap-2 text-xs text-muted">
-        <Badge tone="accent">{item.area}</Badge>
+        {areaName && <Badge tone="accent">{areaName}</Badge>}
         <span>{item.year}</span>
         <span aria-hidden>·</span>
         <span>{t(RESULT_KEY[item.resultType])}</span>

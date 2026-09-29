@@ -47,13 +47,16 @@ export function CommandPalette() {
       to: `/areas/${a.slug}`,
       keywords: normalize(`${a.name} ${a.summary}`),
     }))
-    const caseItems: Item[] = cases.map((c) => ({
-      id: `case-${c.id}`,
-      title: c.title,
-      group: t('palette.groupCases'),
-      to: `/casos/${c.slug}`,
-      keywords: normalize(`${c.title} ${c.area} ${c.outcome} ${c.skills.join(' ')} ${c.year}`),
-    }))
+    const caseItems: Item[] = cases.map((c) => {
+      const areaName = areas.find((a) => a.id === c.areaId)?.name ?? ''
+      return {
+        id: `case-${c.id}`,
+        title: c.title,
+        group: t('palette.groupCases'),
+        to: `/casos/${c.slug}`,
+        keywords: normalize(`${c.title} ${areaName} ${c.outcome} ${c.skills.join(' ')} ${c.year}`),
+      }
+    })
     const pubItems: Item[] = publications.map((p) => ({
       id: `pub-${p.id}`,
       title: p.title,

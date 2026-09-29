@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { useCase } from '@/lib/queries'
+import { useAreas, useCase } from '@/lib/queries'
 import { RESULT_KEY } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
 import { Badge, ButtonLink, ErrorState, Section, Spinner } from '@/components/ui'
@@ -8,6 +8,7 @@ import { useT } from '@/lib/i18n'
 export default function CaseDetail() {
   const { slug = '' } = useParams()
   const { data: c, isLoading, isError, error, refetch } = useCase(slug)
+  const { data: areas = [] } = useAreas()
   const t = useT()
 
   if (isLoading) {
@@ -34,6 +35,8 @@ export default function CaseDetail() {
     { label: t('caseDetail.result'), text: c.result },
   ].filter((b) => b.text)
 
+  const areaName = areas.find((a) => a.id === c.areaId)?.name ?? ''
+
   return (
     <Section>
       <Link to="/casos" className="mb-6 inline-flex items-center gap-1 text-sm text-muted hover:text-ink">
@@ -41,7 +44,7 @@ export default function CaseDetail() {
       </Link>
 
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone="accent">{c.area}</Badge>
+        {areaName && <Badge tone="accent">{areaName}</Badge>}
         <Badge>{c.year}</Badge>
         <Badge tone="green">{t(RESULT_KEY[c.resultType])}</Badge>
       </div>

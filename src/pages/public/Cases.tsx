@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useCases } from '@/lib/queries'
+import { useAreas, useCases } from '@/lib/queries'
 import { CaseCard, RESULT_KEY } from '@/components/CaseCard'
 import { Icon } from '@/components/Icon'
 import { EmptyState, ErrorState, Section, Spinner } from '@/components/ui'
@@ -13,11 +13,12 @@ function normalize(s: string): string {
 
 export default function Cases() {
   const { data: cases = [], isLoading, isError, error, refetch } = useCases()
+  const { data: areas = [] } = useAreas()
   const [params, setParams] = useSearchParams()
   const t = useT()
 
   const q = params.get('q') ?? ''
-  const area = params.get('area') ?? ''
+  const areaId = params.get('areaId') ?? ''
   const year = params.get('year') ?? ''
   const type = params.get('type') ?? ''
 
@@ -30,10 +31,6 @@ export default function Cases() {
     setParams(merged, { replace: true })
   }
 
-  const areaOptions = useMemo(
-    () => [...new Set(cases.map((c) => c.area))].sort(),
-    [cases],
-  )
   const yearOptions = useMemo(
     () => [...new Set(cases.map((c) => c.year))].sort((a, b) => b - a),
     [cases],
@@ -42,20 +39,20 @@ export default function Cases() {
   const filtered = useMemo(() => {
     const needle = normalize(q.trim())
     return cases.filter((c) => {
-      if (area && c.area !== area) return false
+      if (areaId && c.areaId !== areaId) return false
       if (year && String(c.year) !== year) return false
       if (type && c.resultType !== type) return false
       if (needle) {
         const hay = normalize(
-          [c.title, c.area, c.role, c.outcome, c.situation, c.action, c.result, c.skills.join(' ')].join(' '),
+          [c.title, c.role, c.outcome, c.situation, c.action, c.result, c.skills.join(' ')].join(' '),
         )
         if (!hay.includes(needle)) return false
       }
       return true
     })
-  }, [cases, q, area, year, type])
+  }, [cases, q, areaId, year, type])
 
-  const hasFilters = Boolean(q || area || year || type)
+  const hasFilters = Boolean(q || areaId || year || type)
 
   return (
     <Section label={t('casesPage.label')} title={t('casesPage.title')} intro={t('casesPage.intro')}>
@@ -72,14 +69,14 @@ export default function Cases() {
         </div>
 
         <select
-          value={area}
-          onChange={(e) => patch({ area: e.target.value })}
+          value={areaId}
+          onChange={(e) => patch({ areaId: e.target.value })}
           className="rounded-lg border border-line-strong bg-white px-3 py-2 text-sm outline-none"
         >
           <option value="">{t('casesPage.allAreas')}</option>
-          {areaOptions.map((a) => (
-            <option key={a} value={a}>
-              {a}
+          {areas.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.name}
             </option>
           ))}
         </select>

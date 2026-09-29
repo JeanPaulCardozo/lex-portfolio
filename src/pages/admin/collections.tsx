@@ -15,76 +15,81 @@ import {
 import type { CollectionConfig } from '@/components/admin/CollectionAdmin'
 import { formatDate, formatMonthYear } from '@/lib/format'
 
-export const casesConfig: CollectionConfig<Case> = {
-  resource: 'cases',
-  title: 'Casos',
-  singular: 'Caso',
-  description:
-    'Cada caso se cuenta en tres partes: situación, actuación y resultado. Marca como destacados los 3-4 más representativos.',
-  useList: useCases,
-  primary: (r) => r.title,
-  secondary: (r) => `${r.area} · ${r.year} · ${r.outcome}`,
-  badge: (r) => (r.featured ? { label: 'Destacado', tone: 'accent' } : null),
-  blank: {
-    title: '',
-    area: '',
-    year: new Date().getFullYear(),
-    role: '',
-    resultType: '',
-    outcome: '',
-    situation: '',
-    action: '',
-    result: '',
-    skills: [],
-    imageUrl: '',
-    featured: false,
-    confidential: false,
-  },
-  fields: [
-    { name: 'title', label: 'Título del caso', type: 'text', required: true, full: true },
-    {
-      name: 'area',
-      label: 'Área de práctica',
-      type: 'text',
-      required: true,
-      help: 'Escríbela igual que en «Áreas de práctica» (p. ej. Derecho laboral).',
+export function useCasesConfig(): CollectionConfig<Case> {
+  const { data: areas = [] } = useAreas()
+  const areaName = (id: string) => areas.find((a) => a.id === id)?.name ?? '—'
+
+  return {
+    resource: 'cases',
+    title: 'Casos',
+    singular: 'Caso',
+    description:
+      'Cada caso se cuenta en tres partes: situación, actuación y resultado. Marca como destacados los 3-4 más representativos.',
+    useList: useCases,
+    primary: (r) => r.title,
+    secondary: (r) => `${areaName(r.areaId)} · ${r.year} · ${r.outcome}`,
+    badge: (r) => (r.featured ? { label: 'Destacado', tone: 'accent' } : null),
+    blank: {
+      title: '',
+      areaId: '',
+      year: new Date().getFullYear(),
+      role: '',
+      resultType: '',
+      outcome: '',
+      situation: '',
+      action: '',
+      result: '',
+      skills: [],
+      imageUrl: '',
+      featured: false,
+      confidential: false,
     },
-    { name: 'year', label: 'Año', type: 'number', required: true },
-    { name: 'role', label: 'Tu rol', type: 'text', help: 'P. ej. Dirección letrada (parte trabajadora).' },
-    {
-      name: 'resultType',
-      label: 'Tipo de resultado',
-      type: 'select',
-      required: true,
-      options: [
-        { value: 'sentencia', label: 'Sentencia' },
-        { value: 'acuerdo', label: 'Acuerdo / conciliación' },
-        { value: 'archivo', label: 'Archivo / sobreseimiento' },
-        { value: 'dictamen', label: 'Resolución administrativa' },
-        { value: 'otro', label: 'Otro' },
-      ],
-    },
-    {
-      name: 'outcome',
-      label: 'Resultado en una frase',
-      type: 'text',
-      required: true,
-      full: true,
-      help: 'P. ej. Readmisión + 14.200 € de salarios de tramitación.',
-    },
-    { name: 'situation', label: 'Situación', type: 'textarea', full: true },
-    { name: 'action', label: 'Actuación', type: 'textarea', full: true },
-    { name: 'result', label: 'Resultado (detalle)', type: 'textarea', full: true },
-    { name: 'skills', label: 'Competencias demostradas', type: 'tags', full: true },
-    { name: 'imageUrl', label: 'Imagen (opcional)', type: 'image', full: true },
-    { name: 'featured', label: 'Destacar en portada', type: 'boolean' },
-    {
-      name: 'confidential',
-      label: 'Caso confidencial',
-      type: 'boolean',
-      help: 'Muestra un aviso de que se han anonimizado los datos.',
-    },
-  ],
+    fields: [
+      { name: 'title', label: 'Título del caso', type: 'text', required: true, full: true },
+      {
+        name: 'areaId',
+        label: 'Área de práctica',
+        type: 'select',
+        required: true,
+        options: areas.map((a) => ({ value: a.id, label: a.name })),
+      },
+      { name: 'year', label: 'Año', type: 'number', required: true },
+      { name: 'role', label: 'Tu rol', type: 'text', help: 'P. ej. Dirección letrada (parte trabajadora).' },
+      {
+        name: 'resultType',
+        label: 'Tipo de resultado',
+        type: 'select',
+        required: true,
+        options: [
+          { value: 'sentencia', label: 'Sentencia' },
+          { value: 'acuerdo', label: 'Acuerdo / conciliación' },
+          { value: 'archivo', label: 'Archivo / sobreseimiento' },
+          { value: 'dictamen', label: 'Resolución administrativa' },
+          { value: 'otro', label: 'Otro' },
+        ],
+      },
+      {
+        name: 'outcome',
+        label: 'Resultado en una frase',
+        type: 'text',
+        required: true,
+        full: true,
+        help: 'P. ej. Readmisión + 14.200 € de salarios de tramitación.',
+      },
+      { name: 'situation', label: 'Situación', type: 'textarea', full: true },
+      { name: 'action', label: 'Actuación', type: 'textarea', full: true },
+      { name: 'result', label: 'Resultado (detalle)', type: 'textarea', full: true },
+      { name: 'skills', label: 'Competencias demostradas', type: 'tags', full: true },
+      { name: 'imageUrl', label: 'Imagen (opcional)', type: 'image', full: true },
+      { name: 'featured', label: 'Destacar en portada', type: 'boolean' },
+      {
+        name: 'confidential',
+        label: 'Caso confidencial',
+        type: 'boolean',
+        help: 'Muestra un aviso de que se han anonimizado los datos.',
+      },
+    ],
+  }
 }
 
 export const areasConfig: CollectionConfig<PracticeArea> = {

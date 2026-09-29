@@ -64,7 +64,8 @@ export interface Case {
   id: string
   slug: string
   title: string
-  area: string
+  /** FK a `PracticeArea.id`. */
+  areaId: string
   year: number
   role: string
   resultType: CaseResultType
@@ -140,7 +141,7 @@ export interface Message {
 
 export interface CaseQuery {
   q?: string
-  area?: string
+  areaId?: string
   year?: number | string
   resultType?: string
 }
