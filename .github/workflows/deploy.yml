@@ -42,7 +42,8 @@ jobs:
           echo "VITE_BASE=$VITE_BASE"
           npm run build
         env:
-          VITE_API_MODE: mock
+          VITE_API_MODE: live
+          VITE_API_BASE_URL: https://lex-portfolio-api-production.up.railway.app
 
       # SPA fallback: cualquier ruta profunda cae en 404.html, que es la propia app
       - name: SPA fallback
