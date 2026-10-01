@@ -11,6 +11,7 @@ import type {
   Publication,
   Testimonial,
   TestimonialSubmitInput,
+  User,
 } from './types'
 
 const TOKEN_KEY = 'lex_token'
@@ -82,8 +83,19 @@ function qs(params: Record<string, unknown>): string {
 export const httpClient: ApiClient = {
   isMock: false,
 
-  login: (email, password) =>
-    request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  login: async (email, password) => {
+    const form = new URLSearchParams()
+    form.set('username', email)
+    form.set('password', password)
+    const { access_token } = await request<{ access_token: string }>('/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form.toString(),
+    })
+    localStorage.setItem(TOKEN_KEY, access_token)
+    const user = await request<User>('/auth/me')
+    return { token: access_token, user }
+  },
 
   me: () => request('/auth/me'),
 
