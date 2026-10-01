@@ -4,6 +4,27 @@ import { useProfile, useUpdateProfile } from '@/lib/queries'
 import { AutoForm, type FieldSpec, type FormValues } from '@/components/form/AutoForm'
 import { ErrorState, Spinner, Toast } from '@/components/ui'
 import { useT } from '@/lib/i18n'
+import { ApiError } from '@/lib/api/http'
+
+const blankProfile: FormValues = {
+  full_name: '',
+  title: '',
+  tagline: '',
+  headline: '',
+  summary: '',
+  location: '',
+  email: '',
+  notify_email: '',
+  phone: '',
+  whatsapp: '',
+  linkedin: '',
+  avatar_url: '',
+  cv_url: '',
+  languages: [],
+  bar_admissions: [],
+  education: [],
+  stats: [],
+}
 
 const fields: FieldSpec[] = [
   { name: 'full_name', label: 'Nombre completo', type: 'text', required: true, full: true },
@@ -89,8 +110,10 @@ export default function ProfileEdit() {
   const [toast, setToast] = useState(false)
   const t = useT()
 
+  const notFound = error instanceof ApiError && error.status === 404
+
   if (isLoading) return <Spinner />
-  if (isError || !profile) return <ErrorState error={error} onRetry={() => refetch()} />
+  if (isError && !notFound) return <ErrorState error={error} onRetry={() => refetch()} />
 
   async function onSubmit(values: FormValues) {
     await update.mutateAsync(values as unknown as Profile)
@@ -102,13 +125,15 @@ export default function ProfileEdit() {
     <div>
       <header className="mb-6">
         <h1 className="font-display text-2xl font-semibold">{t('profileEdit.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('profileEdit.intro')}</p>
+        <p className="mt-1 text-sm text-muted">
+          {notFound ? t('profileEdit.firstTime') : t('profileEdit.intro')}
+        </p>
       </header>
 
       <div className="rounded-2xl border border-line bg-card p-6">
         <AutoForm
           fields={fields}
-          initial={profile as unknown as FormValues}
+          initial={(profile ?? blankProfile) as unknown as FormValues}
           onSubmit={onSubmit}
           submitting={update.isPending}
           submitLabel={t('profileEdit.save')}

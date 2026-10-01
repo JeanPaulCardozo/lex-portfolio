@@ -271,6 +271,7 @@ const es = {
 
   'profileEdit.title': 'Perfil',
   'profileEdit.intro': 'Estos datos aparecen en la portada, en «Sobre mí» y en la página de contacto.',
+  'profileEdit.firstTime': 'Aún no has creado tu perfil. Completa estos datos y guarda para publicarlo.',
   'profileEdit.save': 'Guardar perfil',
   'profileEdit.saved': 'Perfil guardado',
 }
@@ -531,6 +532,7 @@ const en: Dict = {
 
   'profileEdit.title': 'Profile',
   'profileEdit.intro': 'This information appears on the homepage, in "About" and on the contact page.',
+  'profileEdit.firstTime': "You haven't created your profile yet. Fill this in and save to publish it.",
   'profileEdit.save': 'Save profile',
   'profileEdit.saved': 'Profile saved',
 }
