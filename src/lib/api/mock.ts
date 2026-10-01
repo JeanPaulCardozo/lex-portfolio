@@ -27,7 +27,7 @@ import type {
 
 // Sube la versión cuando cambian los datos semilla para forzar el re-sembrado
 // en navegadores que ya visitaron la demo.
-const DB_KEY = 'lex_db_v4'
+const DB_KEY = 'lex_db_v5'
 const TOKEN_KEY = 'lex_token'
 
 interface DB {
