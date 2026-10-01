@@ -22,7 +22,7 @@ export function Layout() {
     setOpen(false)
   }, [location.pathname])
 
-  const name = profile?.fullName ?? 'Portafolio'
+  const name = profile?.full_name ?? 'Portafolio'
   const profession = profile?.title?.split(' · ')[0] ?? ''
 
   const NAV = [

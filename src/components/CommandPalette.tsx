@@ -48,7 +48,7 @@ export function CommandPalette() {
       keywords: normalize(`${a.name} ${a.summary}`),
     }))
     const caseItems: Item[] = cases.map((c) => {
-      const areaName = areas.find((a) => a.id === c.areaId)?.name ?? ''
+      const areaName = areas.find((a) => a.id === c.practice_area_id)?.name ?? ''
       return {
         id: `case-${c.id}`,
         title: c.title,

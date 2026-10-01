@@ -27,14 +27,14 @@ export function useCasesConfig(): CollectionConfig<Case> {
       'Cada caso se cuenta en tres partes: situación, actuación y resultado. Marca como destacados los 3-4 más representativos.',
     useList: useCases,
     primary: (r) => r.title,
-    secondary: (r) => `${areaName(r.areaId)} · ${r.year} · ${r.outcome}`,
+    secondary: (r) => `${areaName(r.practice_area_id)} · ${r.year} · ${r.outcome}`,
     badge: (r) => (r.featured ? { label: 'Destacado', tone: 'accent' } : null),
     blank: {
       title: '',
-      areaId: '',
+      practice_area_id: '',
       year: new Date().getFullYear(),
       role: '',
-      resultType: '',
+      result_type: '',
       outcome: '',
       situation: '',
       action: '',
@@ -47,7 +47,7 @@ export function useCasesConfig(): CollectionConfig<Case> {
     fields: [
       { name: 'title', label: 'Título del caso', type: 'text', required: true, full: true },
       {
-        name: 'areaId',
+        name: 'practice_area_id',
         label: 'Área de práctica',
         type: 'select',
         required: true,
@@ -56,7 +56,7 @@ export function useCasesConfig(): CollectionConfig<Case> {
       { name: 'year', label: 'Año', type: 'number', required: true },
       { name: 'role', label: 'Tu rol', type: 'text', help: 'P. ej. Dirección letrada (parte trabajadora).' },
       {
-        name: 'resultType',
+        name: 'result_type',
         label: 'Tipo de resultado',
         type: 'select',
         required: true,
@@ -134,13 +134,13 @@ export const experienceConfig: CollectionConfig<Experience> = {
   description: 'Tu experiencia profesional, de lo más reciente a lo más antiguo.',
   useList: useExperience,
   primary: (r) => `${r.role} — ${r.org}`,
-  secondary: (r) => `${formatMonthYear(r.startDate)} – ${r.current ? 'Actualidad' : formatMonthYear(r.endDate || null)}`,
+  secondary: (r) => `${formatMonthYear(r.start_date)} – ${r.current ? 'Actualidad' : formatMonthYear(r.end_date || null)}`,
   blank: {
     org: '',
     role: '',
     location: '',
-    startDate: '',
-    endDate: '',
+    start_date: '',
+    end_date: '',
     current: false,
     description: '',
   },
@@ -148,9 +148,9 @@ export const experienceConfig: CollectionConfig<Experience> = {
     { name: 'org', label: 'Organización / despacho', type: 'text', required: true, full: true },
     { name: 'role', label: 'Cargo', type: 'text', required: true },
     { name: 'location', label: 'Ubicación', type: 'text' },
-    { name: 'startDate', label: 'Fecha de inicio', type: 'text', help: 'Formato AAAA-MM (p. ej. 2018-01).' },
+    { name: 'start_date', label: 'Fecha de inicio', type: 'text', help: 'Formato AAAA-MM (p. ej. 2018-01).' },
     {
-      name: 'endDate',
+      name: 'end_date',
       label: 'Fecha de fin',
       type: 'text',
       help: 'AAAA-MM. Déjalo vacío si es tu puesto actual.',
@@ -205,14 +205,14 @@ export const testimonialsConfig: CollectionConfig<Testimonial> = {
   useList: useAllTestimonials,
   primary: (r) => r.author,
   secondary: (r) =>
-    `${r.authorRole ? `${r.authorRole} · ` : ''}★${r.rating} · ${formatDate(
-      r.createdAt.slice(0, 10),
+    `${r.author_role ? `${r.author_role} · ` : ''}★${r.rating} · ${formatDate(
+      r.created_at.slice(0, 10),
     )} · ${r.quote}`,
   badge: (r) => TESTIMONIAL_STATUS_BADGE[r.status] ?? null,
   blank: {
     quote: '',
     author: '',
-    authorRole: '',
+    author_role: '',
     context: '',
     rating: 5,
     status: 'approved',
@@ -221,7 +221,7 @@ export const testimonialsConfig: CollectionConfig<Testimonial> = {
   fields: [
     { name: 'quote', label: 'Testimonio', type: 'textarea', required: true, full: true },
     { name: 'author', label: 'Autor/a', type: 'text', required: true },
-    { name: 'authorRole', label: 'Rol o sector', type: 'text' },
+    { name: 'author_role', label: 'Rol o sector', type: 'text' },
     {
       name: 'rating',
       label: 'Valoración',

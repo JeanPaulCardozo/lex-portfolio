@@ -31,7 +31,7 @@ export default function AreaDetail() {
     )
   }
 
-  const related = cases.filter((c) => c.areaId === area.id).slice(0, 3)
+  const related = cases.filter((c) => c.practice_area_id === area.id).slice(0, 3)
 
   return (
     <>

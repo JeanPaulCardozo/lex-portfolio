@@ -119,11 +119,11 @@ function uniqueSlug(base: string, taken: string[]): string {
 }
 
 function matchesCaseQuery(c: Case, q: CaseQuery): boolean {
-  if (q.areaId && c.areaId !== q.areaId) return false
+  if (q.practice_area_id && c.practice_area_id !== q.practice_area_id) return false
   if (q.year && String(c.year) !== String(q.year)) return false
-  if (q.resultType && c.resultType !== q.resultType) return false
-  if (q.q) {
-    const needle = q.q.toLowerCase()
+  if (q.result_type && c.result_type !== q.result_type) return false
+  if (q.query) {
+    const needle = q.query.toLowerCase()
     const haystack = [
       c.title,
       c.role,
@@ -205,7 +205,7 @@ export const mockClient: ApiClient = {
 
   async listExperience() {
     await latency()
-    return clone(load().experience).sort((a, b) => b.startDate.localeCompare(a.startDate))
+    return clone(load().experience).sort((a, b) => b.start_date.localeCompare(a.start_date))
   },
 
   async listPublications() {
@@ -221,7 +221,7 @@ export const mockClient: ApiClient = {
   async listAllTestimonials() {
     await latency()
     return clone(load().testimonials).sort((a, b) =>
-      b.createdAt.localeCompare(a.createdAt),
+      b.created_at.localeCompare(a.created_at),
     )
   },
 
@@ -232,12 +232,12 @@ export const mockClient: ApiClient = {
       id: uid('test'),
       quote: data.quote,
       author: data.author,
-      authorRole: data.authorRole,
+      author_role: data.author_role,
       context: String(new Date().getFullYear()),
       rating: clampRating(data.rating),
       status: 'pending',
       email: data.email,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     })
     save(db)
     return { ok: true }
@@ -262,7 +262,7 @@ export const mockClient: ApiClient = {
       if (record.status == null) record.status = 'approved'
       record.rating = clampRating(record.rating)
       if (record.email == null) record.email = ''
-      if (record.createdAt == null) record.createdAt = new Date().toISOString()
+      if (record.created_at == null) record.created_at = new Date().toISOString()
     }
 
     arr.unshift(record)

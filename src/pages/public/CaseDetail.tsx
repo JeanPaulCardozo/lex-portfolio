@@ -35,7 +35,7 @@ export default function CaseDetail() {
     { label: t('caseDetail.result'), text: c.result },
   ].filter((b) => b.text)
 
-  const areaName = areas.find((a) => a.id === c.areaId)?.name ?? ''
+  const areaName = areas.find((a) => a.id === c.practice_area_id)?.name ?? ''
 
   return (
     <Section>
@@ -46,7 +46,7 @@ export default function CaseDetail() {
       <div className="flex flex-wrap items-center gap-2">
         {areaName && <Badge tone="accent">{areaName}</Badge>}
         <Badge>{c.year}</Badge>
-        <Badge tone="green">{t(RESULT_KEY[c.resultType])}</Badge>
+        <Badge tone="green">{t(RESULT_KEY[c.result_type])}</Badge>
       </div>
 
       <h1 className="mt-4 max-w-3xl text-3xl font-semibold sm:text-4xl">{c.title}</h1>

@@ -67,22 +67,22 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 
 ```jsonc
 {
-  "fullName": "Valentina Ortega",
+  "full_name": "Valentina Ortega",
   "title": "Abogada laboralista y de extranjería",
   "tagline": "Defensa Legal con Excelencia y Empatía",  // titular corto del hero de Inicio
   "headline": "Acompaño a personas trabajadoras y pymes...",
   "summary": "Texto largo de la biografía...",
   "location": "Madrid, España",
   "email": "contacto@ejemplo.com",
-  "notifyEmail": "",                  // destino de los avisos; si va "" usa "email". Nunca se muestra en el sitio
+  "notify_email": "",                 // destino de los avisos; si va "" usa "email". Nunca se muestra en el sitio
   "phone": "+34 600 000 000",
   "whatsapp": "34600000000",          // dígitos con prefijo internacional -> https://wa.me/<whatsapp>
                                       // o un usuario de WhatsApp con arroba: "@miusuario" -> https://wa.me/miusuario
   "linkedin": "https://linkedin.com/in/...",
-  "avatarUrl": "https://cdn/.../foto.jpg",   // "" si no hay
-  "cvUrl": "https://cdn/.../cv.pdf",          // "" si no hay
+  "avatar_url": "https://cdn/.../foto.jpg",  // "" si no hay
+  "cv_url": "https://cdn/.../cv.pdf",         // "" si no hay
   "languages": ["Español (nativo)", "Inglés (C1)"],
-  "barAdmissions": ["Ilustre Colegio de la Abogacía de Madrid (nº 000000)"],
+  "bar_admissions": ["Ilustre Colegio de la Abogacía de Madrid (nº 000000)"],
   "education": [
     { "degree": "Máster de Acceso a la Abogacía", "institution": "UCM", "year": "2013" }
   ],
@@ -132,10 +132,10 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 
 | Param | Ejemplo | Efecto |
 |---|---|---|
-| `q`          | `q=despido`      | texto libre sobre título, rol, resultado y narrativa |
-| `areaId`     | `areaId=area_1`  | coincidencia exacta con `areaId` |
+| `query`          | `query=despido`      | texto libre sobre título, rol, resultado y narrativa |
+| `practice_area_id` | `practice_area_id=area_1` | coincidencia exacta con `practice_area_id` |
 | `year`       | `year=2024`      | coincidencia exacta |
-| `resultType` | `resultType=sentencia` | uno de los valores del enum |
+| `result_type` | `result_type=sentencia` | uno de los valores del enum |
 
 > El frontend **también** filtra en cliente para respuesta instantánea; implementar los filtros en servidor es recomendable pero no bloqueante para el MVP.
 
@@ -144,10 +144,10 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "id": "case_1",
   "slug": "despido-nulo-readmision",     // generado a partir de "title"; único
   "title": "Despido declarado nulo con readmisión",
-  "areaId": "area_1",                    // FK a PracticeArea.id (relación, no texto libre)
+  "practice_area_id": "area_1",          // FK a PracticeArea.id (relación, no texto libre)
   "year": 2024,
   "role": "Dirección letrada (parte trabajadora)",
-  "resultType": "sentencia",             // "sentencia" | "acuerdo" | "archivo" | "dictamen" | "otro"
+  "result_type": "sentencia",            // "sentencia" | "acuerdo" | "archivo" | "dictamen" | "otro"
   "outcome": "Readmisión + 14.200 € de salarios de tramitación",
   "situation": "...",
   "action": "...",
@@ -165,7 +165,7 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 
 | Método | Ruta | Acceso |
 |---|---|---|
-| `GET`    | `/experience`     | público — orden descendente por `startDate` |
+| `GET`    | `/experience`     | público — orden descendente por `start_date` |
 | `POST`   | `/experience`     | privado |
 | `PUT`    | `/experience/:id` | privado |
 | `DELETE` | `/experience/:id` | privado |
@@ -175,8 +175,8 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "id": "exp_1",
   "org": "Despacho propio — Ortega Abogacía",
   "role": "Abogada titular",
-  "startDate": "2018-01",      // YYYY-MM
-  "endDate": null,             // null o "" si es el puesto actual
+  "start_date": "2018-01",     // YYYY-MM
+  "end_date": null,            // null o "" si es el puesto actual
   "current": true,
   "location": "Madrid",
   "description": "..."
@@ -216,7 +216,7 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
 | Método | Ruta | Acceso | Nota |
 |---|---|---|---|
 | `GET`    | `/testimonials`         | público  | **solo** los `approved` |
-| `GET`    | `/testimonials?all=1`   | privado  | todos, orden desc por `createdAt` (panel) |
+| `GET`    | `/testimonials?all=1`   | privado  | todos, orden desc por `created_at` (panel) |
 | `POST`   | `/testimonials/submit`  | público  | envío del visitante (ver abajo) |
 | `POST`   | `/testimonials`         | privado  | alta manual del titular; `status` por defecto `approved` |
 | `PUT`    | `/testimonials/:id`     | privado  | actualiza (incluye cambiar `status`) |
@@ -227,12 +227,12 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
   "id": "test_1",
   "quote": "Me explicó las opciones con total claridad...",
   "author": "Cliente — reclamación por despido",
-  "authorRole": "Sector comercio",
+  "author_role": "Sector comercio",
   "context": "2024",
   "rating": 5,                       // entero 1..5
   "status": "approved",              // "pending" | "approved" | "rejected"
   "email": "cliente@ej.com",         // de quien deja la opinión; NUNCA se expone en GET público
-  "createdAt": "2026-09-01T10:00:00.000Z"
+  "created_at": "2026-09-01T10:00:00.000Z"
 }
 ```
 
@@ -242,7 +242,7 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
 // Request
 {
   "author": "Laura Méndez",
-  "authorRole": "Sector servicios",
+  "author_role": "Sector servicios",
   "quote": "Texto de la opinión (mín. 10 caracteres)...",
   "rating": 5,                       // el backend lo acota a 1..5
   "email": "laura@ej.com"
@@ -251,9 +251,9 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
 { "ok": true }
 ```
 
-El backend guarda el registro con `status: "pending"`, `createdAt` (ISO) y un
+El backend guarda el registro con `status: "pending"`, `created_at` (ISO) y un
 `context` (p. ej. el año). **Ignora** cualquier `status` que venga en el cuerpo.
-Recomendado: enviar un correo de aviso al titular (`notifyEmail || email`) y
+Recomendado: enviar un correo de aviso al titular (`notify_email || email`) y
 aplicar rate-limiting / captcha.
 
 > El `GET /testimonials` público **no** debe incluir el campo `email` ni los
@@ -273,7 +273,7 @@ aplicar rate-limiting / captcha.
 ```
 
 El backend guarda el mensaje con `id`, `createdAt` (ISO) y `read: false`, y
-**envía un correo de aviso** al titular (`profile.notifyEmail || profile.email`)
+**envía un correo de aviso** al titular (`profile.notify_email || profile.email`)
 con el nombre, el correo y el texto de la consulta. Aplica rate-limiting / captcha.
 
 > El envío de correo es responsabilidad del backend: el frontend es estático y no
@@ -317,7 +317,7 @@ Actualización parcial. El frontend solo envía `{ "read": true }` o `{ "read": 
 { "url": "https://cdn.tu-dominio.com/uploads/abc123.jpg" }
 ```
 
-El frontend guarda esa `url` en `avatarUrl` / `imageUrl`. Valida tipo (`image/*`) y tamaño.
+El frontend guarda esa `url` en `avatar_url` / `imageUrl`. Valida tipo (`image/*`) y tamaño.
 
 ---
 
@@ -336,7 +336,7 @@ POST   /practice-areas               privado
 PUT    /practice-areas/:id           privado
 DELETE /practice-areas/:id           privado
 
-GET    /cases            público   (?q= &areaId= &year= &resultType=)
+GET    /cases            público   (?query= &practice_area_id= &year= &result_type=)
 GET    /cases/:slug      público
 POST   /cases            privado
 PUT    /cases/:id        privado

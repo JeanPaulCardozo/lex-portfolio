@@ -11,7 +11,7 @@ import { StarsInput } from '@/components/Stars'
 function makeSchema(t: TFn) {
   return z.object({
     author: z.string().min(2, t('testimonialForm.errorName')),
-    authorRole: z.string().optional().or(z.literal('')),
+    author_role: z.string().optional().or(z.literal('')),
     email: z.string().email(t('testimonialForm.errorEmail')),
     quote: z.string().min(10, t('testimonialForm.errorQuote')),
   })
@@ -37,7 +37,7 @@ export function TestimonialForm() {
   async function onSubmit(data: FormData) {
     await submit.mutateAsync({
       author: data.author,
-      authorRole: data.authorRole ?? '',
+      author_role: data.author_role ?? '',
       email: data.email,
       quote: data.quote,
       rating,
@@ -79,7 +79,7 @@ export function TestimonialForm() {
         </label>
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium">{t('testimonialForm.role')}</span>
-          <input className={fieldCls} placeholder={t('testimonialForm.rolePlaceholder')} {...register('authorRole')} />
+          <input className={fieldCls} placeholder={t('testimonialForm.rolePlaceholder')} {...register('author_role')} />
         </label>
       </div>
 

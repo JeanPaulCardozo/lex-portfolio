@@ -134,7 +134,7 @@ export default function Home() {
             <div>
               <p className="label text-[0.6rem]">{t('home.barAdmissions')}</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
-                {profile.barAdmissions.map((b) => (
+                {profile.bar_admissions.map((b) => (
                   <li key={b}>{b}</li>
                 ))}
               </ul>
@@ -160,7 +160,7 @@ export default function Home() {
                 <blockquote className="mt-3 text-sm leading-relaxed text-ink">“{item.quote}”</blockquote>
                 <figcaption className="mt-4 text-xs text-muted">
                   {item.author}
-                  {item.authorRole ? ` · ${item.authorRole}` : ''}
+                  {item.author_role ? ` · ${item.author_role}` : ''}
                 </figcaption>
               </figure>
             ))}

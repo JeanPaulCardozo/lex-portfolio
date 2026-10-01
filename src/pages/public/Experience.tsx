@@ -24,7 +24,7 @@ export default function Experience() {
           <li key={x.id} className="mb-10 last:mb-0">
             <span className="absolute -left-[6.5px] mt-1.5 h-3 w-3 rounded-full border-2 border-paper bg-accent" />
             <p className="text-sm text-muted">
-              {formatMonthYear(x.startDate)} – {x.current ? t('common.current') : formatMonthYear(x.endDate)}
+              {formatMonthYear(x.start_date)} – {x.current ? t('common.current') : formatMonthYear(x.end_date)}
               {x.location ? ` · ${x.location}` : ''}
             </p>
             <h2 className="mt-1 text-lg font-semibold">

@@ -55,7 +55,7 @@ export default function Dashboard() {
     <div>
       <h1 className="font-display text-2xl font-semibold">
         {t('dashboard.greeting')}
-        {profile ? `, ${profile.fullName.split(' ')[0]}` : ''}
+        {profile ? `, ${profile.full_name.split(' ')[0]}` : ''}
       </h1>
       <p className="mt-1 text-sm text-muted">{t('dashboard.subtitle')}</p>
 

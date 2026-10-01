@@ -6,7 +6,7 @@ import { ErrorState, Spinner, Toast } from '@/components/ui'
 import { useT } from '@/lib/i18n'
 
 const fields: FieldSpec[] = [
-  { name: 'fullName', label: 'Nombre completo', type: 'text', required: true, full: true },
+  { name: 'full_name', label: 'Nombre completo', type: 'text', required: true, full: true },
   {
     name: 'title',
     label: 'Titular profesional',
@@ -35,7 +35,7 @@ const fields: FieldSpec[] = [
   { name: 'location', label: 'Ubicación', type: 'text' },
   { name: 'email', label: 'Correo de contacto', type: 'text', required: true },
   {
-    name: 'notifyEmail',
+    name: 'notify_email',
     label: 'Correo para avisos',
     type: 'text',
     help: 'Dónde recibes el aviso de nuevas consultas y testimonios. Si lo dejas vacío se usa tu correo de contacto. No se muestra en el sitio.',
@@ -48,16 +48,16 @@ const fields: FieldSpec[] = [
     help: 'Número con prefijo internacional (573001234567) o tu usuario de WhatsApp (@usuario).',
   },
   { name: 'linkedin', label: 'LinkedIn (URL)', type: 'url', full: true },
-  { name: 'avatarUrl', label: 'Fotografía', type: 'image', full: true },
+  { name: 'avatar_url', label: 'Fotografía', type: 'image', full: true },
   {
-    name: 'cvUrl',
+    name: 'cv_url',
     label: 'CV (URL a PDF)',
     type: 'url',
     full: true,
     help: 'Enlace público a tu currículum en PDF.',
   },
   { name: 'languages', label: 'Idiomas', type: 'tags', full: true },
-  { name: 'barAdmissions', label: 'Colegiación y habilitaciones', type: 'tags', full: true },
+  { name: 'bar_admissions', label: 'Colegiación y habilitaciones', type: 'tags', full: true },
   {
     name: 'education',
     label: 'Formación',

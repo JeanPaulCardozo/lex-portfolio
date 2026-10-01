@@ -30,7 +30,7 @@ export function AdminLayout() {
       <header className="border-b border-black/20 bg-ink/95 text-white shadow-sm backdrop-blur">
         <div className="container-x flex h-14 items-center justify-between">
           <div className="flex items-center gap-3">
-            <BrandMark name={profile?.fullName ?? 'Panel'} profession={profession} size="sm" onDark />
+            <BrandMark name={profile?.full_name ?? 'Panel'} profession={profession} size="sm" onDark />
             <span className="h-5 w-px bg-white/20" />
             <span className="font-display font-semibold">{t('admin.title')}</span>
           </div>

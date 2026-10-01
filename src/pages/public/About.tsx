@@ -36,10 +36,10 @@ export default function About() {
           </div>
 
           <aside className="space-y-5 rounded-2xl border border-line bg-card p-6 text-sm shadow-sm">
-            {profile.avatarUrl && (
+            {profile.avatar_url && (
               <img
-                src={profile.avatarUrl}
-                alt={profile.fullName}
+                src={profile.avatar_url}
+                alt={profile.full_name}
                 className="aspect-square w-full rounded-xl object-cover"
               />
             )}
@@ -50,7 +50,7 @@ export default function About() {
             <div>
               <p className="label text-[0.6rem]">{t('about.barAdmissions')}</p>
               <ul className="mt-1 space-y-1 text-ink-soft">
-                {profile.barAdmissions.map((b) => (
+                {profile.bar_admissions.map((b) => (
                   <li key={b}>{b}</li>
                 ))}
               </ul>
@@ -63,8 +63,8 @@ export default function About() {
                 ))}
               </ul>
             </div>
-            {profile.cvUrl && (
-              <ButtonLink to={profile.cvUrl} external variant="outline" size="sm" className="w-full">
+            {profile.cv_url && (
+              <ButtonLink to={profile.cv_url} external variant="outline" size="sm" className="w-full">
                 <Icon name="external" size={15} /> {t('about.downloadCv')}
               </ButtonLink>
             )}
@@ -92,7 +92,7 @@ export default function About() {
             {experience.slice(0, 3).map((x) => (
               <li key={x.id} className="grid gap-1 sm:grid-cols-[180px_1fr]">
                 <p className="text-sm text-muted">
-                  {formatMonthYear(x.startDate)} – {x.current ? t('common.current') : formatMonthYear(x.endDate)}
+                  {formatMonthYear(x.start_date)} – {x.current ? t('common.current') : formatMonthYear(x.end_date)}
                 </p>
                 <div>
                   <p className="font-medium">

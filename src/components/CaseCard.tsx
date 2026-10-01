@@ -5,7 +5,7 @@ import { useT, type TKey } from '@/lib/i18n'
 import { Icon } from './Icon'
 import { Badge } from './ui'
 
-const RESULT_KEY: Record<Case['resultType'], TKey> = {
+const RESULT_KEY: Record<Case['result_type'], TKey> = {
   sentencia: 'result.sentencia',
   acuerdo: 'result.acuerdo',
   archivo: 'result.archivo',
@@ -17,7 +17,7 @@ export function CaseCard({ item }: { item: Case }) {
   const prefetch = usePrefetchCase()
   const { data: areas = [] } = useAreas()
   const t = useT()
-  const areaName = areas.find((a) => a.id === item.areaId)?.name ?? ''
+  const areaName = areas.find((a) => a.id === item.practice_area_id)?.name ?? ''
   return (
     <Link
       to={`/casos/${item.slug}`}
@@ -29,7 +29,7 @@ export function CaseCard({ item }: { item: Case }) {
         {areaName && <Badge tone="accent">{areaName}</Badge>}
         <span>{item.year}</span>
         <span aria-hidden>·</span>
-        <span>{t(RESULT_KEY[item.resultType])}</span>
+        <span>{t(RESULT_KEY[item.result_type])}</span>
       </div>
 
       <h3 className="mt-4 text-lg font-semibold leading-snug">{item.title}</h3>

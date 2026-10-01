@@ -16,7 +16,7 @@ export interface StatItem {
 }
 
 export interface Profile {
-  fullName: string
+  full_name: string
   title: string
   /** Titular corto de portada (p. ej. «Defensa Legal con Excelencia y Empatía»). */
   tagline: string
@@ -26,14 +26,14 @@ export interface Profile {
   email: string
   /** Dónde recibe el titular los avisos de nuevas consultas y testimonios.
    *  Si va vacío, el backend usa `email`. Nunca se muestra en el sitio. */
-  notifyEmail: string
+  notify_email: string
   phone: string
   whatsapp: string
   linkedin: string
-  avatarUrl: string
-  cvUrl: string
+  avatar_url: string
+  cv_url: string
   languages: string[]
-  barAdmissions: string[]
+  bar_admissions: string[]
   education: EducationItem[]
   stats: StatItem[]
 }
@@ -65,10 +65,10 @@ export interface Case {
   slug: string
   title: string
   /** FK a `PracticeArea.id`. */
-  areaId: string
+  practice_area_id: string
   year: number
   role: string
-  resultType: CaseResultType
+  result_type: CaseResultType
   outcome: string
   situation: string
   action: string
@@ -83,8 +83,8 @@ export interface Experience {
   id: string
   org: string
   role: string
-  startDate: string
-  endDate: string | null
+  start_date: string
+  end_date: string | null
   current: boolean
   location: string
   description: string
@@ -108,7 +108,7 @@ export interface Testimonial {
   id: string
   quote: string
   author: string
-  authorRole: string
+  author_role: string
   context: string
   /** Valoración de 1 a 5 estrellas. */
   rating: number
@@ -116,14 +116,14 @@ export interface Testimonial {
   status: TestimonialStatus
   /** Correo de quien deja la opinión. No se publica; sirve para verificar autoría. */
   email: string
-  createdAt: string
+  created_at: string
 }
 
 /** Datos que envía el público desde la portada. El backend fuerza
  *  `status: 'pending'` y acota `rating` a 1–5. */
 export interface TestimonialSubmitInput {
   author: string
-  authorRole: string
+  author_role: string
   quote: string
   rating: number
   email: string
@@ -140,10 +140,10 @@ export interface Message {
 }
 
 export interface CaseQuery {
-  q?: string
-  areaId?: string
+  query?: string
+  practice_area_id?: string
   year?: number | string
-  resultType?: string
+  result_type?: string
 }
 
 export type Collection =

@@ -46,7 +46,7 @@ export default function Login() {
           {t('login.backToSite')}
         </Link>
         <BrandMark
-          name={profile?.fullName ?? 'Portafolio'}
+          name={profile?.full_name ?? 'Portafolio'}
           profession={profile?.title?.split(' · ')[0]}
           size="lg"
           className="mb-6"
