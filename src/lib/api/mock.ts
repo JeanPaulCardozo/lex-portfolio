@@ -156,6 +156,13 @@ export const mockClient: ApiClient = {
     return { token, user }
   },
 
+  async register(email) {
+    // El modo demo solo soporta las credenciales precargadas (DEMO_CREDENTIALS);
+    // no hay un registro real que luego puedas usar para iniciar sesión aquí.
+    await latency()
+    return { id: 'u-1', name: 'Administración del portafolio', email }
+  },
+
   async me() {
     await sleep(40)
     const token = localStorage.getItem(TOKEN_KEY)

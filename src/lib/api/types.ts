@@ -159,6 +159,7 @@ export interface ApiClient {
   readonly isMock: boolean
 
   login(email: string, password: string): Promise<{ token: string; user: User }>
+  register(email: string, password: string): Promise<User>
   me(): Promise<User>
 
   getProfile(): Promise<Profile>

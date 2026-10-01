@@ -1,39 +1,44 @@
 import { useState, type FormEvent } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth'
-import { API_MODE, api } from '@/lib/api/client'
-import { DEMO_CREDENTIALS } from '@/lib/api/seed'
+import { api } from '@/lib/api/client'
 import { useProfile } from '@/lib/queries'
 import { useT } from '@/lib/i18n'
 import { BrandMark } from '@/components/BrandMark'
 import { Button } from '@/components/ui'
 
-export default function Login() {
+export default function Register() {
   const { status, login } = useAuth()
   const navigate = useNavigate()
-  const location = useLocation() as { state?: { from?: string } }
   const { data: profile } = useProfile()
   const t = useT()
 
-  const demo = api.isMock
-  const [email, setEmail] = useState(demo ? DEMO_CREDENTIALS.email : '')
-  const [password, setPassword] = useState(demo ? DEMO_CREDENTIALS.password : '')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
   if (status === 'authenticated') {
-    return <Navigate to={location.state?.from ?? '/admin'} replace />
+    return <Navigate to="/admin" replace />
   }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
-    setBusy(true)
     setError(null)
+
+    if (password !== confirmPassword) {
+      setError(t('register.passwordMismatch'))
+      return
+    }
+
+    setBusy(true)
     try {
+      await api.register(email, password)
       await login(email, password)
-      navigate(location.state?.from ?? '/admin', { replace: true })
+      navigate('/admin', { replace: true })
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('login.error'))
+      setError(err instanceof Error ? err.message : t('register.error'))
     } finally {
       setBusy(false)
     }
@@ -51,8 +56,8 @@ export default function Login() {
           size="lg"
           className="mb-6"
         />
-        <h1 className="font-display text-2xl font-semibold">{t('admin.title')}</h1>
-        <p className="mt-1 text-sm text-muted">{t('login.subtitle')}</p>
+        <h1 className="font-display text-2xl font-semibold">{t('register.title')}</h1>
+        <p className="mt-1 text-sm text-muted">{t('register.subtitle')}</p>
 
         <div className="mt-6 rounded-2xl border border-line bg-card p-6 shadow-sm">
           <form onSubmit={onSubmit} className="space-y-4">
@@ -73,6 +78,19 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                minLength={8}
+                className="w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25"
+              />
+              <span className="mt-1 block text-xs text-muted">{t('register.passwordHelp')}</span>
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-sm font-medium">{t('register.confirmPassword')}</span>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={8}
                 className="w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25"
               />
             </label>
@@ -80,26 +98,16 @@ export default function Login() {
             {error && <p className="text-sm text-red-600">{error}</p>}
 
             <Button type="submit" disabled={busy} className="w-full">
-              {busy ? t('login.submitting') : t('login.submit')}
+              {busy ? t('register.submitting') : t('register.submit')}
             </Button>
           </form>
 
-          {demo && (
-            <p className="mt-4 rounded-lg bg-accent-soft px-3 py-2 text-xs text-accent-ink">
-              {t('login.demoNotice', { mode: API_MODE })}{' '}
-              <code className="font-mono">{DEMO_CREDENTIALS.email}</code> /{' '}
-              <code className="font-mono">{DEMO_CREDENTIALS.password}</code>
-            </p>
-          )}
-
-          {!demo && (
-            <p className="mt-4 text-center text-sm text-muted">
-              {t('login.noAccount')}{' '}
-              <Link to="/admin/registro" className="font-medium text-accent-ink hover:underline">
-                {t('register.submit')}
-              </Link>
-            </p>
-          )}
+          <p className="mt-4 text-center text-sm text-muted">
+            {t('register.hasAccount')}{' '}
+            <Link to="/admin/login" className="font-medium text-accent-ink hover:underline">
+              {t('login.submit')}
+            </Link>
+          </p>
         </div>
       </div>
     </div>

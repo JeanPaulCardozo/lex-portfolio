@@ -30,6 +30,7 @@ const NotFound = lazy(() => import('@/pages/public/NotFound'))
 
 /* Panel de administración */
 const Login = lazy(() => import('@/pages/admin/Login'))
+const Register = lazy(() => import('@/pages/admin/Register'))
 const Dashboard = lazy(() => import('@/pages/admin/Dashboard'))
 const ProfileEdit = lazy(() => import('@/pages/admin/ProfileEdit'))
 const Messages = lazy(() => import('@/pages/admin/Messages'))
@@ -75,6 +76,7 @@ export default function App() {
               </Route>
 
               <Route path="/admin/login" element={<Login />} />
+              <Route path="/admin/registro" element={<Register />} />
               <Route path="/admin" element={<ProtectedRoute />}>
                 <Route element={<AdminLayout />}>
                   <Route index element={<Dashboard />} />

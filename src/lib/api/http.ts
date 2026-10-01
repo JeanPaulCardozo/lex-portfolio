@@ -97,6 +97,12 @@ export const httpClient: ApiClient = {
     return { token: access_token, user }
   },
 
+  register: (email, password) =>
+    request<User>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
+
   me: () => request('/auth/me'),
 
   getProfile: () => request<Profile>('/profile/'),
