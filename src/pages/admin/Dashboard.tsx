@@ -26,7 +26,7 @@ export default function Dashboard() {
   const t = useT()
 
   const unread = messages.filter((m) => !m.read).length
-  const pendingTestimonials = testimonials.filter((item) => item.status === 'pending').length
+  const pendingTestimonials = testimonials.filter((item) => item.status === 'Pendiente').length
 
   const stats = [
     { label: t('dashboard.cases'), value: cases.length, to: '/admin/casos' },

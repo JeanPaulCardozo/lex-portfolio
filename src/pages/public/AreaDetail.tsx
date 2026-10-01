@@ -46,11 +46,11 @@ export default function AreaDetail() {
           <p>{area.description}</p>
         </div>
 
-        {area.faqs.length > 0 && (
+        {area.fags.length > 0 && (
           <div className="mt-12 max-w-2xl">
             <h2 className="text-xl font-semibold">{t('areaDetail.faq')}</h2>
             <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-card shadow-sm">
-              {area.faqs.map((faq, i) => (
+              {area.fags.map((faq, i) => (
                 <div key={faq.q}>
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}

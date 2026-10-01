@@ -100,7 +100,7 @@ export const areasConfig: CollectionConfig<PracticeArea> = {
   useList: useAreas,
   primary: (r) => r.name,
   secondary: (r) => r.summary,
-  blank: { name: '', summary: '', description: '', faqs: [], order: 99 },
+  blank: { name: '', summary: '', description: '', fags: [], order: 99 },
   fields: [
     { name: 'name', label: 'Nombre del área', type: 'text', required: true, full: true },
     {
@@ -113,7 +113,7 @@ export const areasConfig: CollectionConfig<PracticeArea> = {
     },
     { name: 'description', label: 'Descripción', type: 'textarea', full: true },
     {
-      name: 'faqs',
+      name: 'fags',
       label: 'Preguntas frecuentes',
       type: 'repeater',
       full: true,
@@ -191,9 +191,9 @@ export const publicationsConfig: CollectionConfig<Publication> = {
 }
 
 const TESTIMONIAL_STATUS_BADGE = {
-  pending: { label: 'Pendiente', tone: 'warn' as const },
-  rejected: { label: 'Rechazado', tone: 'muted' as const },
-  approved: null,
+  Pendiente: { label: 'Pendiente', tone: 'warn' as const },
+  Rechazado: { label: 'Rechazado', tone: 'muted' as const },
+  Aprobado: null,
 }
 
 export const testimonialsConfig: CollectionConfig<Testimonial> = {
@@ -215,7 +215,7 @@ export const testimonialsConfig: CollectionConfig<Testimonial> = {
     author_role: '',
     context: '',
     rating: 5,
-    status: 'approved',
+    status: 'Aprobado',
     email: '',
   },
   fields: [
@@ -241,9 +241,9 @@ export const testimonialsConfig: CollectionConfig<Testimonial> = {
       type: 'select',
       required: true,
       options: [
-        { value: 'pending', label: 'Pendiente de revisión' },
-        { value: 'approved', label: 'Aprobado (visible en el sitio)' },
-        { value: 'rejected', label: 'Rechazado' },
+        { value: 'Pendiente', label: 'Pendiente de revisión' },
+        { value: 'Aprobado', label: 'Aprobado (visible en el sitio)' },
+        { value: 'Rechazado', label: 'Rechazado' },
       ],
     },
     {

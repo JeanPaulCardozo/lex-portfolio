@@ -215,7 +215,7 @@ export const mockClient: ApiClient = {
 
   async listTestimonials() {
     await latency()
-    return clone(load().testimonials.filter((t) => t.status === 'approved'))
+    return clone(load().testimonials.filter((t) => t.status === 'Aprobado'))
   },
 
   async listAllTestimonials() {
@@ -235,7 +235,7 @@ export const mockClient: ApiClient = {
       author_role: data.author_role,
       context: String(new Date().getFullYear()),
       rating: clampRating(data.rating),
-      status: 'pending',
+      status: 'Pendiente',
       email: data.email,
       created_at: new Date().toISOString(),
     })
@@ -259,7 +259,7 @@ export const mockClient: ApiClient = {
     }
     if (resource === 'testimonials') {
       // Alta manual desde el panel: se publica salvo que se indique lo contrario.
-      if (record.status == null) record.status = 'approved'
+      if (record.status == null) record.status = 'Aprobado'
       record.rating = clampRating(record.rating)
       if (record.email == null) record.email = ''
       if (record.created_at == null) record.created_at = new Date().toISOString()

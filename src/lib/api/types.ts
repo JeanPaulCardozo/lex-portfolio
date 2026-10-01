@@ -49,7 +49,7 @@ export interface PracticeArea {
   name: string
   summary: string
   description: string
-  faqs: Faq[]
+  fags: Faq[]
   order: number
 }
 
@@ -102,7 +102,7 @@ export interface Publication {
   summary: string
 }
 
-export type TestimonialStatus = 'pending' | 'approved' | 'rejected'
+export type TestimonialStatus = 'Pendiente' | 'Aprobado' | 'Rechazado'
 
 export interface Testimonial {
   id: string
@@ -120,7 +120,7 @@ export interface Testimonial {
 }
 
 /** Datos que envía el público desde la portada. El backend fuerza
- *  `status: 'pending'` y acota `rating` a 1–5. */
+ *  `status: 'Pendiente'` y acota `rating` a 1–5. */
 export interface TestimonialSubmitInput {
   author: string
   author_role: string

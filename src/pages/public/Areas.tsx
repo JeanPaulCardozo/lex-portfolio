@@ -28,9 +28,9 @@ export default function Areas() {
               </span>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">{area.summary}</p>
-            {area.faqs.length > 0 && (
+            {area.fags.length > 0 && (
               <p className="mt-4 text-xs text-muted">
-                {area.faqs.length} {t(area.faqs.length > 1 ? 'areasPage.faqs' : 'areasPage.faq')}
+                {area.fags.length} {t(area.fags.length > 1 ? 'areasPage.faqs' : 'areasPage.faq')}
               </p>
             )}
           </Link>

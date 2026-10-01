@@ -99,21 +99,21 @@ export const httpClient: ApiClient = {
 
   me: () => request('/auth/me'),
 
-  getProfile: () => request<Profile>('/profile'),
+  getProfile: () => request<Profile>('/profile/'),
   updateProfile: (data) =>
-    request<Profile>('/profile', { method: 'PUT', body: JSON.stringify(data) }),
+    request<Profile>('/profile/', { method: 'PATCH', body: JSON.stringify(data) }),
 
-  listAreas: () => request<PracticeArea[]>('/practice-areas'),
+  listAreas: () => request<PracticeArea[]>('/practice-areas/'),
   getArea: (slug) => request<PracticeArea>(`/practice-areas/${slug}`),
 
   listCases: (params: CaseQuery = {}) =>
-    request<Case[]>(`/cases${qs(params as Record<string, unknown>)}`),
+    request<Case[]>(`/cases/${qs(params as Record<string, unknown>)}`),
   getCase: (slug) => request<Case>(`/cases/${slug}`),
 
-  listExperience: () => request<Experience[]>('/experience'),
-  listPublications: () => request<Publication[]>('/publications'),
-  listTestimonials: () => request<Testimonial[]>('/testimonials'),
-  listAllTestimonials: () => request<Testimonial[]>('/testimonials?all=1'),
+  listExperience: () => request<Experience[]>('/experience/'),
+  listPublications: () => request<Publication[]>('/publications/'),
+  listTestimonials: () => request<Testimonial[]>('/testimonials/'),
+  listAllTestimonials: () => request<Testimonial[]>('/testimonials/?all=1'),
   submitTestimonial: (data: TestimonialSubmitInput) =>
     request<{ ok: true }>('/testimonials/submit', {
       method: 'POST',
@@ -121,10 +121,10 @@ export const httpClient: ApiClient = {
     }),
 
   create: (resource, data) =>
-    request(`/${RESOURCE_PATH[resource]}`, { method: 'POST', body: JSON.stringify(data) }),
+    request(`/${RESOURCE_PATH[resource]}/`, { method: 'POST', body: JSON.stringify(data) }),
   update: (resource, id, data) =>
     request(`/${RESOURCE_PATH[resource]}/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(data),
     }),
   remove: (resource, id) =>

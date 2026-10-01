@@ -71,7 +71,7 @@ export const seedAreas: PracticeArea[] = [
       'Procesos ejecutivos y declarativos, medidas cautelares, restitución de inmueble y responsabilidad civil.',
     description:
       'Asesoro y litigo en asuntos civiles bajo el Código General del Proceso: procesos ejecutivos (con títulos valores o contractuales) y declarativos (verbales y verbales sumarios), restitución de inmueble arrendado, responsabilidad civil contractual y extracontractual, pertenencia y servidumbres. Solicito y controvierto medidas cautelares (embargo y secuestro, inscripción de la demanda), preparo la prueba para la audiencia inicial y la de instrucción y juzgamiento, y sustento los recursos de reposición, apelación y, cuando procede, casación.',
-    faqs: [
+    fags: [
       {
         q: '¿Qué necesito para iniciar un proceso ejecutivo?',
         a: 'Un título ejecutivo: un documento que contenga una obligación clara, expresa y exigible (pagaré, letra, factura, contrato, acta de conciliación, sentencia). Con él se libra mandamiento de pago y se pueden pedir medidas cautelares desde el inicio.',
@@ -91,7 +91,7 @@ export const seedAreas: PracticeArea[] = [
       'Reclamación de prestaciones, despidos, estabilidad laboral reforzada y acoso laboral.',
     description:
       'Represento a trabajadores y a pequeñas empresas ante los juzgados laborales del circuito bajo el Código Procesal del Trabajo y de la Seguridad Social: reclamación de salarios, horas extra y recargos, liquidación y reliquidación de prestaciones sociales, despidos sin justa causa, ineficacia del despido por estabilidad laboral reforzada (embarazo, salud, fuero sindical) y acoso laboral. Agoto la reclamación administrativa y la conciliación, y llevo el proceso ordinario hasta la audiencia de trámite y juzgamiento.',
-    faqs: [
+    fags: [
       {
         q: '¿En cuánto tiempo prescriben las acreencias laborales?',
         a: 'La regla general es de tres años contados desde que la obligación se hace exigible (art. 488 del CST y 151 del CPTSS). La reclamación escrita al empleador interrumpe la prescripción por una sola vez.',
@@ -111,7 +111,7 @@ export const seedAreas: PracticeArea[] = [
       'Protección de derechos fundamentales, tutela contra providencias judiciales e incidentes de desacato.',
     description:
       'Presento acciones de tutela (art. 86 de la Constitución) para la protección inmediata de derechos fundamentales frente a autoridades y particulares: mora en el reconocimiento de prestaciones, acceso a la salud, debido proceso administrativo y mínimo vital. Tramito la tutela contra providencias judiciales cuando se cumplen las causales de procedibilidad, e impulso el incidente de desacato hasta el cumplimiento efectivo del fallo.',
-    faqs: [
+    fags: [
       {
         q: '¿En cuánto tiempo se resuelve una tutela?',
         a: 'El juez debe fallar en un máximo de diez días hábiles desde el reparto. El fallo se puede impugnar dentro de los tres días siguientes a su notificación y la Corte Constitucional puede seleccionarlo para revisión.',
@@ -131,7 +131,7 @@ export const seedAreas: PracticeArea[] = [
       'Conciliación extrajudicial como requisito de procedibilidad, acuerdos de pago e insolvencia de persona natural.',
     description:
       'Diseño y conduzco procesos de conciliación en derecho y otros mecanismos alternativos de solución de conflictos: audiencias en centros de conciliación, acuerdos de pago con mérito ejecutivo, transacciones y cláusulas compromisorias. También acompaño trámites de insolvencia de persona natural no comerciante (arts. 531 y siguientes del CGP) para negociar y formalizar acuerdos con los acreedores.',
-    faqs: [
+    fags: [
       {
         q: '¿La conciliación es obligatoria antes de demandar?',
         a: 'En varios asuntos civiles y de familia la conciliación extrajudicial en derecho es requisito de procedibilidad: sin la constancia de que se intentó, el juez rechaza la demanda. En materia laboral no es obligatoria, pero suele ser conveniente.',
@@ -342,7 +342,7 @@ export const seedTestimonials: Testimonial[] = [
     author_role: 'Sector comercio',
     context: '2024',
     rating: 5,
-    status: 'approved',
+    status: 'Aprobado',
     email: '',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 40).toISOString(),
   },
@@ -354,7 +354,7 @@ export const seedTestimonials: Testimonial[] = [
     author_role: 'Seguridad social',
     context: '2024',
     rating: 5,
-    status: 'approved',
+    status: 'Aprobado',
     email: '',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 25).toISOString(),
   },
@@ -366,7 +366,7 @@ export const seedTestimonials: Testimonial[] = [
     author_role: 'Sector servicios',
     context: '2023',
     rating: 4,
-    status: 'approved',
+    status: 'Aprobado',
     email: '',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 12).toISOString(),
   },
@@ -378,7 +378,7 @@ export const seedTestimonials: Testimonial[] = [
     author_role: 'Sector inmobiliario',
     context: '2024',
     rating: 5,
-    status: 'pending',
+    status: 'Pendiente',
     email: 'propietario@example.com',
     created_at: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
   },

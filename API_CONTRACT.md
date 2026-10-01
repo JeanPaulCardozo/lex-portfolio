@@ -111,7 +111,7 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
   "name": "Derecho laboral",
   "summary": "Frase corta para tarjetas.",
   "description": "Texto largo.",
-  "faqs": [ { "q": "¿Pregunta?", "a": "Respuesta." } ],
+  "fags": [ { "q": "¿Pregunta?", "a": "Respuesta." } ],  // sic: así está en la API real, no "faqs"
   "order": 1
 }
 ```
@@ -211,14 +211,14 @@ Valida el token y devuelve el usuario. El frontend la llama al cargar el panel.
 ## 7. Testimonios
 
 El público puede **proponer** un testimonio desde la portada; queda en estado
-`pending` y no se muestra hasta que el titular lo marca como `approved`.
+`Pendiente` y no se muestra hasta que el titular lo marca como `Aprobado`.
 
 | Método | Ruta | Acceso | Nota |
 |---|---|---|---|
-| `GET`    | `/testimonials`         | público  | **solo** los `approved` |
+| `GET`    | `/testimonials`         | público  | **solo** los `Aprobado` |
 | `GET`    | `/testimonials?all=1`   | privado  | todos, orden desc por `created_at` (panel) |
 | `POST`   | `/testimonials/submit`  | público  | envío del visitante (ver abajo) |
-| `POST`   | `/testimonials`         | privado  | alta manual del titular; `status` por defecto `approved` |
+| `POST`   | `/testimonials`         | privado  | alta manual del titular; `status` por defecto `Aprobado` |
 | `PUT`    | `/testimonials/:id`     | privado  | actualiza (incluye cambiar `status`) |
 | `DELETE` | `/testimonials/:id`     | privado  | |
 
@@ -230,7 +230,7 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
   "author_role": "Sector comercio",
   "context": "2024",
   "rating": 5,                       // entero 1..5
-  "status": "approved",              // "pending" | "approved" | "rejected"
+  "status": "Aprobado",               // "Pendiente" | "Aprobado" | "Rechazado"
   "email": "cliente@ej.com",         // de quien deja la opinión; NUNCA se expone en GET público
   "created_at": "2026-09-01T10:00:00.000Z"
 }
@@ -251,13 +251,13 @@ El público puede **proponer** un testimonio desde la portada; queda en estado
 { "ok": true }
 ```
 
-El backend guarda el registro con `status: "pending"`, `created_at` (ISO) y un
+El backend guarda el registro con `status: "Pendiente"`, `created_at` (ISO) y un
 `context` (p. ej. el año). **Ignora** cualquier `status` que venga en el cuerpo.
 Recomendado: enviar un correo de aviso al titular (`notify_email || email`) y
 aplicar rate-limiting / captcha.
 
 > El `GET /testimonials` público **no** debe incluir el campo `email` ni los
-> testimonios `pending`/`rejected`.
+> testimonios `Pendiente`/`Rechazado`.
 
 ---
 
@@ -345,9 +345,9 @@ DELETE /cases/:id        privado
 GET/POST/PUT/DELETE  /experience[/:id]     (GET público, resto privado)
 GET/POST/PUT/DELETE  /publications[/:id]   (GET público, resto privado)
 
-GET    /testimonials            público   (solo approved, sin campo email)
+GET    /testimonials            público   (solo Aprobado, sin campo email)
 GET    /testimonials?all=1      privado   (todos, para el panel)
-POST   /testimonials/submit     público   (propuesta del visitante -> status pending)
+POST   /testimonials/submit     público   (propuesta del visitante -> status Pendiente)
 POST   /testimonials            privado
 PUT    /testimonials/:id        privado
 DELETE /testimonials/:id        privado
