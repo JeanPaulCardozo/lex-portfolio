@@ -12,10 +12,10 @@ import { Icon } from '@/components/Icon'
 import { Stars } from '@/components/Stars'
 import { TestimonialForm } from '@/components/TestimonialForm'
 import { useT } from '@/lib/i18n'
-import { Button, ButtonLink, Section, Spinner } from '@/components/ui'
+import { Button, ButtonLink, EmptyState, Section, Spinner } from '@/components/ui'
 
 export default function Home() {
-  const { data: profile, isLoading } = useProfile()
+  const { data: profile, isLoading, isError } = useProfile()
   const { data: areas = [] } = useAreas()
   const { data: cases = [] } = useCases()
   const { data: testimonials = [] } = useTestimonials()
@@ -24,10 +24,18 @@ export default function Home() {
 
   const featured = cases.filter((c) => c.featured).slice(0, 3)
 
-  if (isLoading || !profile) {
+  if (isLoading) {
     return (
       <div className="container-x py-24">
         <Spinner label={t('home.loading')} />
+      </div>
+    )
+  }
+
+  if (isError || !profile) {
+    return (
+      <div className="container-x py-24">
+        <EmptyState title={t('common.notConfigured')} hint={t('common.notConfiguredHint')} />
       </div>
     )
   }

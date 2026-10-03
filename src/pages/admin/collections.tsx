@@ -96,11 +96,11 @@ export const areasConfig: CollectionConfig<PracticeArea> = {
   resource: 'practice-areas',
   title: 'Áreas de práctica',
   singular: 'Área',
-  description: 'Las materias en las que trabajas. El «orden» controla su posición en el sitio.',
+  description: 'Las materias en las que trabajas.',
   useList: useAreas,
   primary: (r) => r.name,
   secondary: (r) => r.summary,
-  blank: { name: '', summary: '', description: '', fags: [], order: 99 },
+  blank: { name: '', summary: '', description: '', fags: [] },
   fields: [
     { name: 'name', label: 'Nombre del área', type: 'text', required: true, full: true },
     {
@@ -123,7 +123,6 @@ export const areasConfig: CollectionConfig<PracticeArea> = {
         { name: 'a', label: 'Respuesta', type: 'textarea' },
       ],
     },
-    { name: 'order', label: 'Orden', type: 'number' },
   ],
 }
 

@@ -34,6 +34,7 @@ const es = {
   'common.loading': 'Cargando…',
   'common.retry': 'Reintentar',
   'common.errorTitle': 'No se pudieron cargar los datos',
+  'common.saveErrorTitle': 'No se pudo guardar',
   'common.genericError': 'Se produjo un error.',
   'common.save': 'Guardar',
   'common.saving': 'Guardando…',
@@ -42,6 +43,8 @@ const es = {
   'common.close': 'Cerrar',
   'common.sending': 'Enviando…',
   'common.current': 'Actualidad',
+  'common.notConfigured': 'Este portafolio todavía no está configurado',
+  'common.notConfiguredHint': 'El titular aún no ha publicado su perfil. Vuelve a visitarnos pronto.',
 
   'palette.placeholder': 'Busca casos, áreas, publicaciones…',
   'palette.noResults': 'Sin resultados',
@@ -295,6 +298,7 @@ const en: Dict = {
   'common.loading': 'Loading…',
   'common.retry': 'Retry',
   'common.errorTitle': "We couldn't load the data",
+  'common.saveErrorTitle': "Couldn't save",
   'common.genericError': 'Something went wrong.',
   'common.save': 'Save',
   'common.saving': 'Saving…',
@@ -303,6 +307,8 @@ const en: Dict = {
   'common.close': 'Close',
   'common.sending': 'Sending…',
   'common.current': 'Present',
+  'common.notConfigured': "This portfolio isn't set up yet",
+  'common.notConfiguredHint': "The owner hasn't published their profile yet. Please check back soon.",
 
   'palette.placeholder': 'Search cases, practice areas, publications…',
   'palette.noResults': 'No results',

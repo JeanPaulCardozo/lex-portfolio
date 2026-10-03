@@ -4,7 +4,7 @@ import type { Collection } from '@/lib/api/types'
 import { useCreate, useRemove, useUpdate } from '@/lib/queries'
 import { useT } from '@/lib/i18n'
 import { AutoForm, type FieldSpec, type FormValues } from '../form/AutoForm'
-import { Button, EmptyState, ErrorState, Spinner, Toast } from '../ui'
+import { Button, EmptyState, ErrorModal, ErrorState, Spinner, Toast } from '../ui'
 import { Icon } from '../Icon'
 import { Drawer } from './Drawer'
 
@@ -59,6 +59,7 @@ export function CollectionAdmin<T extends { id: string }>({
 
   const [editing, setEditing] = useState<T | 'new' | null>(null)
   const [toast, setToast] = useState<string | null>(null)
+  const [modalError, setModalError] = useState<string | null>(null)
 
   const submitting = create.isPending || update.isPending
 
@@ -67,23 +68,35 @@ export function CollectionAdmin<T extends { id: string }>({
     setTimeout(() => setToast(null), 2200)
   }
 
+  function showError(err: unknown) {
+    setModalError(err instanceof Error ? err.message : t('common.genericError'))
+  }
+
   async function handleSubmit(values: FormValues) {
-    if (editing === 'new') {
-      await create.mutateAsync(values)
-      flash(t('collectionAdmin.created', { item: singular }))
-    } else if (editing) {
-      await update.mutateAsync({ id: editing.id, data: values })
-      flash(t('collectionAdmin.updated', { item: singular }))
+    try {
+      if (editing === 'new') {
+        await create.mutateAsync(values)
+        flash(t('collectionAdmin.created', { item: singular }))
+      } else if (editing) {
+        await update.mutateAsync({ id: editing.id, data: values })
+        flash(t('collectionAdmin.updated', { item: singular }))
+      }
+      setEditing(null)
+    } catch (err) {
+      showError(err)
     }
-    setEditing(null)
   }
 
   async function handleDelete(row: T) {
     if (!window.confirm(t('collectionAdmin.deleteConfirm', { item: singular.toLowerCase() }))) {
       return
     }
-    await remove.mutateAsync(row.id)
-    flash(t('collectionAdmin.deleted', { item: singular }))
+    try {
+      await remove.mutateAsync(row.id)
+      flash(t('collectionAdmin.deleted', { item: singular }))
+    } catch (err) {
+      showError(err)
+    }
   }
 
   const rows = list.data ?? []
@@ -179,6 +192,14 @@ export function CollectionAdmin<T extends { id: string }>({
       </Drawer>
 
       {toast && <Toast>{toast}</Toast>}
+
+      <ErrorModal
+        open={modalError !== null}
+        onClose={() => setModalError(null)}
+        title={t('common.saveErrorTitle')}
+      >
+        {modalError}
+      </ErrorModal>
     </div>
   )
 }

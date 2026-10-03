@@ -1,18 +1,26 @@
 import { useExperience, useProfile } from '@/lib/queries'
 import { formatMonthYear } from '@/lib/format'
-import { ButtonLink, Section, Spinner } from '@/components/ui'
+import { ButtonLink, EmptyState, Section, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 import { useT } from '@/lib/i18n'
 
 export default function About() {
-  const { data: profile, isLoading } = useProfile()
+  const { data: profile, isLoading, isError } = useProfile()
   const { data: experience = [] } = useExperience()
   const t = useT()
 
-  if (isLoading || !profile) {
+  if (isLoading) {
     return (
       <div className="container-x py-24">
         <Spinner />
+      </div>
+    )
+  }
+
+  if (isError || !profile) {
+    return (
+      <div className="container-x py-24">
+        <EmptyState title={t('common.notConfigured')} hint={t('common.notConfiguredHint')} />
       </div>
     )
   }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Profile } from '@/lib/api/types'
 import { useProfile, useUpdateProfile } from '@/lib/queries'
 import { AutoForm, type FieldSpec, type FormValues } from '@/components/form/AutoForm'
-import { ErrorState, Spinner, Toast } from '@/components/ui'
+import { ErrorModal, ErrorState, Spinner, Toast } from '@/components/ui'
 import { useT } from '@/lib/i18n'
 import { ApiError } from '@/lib/api/http'
 
@@ -108,6 +108,7 @@ export default function ProfileEdit() {
   const { data: profile, isLoading, isError, error, refetch } = useProfile()
   const update = useUpdateProfile()
   const [toast, setToast] = useState(false)
+  const [modalError, setModalError] = useState<string | null>(null)
   const t = useT()
 
   const notFound = error instanceof ApiError && error.status === 404
@@ -116,9 +117,13 @@ export default function ProfileEdit() {
   if (isError && !notFound) return <ErrorState error={error} onRetry={() => refetch()} />
 
   async function onSubmit(values: FormValues) {
-    await update.mutateAsync(values as unknown as Profile)
-    setToast(true)
-    setTimeout(() => setToast(false), 2200)
+    try {
+      await update.mutateAsync(values as unknown as Profile)
+      setToast(true)
+      setTimeout(() => setToast(false), 2200)
+    } catch (err) {
+      setModalError(err instanceof Error ? err.message : t('common.genericError'))
+    }
   }
 
   return (
@@ -141,6 +146,14 @@ export default function ProfileEdit() {
       </div>
 
       {toast && <Toast>{t('profileEdit.saved')}</Toast>}
+
+      <ErrorModal
+        open={modalError !== null}
+        onClose={() => setModalError(null)}
+        title={t('common.saveErrorTitle')}
+      >
+        {modalError}
+      </ErrorModal>
     </div>
   )
 }

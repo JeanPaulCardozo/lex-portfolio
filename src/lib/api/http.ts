@@ -39,6 +39,29 @@ function authHeader(): Record<string, string> {
   return token ? { Authorization: `Bearer ${token}` } : {}
 }
 
+/** FastAPI devuelve `detail` como string o como lista de errores de validación. */
+function extractMessage(payload: unknown): string | null {
+  if (!payload || typeof payload !== 'object') return null
+  const p = payload as Record<string, unknown>
+  if (typeof p.message === 'string') return p.message
+  if (typeof p.error === 'string') return p.error
+  const detail = p.detail
+  if (typeof detail === 'string') return detail
+  if (Array.isArray(detail)) {
+    return detail
+      .map((d) => {
+        if (!d || typeof d !== 'object') return String(d)
+        const loc = (d as Record<string, unknown>).loc
+        const msg = (d as Record<string, unknown>).msg
+        const field = Array.isArray(loc) ? loc[loc.length - 1] : undefined
+        return field ? `${field}: ${msg}` : String(msg ?? '')
+      })
+      .filter(Boolean)
+      .join('; ')
+  }
+  return null
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     ...init,
@@ -58,10 +81,12 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const payload = isJson ? await res.json().catch(() => null) : await res.text()
 
   if (!res.ok) {
-    const message =
-      (isJson && payload && (payload.message || payload.error || payload.detail)) ||
-      `Error ${res.status}`
-    throw new ApiError(String(message), res.status)
+    if (res.status === 401) {
+      localStorage.removeItem(TOKEN_KEY)
+      window.dispatchEvent(new Event('lex:unauthorized'))
+    }
+    const message = (isJson && extractMessage(payload)) || `Error ${res.status}`
+    throw new ApiError(message, res.status)
   }
   return payload as T
 }

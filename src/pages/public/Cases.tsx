@@ -39,7 +39,7 @@ export default function Cases() {
   const filtered = useMemo(() => {
     const needle = normalize(q.trim())
     return cases.filter((c) => {
-      if (areaId && c.practice_area_id !== areaId) return false
+      if (areaId && String(c.practice_area_id) !== areaId) return false
       if (year && String(c.year) !== year) return false
       if (type && c.result_type !== type) return false
       if (needle) {

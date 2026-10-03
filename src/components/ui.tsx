@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import { useEffect, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 import { useT } from '@/lib/i18n'
 import { Icon } from './Icon'
@@ -157,6 +157,47 @@ export function EmptyState({ title, hint }: { title: string; hint?: string }) {
     <div className="rounded-xl border border-dashed border-line-strong bg-white p-10 text-center">
       <p className="font-medium text-ink">{title}</p>
       {hint && <p className="mt-1 text-sm text-muted">{hint}</p>}
+    </div>
+  )
+}
+
+/* ---------------------------- Error modal ---------------------------- */
+export function ErrorModal({
+  open,
+  onClose,
+  title,
+  children,
+}: {
+  open: boolean
+  onClose: () => void
+  title: string
+  children: ReactNode
+}) {
+  const t = useT()
+  useEffect(() => {
+    if (!open) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open, onClose])
+
+  if (!open) return null
+
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center p-4">
+      <div className="absolute inset-0 bg-ink/30 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-sm rounded-2xl border border-line bg-white p-5 shadow-2xl">
+        <p className="font-medium text-red-700">{title}</p>
+        <div className="mt-1.5 text-sm text-ink-soft">{children}</div>
+        <button
+          onClick={onClose}
+          className="mt-4 w-full rounded-full border border-line-strong py-2 text-sm font-medium hover:bg-paper"
+        >
+          {t('common.close')}
+        </button>
+      </div>
     </div>
   )
 }

@@ -67,6 +67,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setStatus('anonymous')
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('lex:unauthorized', logout)
+    return () => window.removeEventListener('lex:unauthorized', logout)
+  }, [logout])
+
   const value = useMemo<AuthState>(
     () => ({ user, token, status, login, logout }),
     [user, token, status, login, logout],

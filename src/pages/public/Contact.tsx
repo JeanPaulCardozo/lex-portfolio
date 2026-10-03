@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { useProfile, useSubmitContact } from '@/lib/queries'
 import { whatsappHref } from '@/lib/format'
 import { useT, type TFn } from '@/lib/i18n'
-import { Button, Section } from '@/components/ui'
+import { Button, EmptyState, Section, Spinner } from '@/components/ui'
 import { Icon } from '@/components/Icon'
 
 function makeSchema(t: TFn) {
@@ -23,7 +23,7 @@ const fieldCls =
   'w-full rounded-lg border border-line-strong bg-white px-3 py-2.5 text-sm outline-none transition-shadow focus:border-accent focus:ring-2 focus:ring-accent/25'
 
 export default function Contact() {
-  const { data: profile } = useProfile()
+  const { data: profile, isLoading, isError } = useProfile()
   const submit = useSubmitContact()
   const t = useT()
   const schema = useMemo(() => makeSchema(t), [t])
@@ -33,6 +33,22 @@ export default function Contact() {
     reset,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
+
+  if (isLoading) {
+    return (
+      <div className="container-x py-24">
+        <Spinner />
+      </div>
+    )
+  }
+
+  if (isError || !profile) {
+    return (
+      <div className="container-x py-24">
+        <EmptyState title={t('common.notConfigured')} hint={t('common.notConfiguredHint')} />
+      </div>
+    )
+  }
 
   async function onSubmit(data: FormData) {
     await submit.mutateAsync({
