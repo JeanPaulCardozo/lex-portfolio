@@ -80,7 +80,6 @@ const es = {
   'home.noTestimonials':
     'Aún no hay opiniones publicadas. ¿Trabajaste conmigo? Anímate a dejar la primera.',
   'home.leaveReview': 'Deja tu opinión',
-  'home.reviewsModerated': 'Las opiniones se revisan antes de publicarse.',
   'home.ctaTitle': '¿Hablamos de tu caso?',
   'home.ctaSubtitle': 'Primera valoración sin compromiso.',
   'home.goToContact': 'Ir a contacto',
@@ -344,7 +343,6 @@ const en: Dict = {
   'home.noTestimonials':
     'No reviews published yet. Have we worked together? Feel free to leave the first one.',
   'home.leaveReview': 'Leave a review',
-  'home.reviewsModerated': 'Reviews are checked before they go live.',
   'home.ctaTitle': "Let's talk about your case",
   'home.ctaSubtitle': 'Free initial assessment.',
   'home.goToContact': 'Go to contact',

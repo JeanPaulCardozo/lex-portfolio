@@ -268,32 +268,31 @@ aplicar rate-limiting / captcha.
 ```jsonc
 // Request
 { "name": "Laura Méndez", "email": "laura@ej.com", "phone": "", "message": "Buenos días..." }
-// 200
+// 201
 { "ok": true }
 ```
 
-El backend guarda el mensaje con `id`, `createdAt` (ISO) y `read: false`, y
-**envía un correo de aviso** al titular (`profile.notify_email || profile.email`)
-con el nombre, el correo y el texto de la consulta. Aplica rate-limiting / captcha.
+El backend guarda el mensaje con `id`, `created_at` (ISO), `user_id` (el único
+titular) y `read: false`. Rate-limited a 5/min por IP.
 
-> El envío de correo es responsabilidad del backend: el frontend es estático y no
-> puede guardar credenciales SMTP. El mismo criterio aplica a `POST
-> /testimonials/submit`.
+> Nota: el aviso por correo descrito originalmente acá todavía no está
+> implementado en el backend — `create_message` solo guarda el registro.
 
 ### `GET /messages`  — privado
 
-Lista descendente por `createdAt`.
+Lista descendente por `created_at`.
 
 ```jsonc
 [
   {
-    "id": "msg_1",
+    "id": 1,
     "name": "Laura Méndez",
     "email": "laura@ej.com",
     "phone": "+34 611 111 111",
     "message": "...",
-    "createdAt": "2026-09-07T09:12:00.000Z",
-    "read": false
+    "created_at": "2026-09-07T09:12:00.000Z",
+    "read": false,
+    "user_id": 1
   }
 ]
 ```

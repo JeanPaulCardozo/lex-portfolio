@@ -27,7 +27,7 @@ import type {
 
 // Sube la versión cuando cambian los datos semilla para forzar el re-sembrado
 // en navegadores que ya visitaron la demo.
-const DB_KEY = 'lex_db_v5'
+const DB_KEY = 'lex_db_v6'
 const TOKEN_KEY = 'lex_token'
 
 interface DB {
@@ -315,7 +315,7 @@ export const mockClient: ApiClient = {
     db.messages.unshift({
       ...data,
       id: uid('msg'),
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       read: false,
     })
     save(db)
@@ -324,7 +324,7 @@ export const mockClient: ApiClient = {
 
   async listMessages() {
     await latency()
-    return clone(load().messages).sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    return clone(load().messages).sort((a, b) => b.created_at.localeCompare(a.created_at))
   },
 
   async updateMessage(id, data) {

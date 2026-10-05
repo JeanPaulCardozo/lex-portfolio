@@ -44,7 +44,7 @@ export default function Messages() {
                 <span className={cn('shrink-0 font-medium', m.read && 'ml-5')}>{m.name}</span>
                 <span className="min-w-0 flex-1 truncate text-sm text-muted">{m.message}</span>
                 <span className="hidden shrink-0 text-xs text-muted sm:block">
-                  {formatDate(m.createdAt.slice(0, 10))}
+                  {formatDate(m.created_at.slice(0, 10))}
                 </span>
                 <Icon name="chevronDown" size={15} className={cn('shrink-0 text-muted', open && 'rotate-180')} />
               </button>
@@ -57,7 +57,7 @@ export default function Messages() {
                       {m.email}
                     </a>
                     {m.phone && <span>{m.phone}</span>}
-                    <span>{new Date(m.createdAt).toLocaleString('es-ES')}</span>
+                    <span>{new Date(m.created_at).toLocaleString('es-ES')}</span>
                   </div>
                   <div className="flex gap-2 pt-1">
                     <a

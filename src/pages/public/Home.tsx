@@ -185,7 +185,6 @@ export default function Home() {
               <Icon name="plus" size={15} /> {t('home.leaveReview')}
             </Button>
           )}
-          <p className="mt-3 text-xs text-muted">{t('home.reviewsModerated')}</p>
         </div>
       </Section>
 

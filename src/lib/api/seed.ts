@@ -392,7 +392,7 @@ export const seedMessages: Message[] = [
     phone: '+57 311 111 1111',
     message:
       'Buenos días. Me notificaron una demanda ejecutiva, pero creo que nunca me notificaron en debida forma el auto que la admitió y ya hay un embargo. ¿Podríamos hablar esta semana?',
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
     read: false,
   },
   {
@@ -402,7 +402,7 @@ export const seedMessages: Message[] = [
     phone: '',
     message:
       'Necesito iniciar un proceso de restitución de un inmueble arrendado. El arrendatario lleva cuatro meses sin pagar y no quiere entregar. Gracias.',
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
     read: true,
   },
 ]

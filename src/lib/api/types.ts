@@ -135,7 +135,7 @@ export interface Message {
   email: string
   phone: string
   message: string
-  createdAt: string
+  created_at: string
   read: boolean
 }
 
@@ -153,7 +153,7 @@ export type Collection =
   | 'publications'
   | 'testimonials'
 
-export type ContactInput = Omit<Message, 'id' | 'createdAt' | 'read'>
+export type ContactInput = Omit<Message, 'id' | 'created_at' | 'read'>
 
 export interface ApiClient {
   readonly isMock: boolean
